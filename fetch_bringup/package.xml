@@ -1,0 +1,17 @@
+<package>
+  <name>fetch_bringup</name>
+  <version>0.2.0</version>
+  <description>
+    Bringup for fetch
+  </description>
+  <author>Michael Ferguson</author>
+  <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>
+  <license>Proprietary</license>
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>fetch_description</run_depend>
+  <run_depend>fetch_drivers</run_depend>
+  <run_depend>graft</run_depend>
+  <run_depend>openni2_launch</run_depend>
+  <run_depend>robot_state_publisher</run_depend>
+  <run_depend>sick_tim</run_depend>
+</package>

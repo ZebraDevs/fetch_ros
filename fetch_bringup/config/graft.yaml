@@ -1,0 +1,50 @@
+planar_output: True # Output only x, y, and rotation about z
+
+output_frame: odom # TF frame id, param name ported from robot_pose_ekf
+parent_frame_id: odom # TF frame id, override output_frame if set
+child_frame_id: base_link #TF frame id
+publish_tf: true
+
+update_rate: 25.0
+update_topic: odom
+
+queue_size: 1
+
+# Filter parameters
+alpha: 0.001
+kappa: 0.0
+beta: 2.0
+
+# Process noise covariance 2x2 for velocites, 5x5 for 2d position
+process_noise: [1e6, 0, 0,
+                0, 1e6, 0,
+                0, 0, 1e6]
+
+# Inputs
+topics: {
+  odom: {
+    topic: /odom,
+    type: nav_msgs/Odometry,
+    absolute_pose: False,
+    use_velocities: True,
+    timeout: 1.0,
+    override_twist_covariance: [1e-3, 0, 0, 0, 0, 0,
+                                0, 1e-3, 0, 0, 0, 0,
+                                0, 0, 1e-6, 0, 0, 0,
+                                0, 0, 0, 1e-6, 0, 0,
+                                0, 0, 0, 0, 1e-6, 0,
+                                0, 0, 0, 0, 0, 1e-3],
+  },
+
+  imu: {
+    topic: /imu,
+    type: sensor_msgs/Imu,
+    absolute_orientation: False,
+    use_velocities: True,
+    use_accelerations: False,
+    timeout: 1.0,
+    override_angular_velocity_covariance: [0, 0, 0,
+                                           0, 0, 0,
+                                           0, 0, 0.000004],
+  },
+}

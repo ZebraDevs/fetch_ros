@@ -1,0 +1,60 @@
+arm_controller:
+  follow_joint_trajectory:
+    type: "robot_controllers/FollowJointTrajectoryController"
+    joints:
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - upperarm_roll_joint
+      - elbow_flex_joint
+      - forearm_roll_joint
+      - wrist_flex_joint
+      - wrist_roll_joint
+
+arm_with_torso_controller:
+  follow_joint_trajectory:
+    type: "robot_controllers/FollowJointTrajectoryController"
+    joints:
+      - torso_lift_joint
+      - shoulder_pan_joint
+      - shoulder_lift_joint
+      - upperarm_roll_joint
+      - elbow_flex_joint
+      - forearm_roll_joint
+      - wrist_flex_joint
+      - wrist_roll_joint
+  gravity_compensation:
+    type: "robot_controllers/GravityCompensation"
+    root: "base_link"
+    tip: "gripper_link"
+    autostart: true
+
+torso_controller:
+  follow_joint_trajectory:
+    type: "robot_controllers/FollowJointTrajectoryController"
+    joints:
+      - torso_lift_joint
+
+head_controller:
+  point_head:
+    type: "robot_controllers/PointHeadController"
+  follow_joint_trajectory:
+    type: "robot_controllers/FollowJointTrajectoryController"
+    joints:
+      - head_pan_joint
+      - head_tilt_joint
+
+base_controller:
+  type: "robot_controllers/DiffDriveBaseController"
+  max_velocity_x: 1.0
+  max_acceleration_x: 0.75
+  autostart: true
+
+robot_driver:
+  default_controllers:
+    - "arm_controller/follow_joint_trajectory"
+    - "arm_with_torso_controller/follow_joint_trajectory"
+    - "arm_with_torso_controller/gravity_compensation"
+    - "base_controller"
+    - "head_controller/follow_joint_trajectory"
+    - "head_controller/point_head"
+    - "torso_controller/follow_joint_trajectory"
