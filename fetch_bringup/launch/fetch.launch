@@ -37,6 +37,8 @@
     <param name="max_ang" type="double" value="1.91986" />
     <param name="hostname" type="string" value="10.42.42.10" />
     <param name="frame_id" type="string" value="laser_link" />
+    <param name="range_max" type="double" value="25.0" />
+    <param name="time_increment" type="double" value="0.000061728" />
     <remap from="scan" to="base_scan" />
   </node>
 
