@@ -1,0 +1,7 @@
+<launch>
+
+  <node name="graft" pkg="graft" type="graft_ukf_velocity" output="screen">
+    <rosparam file="$(find freight_bringup)/config/graft.yaml" command="load" />
+  </node>
+
+</launch>

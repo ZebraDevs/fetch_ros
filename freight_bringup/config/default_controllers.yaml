@@ -1,0 +1,9 @@
+base_controller:
+  type: "robot_controllers/DiffDriveBaseController"
+  max_velocity_x: 1.5
+  max_acceleration_x: 1.25
+  autostart: true
+
+robot_driver:
+  default_controllers:
+    - "base_controller"
