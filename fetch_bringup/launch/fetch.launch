@@ -2,6 +2,10 @@
 
   <!-- Calibration -->
   <param name="base_controller/track_width" value="0.37476" />
+  <param name="head_camera/driver/z_offset_mm" value="0.0" />
+  <param name="head_camera/driver/z_scaling" value="1.0" />
+  <arg name="rgb_camera_info_url" default="" />
+  <arg name="depth_camera_info_url" default="" />
 
   <!-- Odometry -->
   <param name="base_controller/publish_tf" value="false" />
@@ -29,7 +33,10 @@
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
 
   <!-- Head Camera -->
-  <include file="$(find fetch_bringup)/launch/head_camera.launch" />
+  <include file="$(find fetch_bringup)/launch/head_camera.launch" >
+    <arg name="rgb_camera_info_url" value="$(arg rgb_camera_info_url)" />
+    <arg name="depth_camera_info_url" value="$(arg depth_camera_info_url)" />
+  </include>
 
   <!-- Laser -->
   <node name="sick_tim551_2050001" pkg="sick_tim" type="sick_tim551_2050001" respawn="true" >
