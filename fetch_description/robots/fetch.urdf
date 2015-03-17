@@ -218,7 +218,7 @@
     <parent link="shoulder_pan_link" />
     <child link="shoulder_lift_link" />
     <axis xyz="0 1 0" />
-  <limit effort="131.76" lower="-3.839" upper="1.396" velocity="1.454" /></joint>
+  <limit effort="131.76" lower="-1.221" upper="1.518" velocity="1.454" /></joint>
   <link name="upperarm_roll_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0.1165 0.0014 0.0000" />
@@ -274,7 +274,7 @@
     <parent link="upperarm_roll_link" />
     <child link="elbow_flex_link" />
     <axis xyz="0 1 0" />
-  <limit effort="66.18" lower="-2.26" upper="2.26" velocity="1.521" /></joint>
+  <limit effort="66.18" lower="-2.251" upper="2.251" velocity="1.521" /></joint>
   <link name="forearm_roll_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0.1097 -0.0266 0.0000" />
