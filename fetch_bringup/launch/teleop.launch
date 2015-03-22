@@ -2,13 +2,7 @@
 
   <node name="joy" pkg="joy" type="joy_node"/>
 
-  <node name="teleop" pkg="etherbotix_python" type="simple_teleop.py">
-    <param name="axis_linear" value="3"/>
-    <param name="axis_angular" value="0"/>
-    <param name="scale_linear" value="1.0"/>
-    <param name="scale_angular" value="2.0"/>
-    <param name="axis_deadman" value="10"/><!--L1 shoulder button-->
-  </node>
+  <node name="teleop" pkg="fetch_teleop" type="joystick_teleop" />
 
   <node name="cmd_vel_mux" pkg="topic_tools" type="mux" respawn="true" args="base_controller/command /cmd_vel /teleop/cmd_vel">
     <remap from="mux" to="cmd_vel_mux" />

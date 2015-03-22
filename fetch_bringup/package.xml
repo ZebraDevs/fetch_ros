@@ -10,6 +10,7 @@
   <buildtool_depend>catkin</buildtool_depend>
   <run_depend>fetch_description</run_depend>
   <run_depend>fetch_drivers</run_depend>
+  <run_depend>fetch_teleop</run_depend>
   <run_depend>graft</run_depend>
   <run_depend>openni2_launch</run_depend>
   <run_depend>robot_state_publisher</run_depend>
