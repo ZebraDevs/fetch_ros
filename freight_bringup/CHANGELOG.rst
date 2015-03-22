@@ -2,8 +2,8 @@
 Changelog for package freight_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.2 (2015-03-21)
+------------------
 * specify minimum version of laser drivers
 * update laser parameters
 * Contributors: Michael Ferguson

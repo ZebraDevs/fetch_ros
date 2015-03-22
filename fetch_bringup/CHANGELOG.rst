@@ -2,8 +2,8 @@
 Changelog for package fetch_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.3.2 (2015-03-21)
+------------------
 * specify minimum version of laser drivers
 * fix graft launch file include
 * add head camera calibration
