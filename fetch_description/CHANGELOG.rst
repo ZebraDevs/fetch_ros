@@ -2,8 +2,8 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.4.1 (2015-03-23)
+------------------
 * update velocity limits of base motors
 * Contributors: Michael Ferguson
 
