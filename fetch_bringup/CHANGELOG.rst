@@ -2,6 +2,11 @@
 Changelog for package fetch_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* update to use fetch_teleop
+* Contributors: Michael Ferguson
+
 0.3.2 (2015-03-21)
 ------------------
 * specify minimum version of laser drivers
