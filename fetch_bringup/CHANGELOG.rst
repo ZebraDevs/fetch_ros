@@ -2,6 +2,9 @@
 Changelog for package fetch_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.4.0 (2015-03-22)
 ------------------
 * update to use fetch_teleop
