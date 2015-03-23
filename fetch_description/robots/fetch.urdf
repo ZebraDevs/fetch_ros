@@ -48,7 +48,7 @@
     <parent link="base_link" />
     <child link="r_wheel_link" />
     <axis xyz="0 1 0" />
-  <limit effort="8.85" velocity="16.5" /></joint>
+  <limit effort="8.85" velocity="17.4" /></joint>
   <link name="l_wheel_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0" />
@@ -76,7 +76,7 @@
     <parent link="base_link" />
     <child link="l_wheel_link" />
     <axis xyz="0 1 0" />
-  <limit effort="8.85" velocity="16.5" /></joint>
+  <limit effort="8.85" velocity="17.4" /></joint>
   <link name="torso_lift_link">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.0013 -0.0009 0.2935" />

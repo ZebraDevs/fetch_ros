@@ -48,7 +48,7 @@
     <parent link="base_link" />
     <child link="r_wheel_link" />
     <axis xyz="0 1 0" />
-  <limit effort="8.85" velocity="16.5" /></joint>
+  <limit effort="8.85" velocity="34.8" /></joint>
   <link name="l_wheel_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0" />
@@ -76,7 +76,7 @@
     <parent link="base_link" />
     <child link="l_wheel_link" />
     <axis xyz="0 1 0" />
-  <limit effort="8.85" velocity="16.5" /></joint>
+  <limit effort="8.85" velocity="34.8" /></joint>
   <link name="estop_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0.002434512737072 -0.00330608315239905 0.00665139196650039" />
