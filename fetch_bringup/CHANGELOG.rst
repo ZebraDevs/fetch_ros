@@ -2,6 +2,11 @@
 Changelog for package fetch_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add depend on joy
+* Contributors: Michael Ferguson
+
 0.4.1 (2015-03-23)
 ------------------
 
