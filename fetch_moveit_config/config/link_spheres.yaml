@@ -1,0 +1,74 @@
+link_spheres:
+  base_link:
+    - {x: 0.0, y: 0.0, z: 0.205, radius: 0.33}
+    - {x: 0.0, y: 0.0, z: 1.0, distance: 0.16}
+  laser_link:
+    - {x: 0.0, y: 0.0, z: 0.0, radius: 0.001}
+  torso_fixed_link:
+    - {x: -0.065, y: 0.0, z: 0.2, radius: 0.275}
+    - {x: 1.0, y: 0.0, z: 0.0, distance: 0.12}
+    - {x: 0.0, y: 1.0, z: 0.0, distance: 0.16}
+  torso_lift_link:
+    - {x: -0.07, y: 0.0, z: 0.3, radius: 0.375}
+    - {x: 1.0, y: 0.0, z: 0.0, distance: 0.125}
+    - {x: 0.0, y: 1.0, z: 0.0, distance: 0.175}
+  bellows_link:
+    - {x: 0.0, y: 0.0, z: 0.0, radius: 0.001}
+  bellows_link2:
+    - {x: 0.0, y: 0.0, z: 0.0, radius: 0.001}
+  shoulder_pan_link:
+    - {x: 0.0, y: 0.0, z: -0.13, radius: 0.065}
+    - {x: 0.0, y: 0.0, z: -0.07, radius: 0.065}
+    - {x: 0.0, y: 0.0, z: -0.005, radius: 0.065}
+    - {x: 0.02, y: 0.0, z: 0.05, radius: 0.075}
+    - {x: 0.117, y: 0.0, z: 0.06, radius: 0.09}
+  shoulder_lift_link:
+    - {x: 0.075, y: 0.0, z: 0.0, radius: 0.0625}
+    - {x: 0.14, y: 0.0, z: 0.0, radius: 0.0625}
+  upperarm_roll_link:
+    - {x: -0.015, y: 0.0, z: 0.0, radius: 0.0625}
+    - {x: 0.055, y: 0.0, z: 0.0, radius: 0.0625}
+    - {x: 0.13, y: -0.035, z: 0.0, radius: 0.0625}
+    - {x: 0.13, y: 0.0, z: 0.0, radius: 0.0625}
+    - {x: 0.13, y: 0.035, z: 0.0, radius: 0.0625}
+  elbow_flex_link:
+    - {x: 0.08, y: 0.0, z: 0.0, radius: 0.0625}
+    - {x: 0.14, y: 0.0, z: 0.0, radius: 0.0625}
+  forearm_roll_link:
+    - {x: 0.0, y: 0.0, z: 0.0, radius: 0.0625}
+    - {x: 0.06, y: -0.035, z: 0.0, radius: 0.0625}
+  wrist_flex_link:
+    - {x: 0.0, y: -0.045, z: 0.0, radius: 0.065}
+    - {x: 0.0, y: 0.0, z: 0.0, radius: 0.065}
+    - {x: 0.0, y: 0.025, z: 0.0, radius: 0.065}
+    - {x: 0.0675, y: 0.0, z: 0.0, radius: 0.0625}
+  wrist_roll_link:
+    - {x: -0.005, y: 0.0, z: 0.0, radius: 0.0625}
+  gripper_link:
+    - {x: -0.125, y: 0.032, z: 0.0, radius: 0.05}
+    - {x: -0.125, y: 0.0, z: 0.0, radius: 0.05}
+    - {x: -0.125, y: -0.032, z: 0.0, radius: 0.05}
+    - {x: -0.09, y: 0.032, z: 0.0, radius: 0.05}
+    - {x: -0.09, y: 0.0, z: 0.0, radius: 0.05}
+    - {x: -0.09, y: -0.032, z: 0.0, radius: 0.05}
+    - {x: -0.055, y: 0.032, z: 0.0, radius: 0.05}
+    - {x: -0.055, y: 0.0, z: 0.0, radius: 0.05}
+    - {x: -0.055, y: -0.032, z: 0.0, radius: 0.05}
+  l_gripper_finger_link:
+    - {x: -0.018, y: 0.009, z: 0.0, radius: 0.015}
+    - {x: -0.009, y: 0.009, z: 0.0, radius: 0.015}
+    - {x: 0.003, y: 0.009, z: 0.0, radius: 0.015}
+    - {x: 0.015, y: 0.009, z: 0.0, radius: 0.015}
+    - {x: 0.027, y: 0.009, z: 0.0, radius: 0.015}
+  r_gripper_finger_link:
+    - {x: -0.018, y: -0.009, z: 0.0, radius: 0.015}
+    - {x: -0.009, y: -0.009, z: 0.0, radius: 0.015}
+    - {x: 0.003, y: -0.009, z: 0.0, radius: 0.015}
+    - {x: 0.015, y: -0.009, z: 0.0, radius: 0.015}
+    - {x: 0.027, y: -0.009, z: 0.0, radius: 0.015}
+  head_pan_link:
+    - {x: 0.0, y: 0.0, z: 0.05, radius: 0.175}
+  head_tilt_link:
+    - {x: -0.01, y: -0.065, z: 0.0, radius: 0.1}
+    - {x: -0.01, y: 0.0, z: 0.0, radius: 0.1}
+    - {x: -0.01, y: 0.065, z: 0.0, radius: 0.1}

@@ -1,0 +1,24 @@
+<launch>
+
+  <!-- SBPL Plugin for MoveIt! -->
+  <arg name="planning_plugin" value="fetch_sbpl_interface/SBPLPlanner" />
+
+  <!-- The request adapters (plugins) used when planning with SBPL. 
+       ORDER MATTERS -->
+  <arg name="planning_adapters" value="parabolic_trajectory_adapter/Adapter
+                       default_planner_request_adapters/FixWorkspaceBounds
+                       default_planner_request_adapters/FixStartStateBounds
+                       default_planner_request_adapters/FixStartStateCollision
+                       default_planner_request_adapters/FixStartStatePathConstraints" />
+
+  <arg name="start_state_max_bounds_error" value="0.1" />
+
+  <param name="planning_plugin" value="$(arg planning_plugin)" />
+  <param name="request_adapters" value="$(arg planning_adapters)" />
+  <param name="start_state_max_bounds_error" value="$(arg start_state_max_bounds_error)" />
+
+  <!-- Other context params -->
+  <rosparam command="load" file="$(find fetch_moveit_config)/config/link_spheres.yaml" />
+  <rosparam command="load" file="$(find fetch_moveit_config)/config/sbpl_planning.yaml"/>
+
+</launch>

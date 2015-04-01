@@ -1,0 +1,8 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: fetch_description
+    relative_path: robots/fetch.urdf
+  SRDF:
+    relative_path: config/fetch.srdf
+  CONFIG:
+    generated_timestamp: 1414661768
