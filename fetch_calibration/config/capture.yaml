@@ -1,0 +1,43 @@
+chains:
+  - name: arm
+    topic: /arm_controller/follow_joint_trajectory
+    joints:
+     - shoulder_pan_joint
+     - shoulder_lift_joint
+     - upperarm_roll_joint
+     - elbow_flex_joint
+     - forearm_roll_joint
+     - wrist_flex_joint
+     - wrist_roll_joint
+    planning_group: arm
+  - name: head
+    topic: /head_controller/follow_joint_trajectory
+    joints:
+     - head_pan_joint
+     - head_tilt_joint
+duration: 2.0
+led_finder:
+  action: /gripper_controller/led_action
+  topic: /head_camera/depth_registered/points
+  threshold: 1000.0
+  max_iterations: 50
+  debug_image: false
+  gripper_led_frame: wrist_roll_link
+  poses:
+    - code: 1
+      x: 0.1044
+      y: 0.0355
+      z: 0.038
+      # new skin will be 0.0396 in z direction
+    - code: 2
+      x: 0.0514
+      y: 0.0355
+      z: 0.038
+    - code: 4
+      x: 0.0514
+      y: -0.0355
+      z: 0.038
+    - code: 8
+      x: 0.1044
+      y: -0.0355
+      z: 0.038
