@@ -2,6 +2,9 @@
 Changelog for package freight_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.4.2 (2015-03-23)
 ------------------
 
