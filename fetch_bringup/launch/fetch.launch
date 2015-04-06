@@ -1,5 +1,11 @@
 <launch>
 
+  <!-- GDB Debug Option -->
+  <arg name="debug" default="false" />
+  <arg unless="$(arg debug)" name="launch_prefix" value="" />
+  <arg     if="$(arg debug)" name="launch_prefix"
+     value="gdb -x $(find fetch_bringup)/launch/gdb_settings.gdb --ex run --args" />
+
   <!-- Calibration -->
   <param name="base_controller/track_width" value="0.37476" />
   <param name="head_camera/driver/z_offset_mm" value="0.0" />
@@ -15,7 +21,7 @@
   <param name="robot_description" textfile="$(find fetch_description)/robots/fetch.urdf" />
 
   <!-- Drivers for Base -->
-  <node name="robot_driver" pkg="fetch_drivers" type="robot_driver" output="screen">
+  <node name="robot_driver" launch-prefix="$(arg launch_prefix)" pkg="fetch_drivers" type="robot_driver" output="screen">
     <param name="firmware_tar_gz" value="$(find fetch_drivers)/firmware.tar.gz" />
     <param name="has_base" value="true" />
     <param name="has_torso" value="true" />
