@@ -16,6 +16,8 @@
   <run_depend>image_proc</run_depend>
   <run_depend>joy</run_depend>
   <run_depend>openni2_launch</run_depend>
+  <run_depend>robot_controllers_msgs</run_depend>
   <run_depend>robot_state_publisher</run_depend>
+  <run_depend>sensor_msgs</run_depend>
   <run_depend version_gte="0.0.4">sick_tim</run_depend>
 </package>

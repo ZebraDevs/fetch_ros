@@ -8,4 +8,6 @@
     <remap from="mux" to="cmd_vel_mux" />
   </node>
 
+  <node name="controller_reset" pkg="fetch_bringup" type="controller_reset.py" />
+
 </launch>
