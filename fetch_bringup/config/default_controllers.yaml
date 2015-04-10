@@ -9,6 +9,11 @@ arm_controller:
       - forearm_roll_joint
       - wrist_flex_joint
       - wrist_roll_joint
+  gravity_compensation:
+    type: "robot_controllers/GravityCompensation"
+    root: "torso_lift_link"
+    tip: "gripper_link"
+    autostart: true
 
 arm_with_torso_controller:
   follow_joint_trajectory:
@@ -22,11 +27,6 @@ arm_with_torso_controller:
       - forearm_roll_joint
       - wrist_flex_joint
       - wrist_roll_joint
-  gravity_compensation:
-    type: "robot_controllers/GravityCompensation"
-    root: "base_link"
-    tip: "gripper_link"
-    autostart: true
 
 torso_controller:
   follow_joint_trajectory:
@@ -52,8 +52,8 @@ base_controller:
 robot_driver:
   default_controllers:
     - "arm_controller/follow_joint_trajectory"
+    - "arm_controller/gravity_compensation"
     - "arm_with_torso_controller/follow_joint_trajectory"
-    - "arm_with_torso_controller/gravity_compensation"
     - "base_controller"
     - "head_controller/follow_joint_trajectory"
     - "head_controller/point_head"
