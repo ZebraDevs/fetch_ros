@@ -2,6 +2,13 @@
 Changelog for package fetch_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add controller reset script
+* gas spring replaces gravity comp
+* added debug flag for fetch drivers
+* Contributors: Aaron Blasdel, Michael Ferguson
+
 0.5.0 (2015-04-04)
 ------------------
 
