@@ -67,7 +67,7 @@ public:
                       const sensor_msgs::JointState::ConstPtr& state) = 0;
 
   // This gets called at set frequency
-  virtual bool publish(const ros::Duration& dt) = 0;
+  virtual void publish(const ros::Duration& dt) = 0;
 
   // Start the component. Must be idempotent.
   virtual bool start()
@@ -136,7 +136,7 @@ public:
     return true;
   }
 
-  virtual bool publish(const ros::Duration& dt)
+  virtual void publish(const ros::Duration& dt)
   {
     if (active_)
     {
@@ -279,7 +279,7 @@ public:
   }
 
   // This gets called at set frequency
-  virtual bool publish(const ros::Duration& dt)
+  virtual void publish(const ros::Duration& dt)
   {
     if (active_)
     {
@@ -373,7 +373,7 @@ public:
   }
 
   // This gets called at set frequency
-  virtual bool publish(const ros::Duration& dt)
+  virtual void publish(const ros::Duration& dt)
   {
     if (req_open_)
     {
@@ -464,7 +464,7 @@ public:
   }
 
   // This gets called at set frequency
-  virtual bool publish(const ros::Duration& dt)
+  virtual void publish(const ros::Duration& dt)
   {
     if (active_)
     {
