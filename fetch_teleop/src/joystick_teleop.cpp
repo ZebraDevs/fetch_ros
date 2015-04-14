@@ -69,12 +69,14 @@ public:
   // This gets called at set frequency
   virtual bool publish(const ros::Duration& dt) = 0;
 
+  // Start the component. Must be idempotent.
   virtual bool start()
   {
     active_ = true;
     return active_;
   }
 
+  // Stop the component. Must be idempotent.
   virtual bool stop()
   {
     active_ = false;
@@ -587,6 +589,11 @@ private:
       if (ok)
       {
         ok &= !components_[c]->update(msg, state_msg_);
+      }
+      else
+      {
+        // supressed by a higher priority component
+        components_[c]->stop();
       }
     }
     last_update_ = ros::Time::now();
