@@ -16,7 +16,6 @@ free_params:
  - forearm_roll_joint
  - wrist_flex_joint
  - wrist_roll_joint
- - head_pan_joint
  - head_tilt_joint
  - camera_fx
  - camera_fy
@@ -26,6 +25,13 @@ free_params:
  - camera_z_scaling
 free_frames:
  - name: head_camera_rgb_joint
+   x: true
+   y: true
+   z: true
+   roll: true
+   pitch: true
+   yaw: true
+ - name: head_pan_joint
    x: true
    y: true
    z: true
