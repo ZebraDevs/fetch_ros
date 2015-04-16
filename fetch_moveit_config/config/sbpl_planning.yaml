@@ -25,7 +25,7 @@ env:
   field:
     size_x: 2.0
     size_y: 2.0
-    size_z: 2.0
+    size_z: 2.5
     origin_x: -0.5
     origin_y: -1.0
     origin_z: 0.0
