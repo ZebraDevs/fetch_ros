@@ -7,6 +7,7 @@
      value="gdb -x $(find fetch_bringup)/launch/gdb_settings.gdb --ex run --args" />
 
   <!-- Calibration -->
+  <param name="calibration_date" value="uncalibrated" />
   <param name="base_controller/track_width" value="0.37476" />
   <param name="head_camera/driver/z_offset_mm" value="0.0" />
   <param name="head_camera/driver/z_scaling" value="1.0" />
