@@ -11,6 +11,7 @@ find_package(catkin REQUIRED
     actionlib
     control_msgs
     geometry_msgs
+    nav_msgs
     roscpp
     sensor_msgs
     topic_tools

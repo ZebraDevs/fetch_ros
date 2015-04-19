@@ -42,6 +42,7 @@
 #include <control_msgs/FollowJointTrajectoryAction.h>
 #include <control_msgs/GripperCommandAction.h>
 #include <geometry_msgs/Twist.h>
+#include <nav_msgs/Odometry.h>
 #include <sensor_msgs/JointState.h>
 #include <sensor_msgs/Joy.h>
 #include <topic_tools/MuxSelect.h>
@@ -106,6 +107,9 @@ public:
     pnh.param("max_acc_x", max_acc_x_, 1.0);
     pnh.param("max_acc_w", max_acc_w_, 3.0);
 
+    // Maximum windup of acceleration ramping
+    pnh.param("max_windup_time", max_windup_time, 0.25);
+
     // Mux for overriding navigation, etc.
     pnh.param("use_mux", use_mux_, true);
     if(use_mux_)
@@ -113,7 +117,8 @@ public:
       mux_ = nh.serviceClient<topic_tools::MuxSelect>("/cmd_vel_mux/select");
     }
 
-    pub_ = nh.advertise<geometry_msgs::Twist>("/teleop/cmd_vel", 1);
+    cmd_vel_pub_ = nh.advertise<geometry_msgs::Twist>("/teleop/cmd_vel", 1);
+    odom_sub_ = nh.subscribe("/odom", 1, &BaseTeleop::odomCallback, this);
   }
 
   virtual bool update(const sensor_msgs::Joy::ConstPtr& joy,
@@ -140,9 +145,25 @@ public:
   {
     if (active_)
     {
+      {
+        boost::mutex::scoped_lock lock(odom_mutex_);
+        // Make sure base is actually keeping up with commands
+        // When accelerating (in either direction) do not continue to ramp our
+        //   acceleration more than max_windup_time ahead of actually attained speeds.
+        // This is especially important if robot gets stuck.
+        if (last_.linear.x >= 0)
+          last_.linear.x = std::min(last_.linear.x, odom_.twist.twist.linear.x + max_acc_x_ * max_windup_time);
+        else
+          last_.linear.x = std::max(last_.linear.x, odom_.twist.twist.linear.x - max_acc_x_ * max_windup_time);
+        if (last_.angular.z >= 0)
+          last_.angular.z = std::min(last_.angular.z, odom_.twist.twist.angular.z + max_acc_w_ * max_windup_time);
+        else
+          last_.angular.z = std::max(last_.angular.z, odom_.twist.twist.angular.z - max_acc_w_ * max_windup_time);
+      }
+      // Ramp commands based on acceleration limits
       last_.linear.x = integrate(desired_.linear.x, last_.linear.x, max_acc_x_, dt.toSec());
       last_.angular.z = integrate(desired_.angular.z, last_.angular.z, max_acc_w_, dt.toSec());
-      pub_.publish(last_);
+      cmd_vel_pub_.publish(last_);
     }
   }
 
@@ -152,7 +173,7 @@ public:
     {
       // Connect mux
       topic_tools::MuxSelect req;
-      req.request.topic = pub_.getTopic();
+      req.request.topic = cmd_vel_pub_.getTopic();
       if (mux_.call(req))
       {
         prev_mux_topic_ = req.response.prev_topic;
@@ -170,7 +191,7 @@ public:
   {
     // Publish stop message
     last_ = desired_ = geometry_msgs::Twist();
-    pub_.publish(last_);
+    cmd_vel_pub_.publish(last_);
     // Disconnect mux
     if (active_ && use_mux_)
     {
@@ -187,16 +208,34 @@ public:
   }
 
 private:
+  void odomCallback(const nav_msgs::OdometryConstPtr& odom)
+  {
+    // Lock mutex on state message
+    boost::mutex::scoped_lock lock(odom_mutex_);
+    odom_ = *odom;
+  }
+
+  // Buttons from params
   int deadman_, axis_x_, axis_w_;
 
+  // Limits from params
   double max_vel_x_, max_vel_w_;
   double max_acc_x_, max_acc_w_;
 
+  // Support for multiplexor between teleop and application base commands
   bool use_mux_;
   std::string prev_mux_topic_;
-
   ros::ServiceClient mux_;
-  ros::Publisher pub_;
+
+  // Twist output, odometry feedback
+  ros::Publisher cmd_vel_pub_;
+  ros::Subscriber odom_sub_;
+
+  // Latest feedback, mutex around it
+  boost::mutex odom_mutex_;
+  nav_msgs::Odometry odom_;
+  // Maximum timestep that our ramping can get ahead of actual velocities
+  double max_windup_time;
 
   geometry_msgs::Twist desired_;
   geometry_msgs::Twist last_;
