@@ -47,6 +47,10 @@ base_controller:
   type: "robot_controllers/DiffDriveBaseController"
   max_velocity_x: 1.0
   max_acceleration_x: 0.75
+  # hold position
+  moving_threshold: -0.01
+  rotating_threshold: -0.01
+  # autostart to get odom
   autostart: true
 
 robot_driver:
