@@ -2,8 +2,8 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.2 (2015-04-19)
+------------------
 * update calibration configuration
 * Contributors: Michael Ferguson
 
