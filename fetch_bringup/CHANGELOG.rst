@@ -2,8 +2,8 @@
 Changelog for package fetch_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.2 (2015-04-19)
+------------------
 * hold position when stopped
 * add default calibration_date
 * Contributors: Michael Ferguson
