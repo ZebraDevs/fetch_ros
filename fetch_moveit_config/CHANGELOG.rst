@@ -2,6 +2,11 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Increase bounding box size
+* Contributors: Aaron Blasdel
+
 0.5.1 (2015-04-09)
 ------------------
 

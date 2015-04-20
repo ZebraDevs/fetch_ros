@@ -2,6 +2,12 @@
 Changelog for package fetch_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* hold position when stopped
+* add default calibration_date
+* Contributors: Michael Ferguson
+
 0.5.1 (2015-04-09)
 ------------------
 * add controller reset script

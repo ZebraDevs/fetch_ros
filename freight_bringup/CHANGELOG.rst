@@ -2,6 +2,11 @@
 Changelog for package freight_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* hold position when stopped
+* Contributors: Michael Ferguson
+
 0.5.1 (2015-04-09)
 ------------------
 
