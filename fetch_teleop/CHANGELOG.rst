@@ -2,6 +2,13 @@
 Changelog for package freight_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* prevent teleop command from winding up ahead of actual velocity
+* use -Wall, publish should return void
+* stop supressed components, fixes `#2 <https://github.com/fetchrobotics/fetch_ros/issues/2>`_
+* Contributors: Michael Ferguson
+
 0.5.1 (2015-04-09)
 ------------------
 
