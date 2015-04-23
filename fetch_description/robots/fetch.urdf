@@ -161,7 +161,7 @@
     <parent link="head_pan_link" />
     <child link="head_tilt_link" />
     <axis xyz="0 1 0" />
-    <limit effort="0.68" lower="-1.57" upper="1.57" velocity="1.57" />
+    <limit effort="0.68" lower="-0.785" upper="1.57" velocity="1.57" />
   </joint>
   <link name="shoulder_pan_link">
     <inertial>
