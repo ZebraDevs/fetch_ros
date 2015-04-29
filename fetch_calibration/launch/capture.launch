@@ -1,8 +1,11 @@
 <launch>
 
+  <arg name="velocity_factor" default="1.0" />
+
   <node pkg="robot_calibration" type="calibrate" name="robot_calibration"
         args="$(find fetch_calibration)/config/calibration_poses.bag"
         output="screen" required="true">
+    <param name="velocity_factor" value="$(arg velocity_factor)" />
     <rosparam file="$(find fetch_calibration)/config/capture.yaml" command="load" />
     <rosparam file="$(find fetch_calibration)/config/calibrate.yaml" command="load" />
   </node>
