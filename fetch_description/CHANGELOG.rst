@@ -2,8 +2,8 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.3 (2015-05-03)
+------------------
 * Update head tilt range
 * Contributors: Aaron Blasdel
 

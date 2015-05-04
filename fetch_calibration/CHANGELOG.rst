@@ -2,8 +2,8 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.3 (2015-05-03)
+------------------
 * add launch file argument for velocity_factor
 * Contributors: Michael Ferguson
 

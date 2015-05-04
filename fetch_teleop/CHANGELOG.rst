@@ -2,8 +2,8 @@
 Changelog for package freight_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.3 (2015-05-03)
+------------------
 * set a slower reverse speed for teleop
 * Contributors: Michael Ferguson
 
