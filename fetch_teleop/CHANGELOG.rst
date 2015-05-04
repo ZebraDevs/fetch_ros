@@ -2,6 +2,11 @@
 Changelog for package freight_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* set a slower reverse speed for teleop
+* Contributors: Michael Ferguson
+
 0.5.2 (2015-04-19)
 ------------------
 * prevent teleop command from winding up ahead of actual velocity
