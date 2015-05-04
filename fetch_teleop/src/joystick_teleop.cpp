@@ -103,6 +103,7 @@ public:
 
     // Base limits
     pnh.param("max_vel_x", max_vel_x_, 1.0);
+    pnh.param("min_vel_x", min_vel_x_, -0.5);
     pnh.param("max_vel_w", max_vel_w_, 3.0);
     pnh.param("max_acc_x", max_acc_x_, 1.0);
     pnh.param("max_acc_w", max_acc_w_, 3.0);
@@ -134,7 +135,10 @@ public:
 
     start();
 
-    desired_.linear.x = joy->axes[axis_x_] * max_vel_x_;
+    if (joy->axes[axis_x_] > 0.0)
+      desired_.linear.x = joy->axes[axis_x_] * max_vel_x_;
+    else
+      desired_.linear.x = joy->axes[axis_x_] * -min_vel_x_;
     desired_.angular.z = joy->axes[axis_w_] * max_vel_w_;
 
     // We are active, don't process lower priority components
@@ -219,7 +223,7 @@ private:
   int deadman_, axis_x_, axis_w_;
 
   // Limits from params
-  double max_vel_x_, max_vel_w_;
+  double max_vel_x_, min_vel_x_, max_vel_w_;
   double max_acc_x_, max_acc_w_;
 
   // Support for multiplexor between teleop and application base commands
