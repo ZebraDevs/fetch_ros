@@ -2,6 +2,10 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* repository cleanup
+
 0.5.3 (2015-05-03)
 ------------------
 * Update head tilt range

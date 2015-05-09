@@ -2,6 +2,10 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* repository cleanup
+
 0.5.3 (2015-05-03)
 ------------------
 
