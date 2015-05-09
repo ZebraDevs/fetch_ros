@@ -1,6 +1,6 @@
 <package>
   <name>fetch_teleop</name>
-  <version>0.5.3</version>
+  <version>0.5.4</version>
   <description>
     Teleoperation for fetch and freight.
   </description>
