@@ -1,0 +1,7 @@
+<launch>
+
+  <node pkg="slam_karto" type="karto" name="karto" output="screen">
+    <remap from="scan" to="base_scan" />
+  </node>
+
+</launch>

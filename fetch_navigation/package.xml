@@ -1,0 +1,13 @@
+<package>
+  <name>fetch_navigation</name>
+  <version>0.5.4</version>
+  <description>Configuration and launch files for running ROS navigation on Fetch.</description>
+  <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>
+  <license>BSD</license>
+  <author>Michael Ferguson</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend>navigation</run_depend>
+  <run_depend>slam_karto</run_depend>
+</package>
