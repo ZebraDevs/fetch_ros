@@ -2,6 +2,9 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.5.5 (2015-06-03)
 ------------------
 * release fetch_depth_layer
