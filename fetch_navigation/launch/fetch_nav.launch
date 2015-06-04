@@ -14,6 +14,7 @@
   <group if="$(arg use_keepout)" >
   <node name="map_keepout_server" pkg="map_server" type="map_server" args="$(arg map_keepout_file)" >
     <remap from="map" to="map_keepout" />
+    <remap from="static_map" to="static_map_keepout" />
   </node>
   </group>
 
