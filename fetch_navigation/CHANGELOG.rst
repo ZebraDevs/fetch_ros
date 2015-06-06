@@ -2,8 +2,8 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.7 (2015-06-05)
+------------------
 * display whole global plan
 * Contributors: Michael Ferguson
 
