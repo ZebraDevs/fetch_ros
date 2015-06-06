@@ -2,6 +2,11 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* bump joint limits used for moveit
+* Contributors: Michael Ferguson
+
 0.5.6 (2015-06-04)
 ------------------
 
