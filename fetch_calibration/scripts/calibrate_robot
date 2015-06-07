@@ -95,13 +95,13 @@ def get_calibration_dict(directory, calibration = None):
         return calibration
     # Get dictionary data
     try:
-        calibration["/head_camera/driver/z_offset_mm"] = str(int(calyaml["camera_z_offset"]*1000.0))
+        calibration["head_camera/driver/z_offset_mm"] = str(int(calyaml["camera_z_offset"]*1000.0))
     except KeyError:
-        calibration["/head_camera/driver/z_offset_mm"] = "0"
+        calibration["head_camera/driver/z_offset_mm"] = "0"
     try:
-        calibration["/head_camera/driver/z_scaling"] = str(1.0 + calyaml["camera_z_scaling"])
+        calibration["head_camera/driver/z_scaling"] = str(1.0 + calyaml["camera_z_scaling"])
     except KeyError:
-        calibration["/head_camera/driver/z_scaling"] = "1.0"
+        calibration["head_camera/driver/z_scaling"] = "1.0"
     calibration["depth_camera_info_url"] = calyaml["depth_info"]
     calibration["rgb_camera_info_url"] = calyaml["rgb_info"]
     calibration["robot_description"] = calyaml["urdf"]
