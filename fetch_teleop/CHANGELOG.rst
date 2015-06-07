@@ -2,8 +2,8 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.10 (2015-06-07)
+-------------------
 * fix random glitches due to having two joint states publishers
 * Contributors: Michael Ferguson
 

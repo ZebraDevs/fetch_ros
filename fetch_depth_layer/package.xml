@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>fetch_depth_layer</name>
-  <version>0.5.9</version>
+  <version>0.5.10</version>
   <description>The fetch_depth_layer package</description>
 
   <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>
