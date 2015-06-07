@@ -12,3 +12,8 @@ install(DIRECTORY config
 install(DIRECTORY launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
+
+install(
+  PROGRAMS scripts/camera_reconfigure.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
