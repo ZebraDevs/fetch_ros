@@ -196,8 +196,7 @@ if __name__ == "__main__":
         except:
             print("\nCould not find robot_calibration package, is your ROS path correct?")
             exit(-1)
-        pose_bag = os.path.join(cal_pkg, "launch", "calibration_poses.bag")
-        if subprocess.call(["rosrun", "robot_calibration", "calibrate", pose_bag]) != 0:
+        if subprocess.call(["roslaunch", "fetch_calibration", "capture.launch"]) != 0:
             print("Failed to run calibrate")
             exit(-1)
 
