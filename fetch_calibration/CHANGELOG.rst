@@ -2,8 +2,8 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.9 (2015-06-07)
+------------------
 * fix head camera parameter names
 * Contributors: Michael Ferguson
 
