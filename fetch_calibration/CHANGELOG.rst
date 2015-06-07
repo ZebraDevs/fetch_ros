@@ -2,8 +2,8 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.8 (2015-06-07)
+------------------
 * add script for disabling auto exposure/whitebalance of head camera
 * update calibration config
 * Contributors: Michael Ferguson
