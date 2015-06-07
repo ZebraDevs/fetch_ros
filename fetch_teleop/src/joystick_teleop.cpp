@@ -598,7 +598,7 @@ public:
 
     state_msg_.reset(new sensor_msgs::JointState());
     joy_sub_ = nh.subscribe("/joy", 1, &Teleop::joyCallback, this);
-    state_sub_ = nh.subscribe("/joint_states", 1, &Teleop::stateCallback, this);
+    state_sub_ = nh.subscribe("/joint_states", 10, &Teleop::stateCallback, this);
   }
 
   void publish(const ros::Duration& dt)
