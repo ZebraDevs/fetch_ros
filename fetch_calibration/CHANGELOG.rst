@@ -2,6 +2,11 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Update calibration poses bag file
+* Contributors: varunns
+
 0.5.10 (2015-06-07)
 -------------------
 
