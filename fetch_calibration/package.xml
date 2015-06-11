@@ -1,6 +1,6 @@
 <package>
   <name>fetch_calibration</name>
-  <version>0.5.10</version>
+  <version>0.5.11</version>
   <description>
     Launch and configuration files for calibrating Fetch using the 'robot_calibration' package.
   </description>
