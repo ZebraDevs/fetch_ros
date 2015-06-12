@@ -2,6 +2,11 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Slam_karto node rename in launch
+* Contributors: Aaron Blasdel
+
 0.5.11 (2015-06-10)
 -------------------
 
