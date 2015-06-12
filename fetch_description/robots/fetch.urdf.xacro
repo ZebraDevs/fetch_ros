@@ -398,28 +398,6 @@
     <parent link="torso_lift_link" />
     <child link="bellows_link2" />
   </joint>
-  <link name="estop_link">
-    <inertial>
-      <origin rpy="0 0 0" xyz="0.002434512737072 -0.00330608315239905 0.00665139196650039" />
-      <mass value="0.00196130439134723" />
-      <inertia ixx="3.02810026604417E-07" ixy="-1.5862023118056E-08" ixz="3.16561396557437E-08" iyy="2.93322917127605E-07" iyz="-4.28833522751273E-08" izz="2.28513272627183E-07" />
-    </inertial>
-    <visual>
-      <origin rpy="0 0 0" xyz="0 0 0" />
-      <geometry>
-        <mesh filename="package://fetch_description/meshes/estop_link.STL" />
-      </geometry>
-      <material name="">
-        <color rgba="0.8 0 0 1" />
-      </material>
-    </visual>
-    <collision>
-      <origin rpy="0 0 0" xyz="0 0 0" />
-      <geometry>
-        <mesh filename="package://fetch_description/meshes/estop_link.STL" />
-      </geometry>
-    </collision>
-  </link>
 
   <link name="torso_fixed_link">
     <inertial>
