@@ -140,6 +140,28 @@
     <child link="laser_link"/>
     <axis xyz="0 0 0"/>
   </joint>
+  <link name="torso_lift_link">
+    <inertial>
+      <origin rpy="0 0 0" xyz="-0.0013 -0.0009 0.2935"/>
+      <mass value="10.7796"/>
+      <inertia ixx="0.3354" ixy="0.0" ixz="-0.0162" iyx="0.0" iyy="0.3354" iyz="-0.0006" izx="-0.0162" izy="-0.0006" izz="0.0954"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/torso_lift_link.dae"/>
+      </geometry>
+      <material name="">
+        <color rgba="1 1 1 1"/>
+      </material>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/torso_lift_link_collision.STL"/>
+      </geometry>
+    </collision>
+  </link>
   <joint name="torso_lift_joint" type="prismatic">
     <origin rpy="-6.123E-17 0 0" xyz="-0.086875 0 0.37743"/>
     <parent link="base_link"/>
