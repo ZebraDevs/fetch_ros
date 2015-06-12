@@ -1,0 +1,4 @@
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="freight">
+  <xacro:include filename="$(find fetch_description)/robots/macros.xacro"/>
+  <xacro:freight_macro velocity_limit="34.8" />
+</robot>
