@@ -2,6 +2,11 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add dynamics to arm joints for simulation
+* Contributors: Michael Ferguson
+
 0.5.12 (2015-06-12)
 -------------------
 
