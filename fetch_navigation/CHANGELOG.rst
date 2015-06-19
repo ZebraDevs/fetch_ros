@@ -2,8 +2,8 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.14 (2015-06-19)
+-------------------
 * fetch_navigation depends fetch_depth_layer
 * Contributors: Michael Ferguson
 

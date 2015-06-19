@@ -2,8 +2,8 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.5.14 (2015-06-19)
+-------------------
 * add script to tuck arm
 * Contributors: Michael Ferguson
 

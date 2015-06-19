@@ -1,6 +1,6 @@
 <package>
   <name>fetch_navigation</name>
-  <version>0.5.13</version>
+  <version>0.5.14</version>
   <description>Configuration and launch files for running ROS navigation on Fetch.</description>
   <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>
   <license>BSD</license>
