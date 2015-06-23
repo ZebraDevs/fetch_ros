@@ -28,6 +28,7 @@
 
 # Author: Michael Ferguson
 
+import argparse
 import subprocess
 from threading import Thread
 
@@ -111,6 +112,15 @@ class TuckArmTeleop:
             rospy.logwarn("tuck_button is out of range")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Tuck the arm, either immediately or as a joystck-controlled server.")
+    parser.add_argument("--joystick", action="store_true", help="Run as server that tucks on command from joystick.")
+    args, unknown = parser.parse_known_args()
+
     rospy.init_node("tuck_arm")
-    t = TuckArmTeleop()
-    rospy.spin()
+
+    if args.joystick:
+        t = TuckArmTeleop()
+        rospy.spin()
+    else:
+        rospy.loginfo("Tucking the arm")
+        tuck()
