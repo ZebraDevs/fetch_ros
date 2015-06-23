@@ -34,8 +34,8 @@ from threading import Thread
 
 import rospy
 from sensor_msgs.msg import Joy
-from moveit_msgs.msg import MoveItErrorCodes
-from moveit_python import MoveGroupInterface
+from moveit_msgs.msg import MoveItErrorCodes, PlanningScene
+from moveit_python import MoveGroupInterface, PlanningSceneInterface
 
 class MoveItThread(Thread):
 
@@ -68,12 +68,21 @@ def tuck():
     client = MoveGroupInterface("arm_with_torso", "base_link")
     rospy.loginfo("...connected")
 
+    # Padding does not work (especially for self collisions)
+    # So we are adding a box above the base of the robot
+    scene = PlanningSceneInterface("base_link")
+    scene.addBox("keepout", 0.2, 0.5, 0.05, 0.15, 0.0, 0.375)
+
     joints = ["torso_lift_joint", "shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
               "elbow_flex_joint", "forearm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
     pose = [0.05, 1.32, 1.40, -0.2, 1.72, 0.0, 1.66, 0.0]
     while not rospy.is_shutdown():
-        result = client.moveToJointPosition(joints, pose, 0.0, max_velocity_scaling_factor=0.5)
+        result = client.moveToJointPosition(joints,
+                                            pose,
+                                            0.0,
+                                            max_velocity_scaling_factor=0.5)
         if result.error_code.val == MoveItErrorCodes.SUCCESS:
+            scene.removeCollisionObject("keepout")
             move_thread.stop()
             return
 
