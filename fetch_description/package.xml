@@ -1,6 +1,6 @@
 <package>
   <name>fetch_description</name>
-  <version>0.5.14</version>
+  <version>0.6.0</version>
   <description>
     URDF for Fetch Robot.
   </description>
