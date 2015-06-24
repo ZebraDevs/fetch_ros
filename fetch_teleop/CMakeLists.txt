@@ -33,3 +33,8 @@ install(
   TARGETS joystick_teleop
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+
+install(
+  PROGRAMS scripts/tuck_arm.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
