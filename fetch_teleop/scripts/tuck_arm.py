@@ -28,13 +28,14 @@
 
 # Author: Michael Ferguson
 
+import argparse
 import subprocess
 from threading import Thread
 
 import rospy
 from sensor_msgs.msg import Joy
-from moveit_msgs.msg import MoveItErrorCodes
-from moveit_python import MoveGroupInterface
+from moveit_msgs.msg import MoveItErrorCodes, PlanningScene
+from moveit_python import MoveGroupInterface, PlanningSceneInterface
 
 class MoveItThread(Thread):
 
@@ -67,12 +68,21 @@ def tuck():
     client = MoveGroupInterface("arm_with_torso", "base_link")
     rospy.loginfo("...connected")
 
+    # Padding does not work (especially for self collisions)
+    # So we are adding a box above the base of the robot
+    scene = PlanningSceneInterface("base_link")
+    scene.addBox("keepout", 0.2, 0.5, 0.05, 0.15, 0.0, 0.375)
+
     joints = ["torso_lift_joint", "shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
               "elbow_flex_joint", "forearm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
     pose = [0.05, 1.32, 1.40, -0.2, 1.72, 0.0, 1.66, 0.0]
     while not rospy.is_shutdown():
-        result = client.moveToJointPosition(joints, pose, 0.0, max_velocity_scaling_factor=0.5)
+        result = client.moveToJointPosition(joints,
+                                            pose,
+                                            0.0,
+                                            max_velocity_scaling_factor=0.5)
         if result.error_code.val == MoveItErrorCodes.SUCCESS:
+            scene.removeCollisionObject("keepout")
             move_thread.stop()
             return
 
@@ -111,6 +121,15 @@ class TuckArmTeleop:
             rospy.logwarn("tuck_button is out of range")
 
 if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Tuck the arm, either immediately or as a joystck-controlled server.")
+    parser.add_argument("--joystick", action="store_true", help="Run as server that tucks on command from joystick.")
+    args, unknown = parser.parse_known_args()
+
     rospy.init_node("tuck_arm")
-    t = TuckArmTeleop()
-    rospy.spin()
+
+    if args.joystick:
+        t = TuckArmTeleop()
+        rospy.spin()
+    else:
+        rospy.loginfo("Tucking the arm")
+        tuck()
