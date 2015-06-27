@@ -464,8 +464,8 @@ public:
     pnh.param("max_vel_tilt", max_vel_tilt_, 1.5);
     pnh.param("min_pos_pan", min_pos_pan_, -1.57);
     pnh.param("max_pos_pan", max_pos_pan_, 1.57);
-    pnh.param("min_pos_tilt", min_pos_tilt_, -0.85);
-    pnh.param("max_pos_tilt", max_pos_tilt_, 1.57);
+    pnh.param("min_pos_tilt", min_pos_tilt_, -0.76);
+    pnh.param("max_pos_tilt", max_pos_tilt_, 1.45);
 
     // TODO: load topic from params
     head_pan_joint_ = "head_pan_joint";
