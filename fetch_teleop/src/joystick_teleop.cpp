@@ -450,7 +450,9 @@ class HeadTeleop : public TeleopComponent
   typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> client_t;
 
 public:
-  HeadTeleop(const std::string& name, ros::NodeHandle& nh)
+  HeadTeleop(const std::string& name, ros::NodeHandle& nh) :
+    last_pan_(0.0),
+    last_tilt_(0.0)
   {
     ros::NodeHandle pnh(nh, name);
 
@@ -462,6 +464,8 @@ public:
     // Joint limits
     pnh.param("max_vel_pan", max_vel_pan_, 1.5);
     pnh.param("max_vel_tilt", max_vel_tilt_, 1.5);
+    pnh.param("max_acc_pan", max_acc_pan_, 3.0);
+    pnh.param("max_acc_tilt", max_acc_tilt_, 3.0);
     pnh.param("min_pos_pan", min_pos_pan_, -1.57);
     pnh.param("max_pos_pan", max_pos_pan_, 1.57);
     pnh.param("min_pos_tilt", min_pos_tilt_, -0.76);
@@ -513,10 +517,10 @@ public:
     {
       // Fill in message (future dated with fixed time step)
       double step = 0.125;
-      double pan_vel = integrate(desired_pan_, last_pan_, 1.0, step);
+      double pan_vel = integrate(desired_pan_, last_pan_, max_acc_pan_, step);
       double pan_travel = step * (pan_vel + last_pan_) / 2.0;
       double pan = std::max(min_pos_pan_, std::min(max_pos_pan_, actual_pos_pan_ + pan_travel));
-      double tilt_vel = integrate(desired_tilt_, last_tilt_, 1.0, step);
+      double tilt_vel = integrate(desired_tilt_, last_tilt_, max_acc_tilt_, step);
       double tilt_travel = step * (tilt_vel + last_tilt_) / 2.0;
       double tilt = std::max(min_pos_tilt_, std::min(max_pos_tilt_, actual_pos_tilt_ + tilt_travel));
       // Publish message
@@ -533,11 +537,11 @@ public:
       goal.goal_time_tolerance = ros::Duration(0.0);
       client_->sendGoal(goal);
       // Update based on actual timestep
-      pan_vel = integrate(desired_pan_, last_pan_, 1.0, dt.toSec());
+      pan_vel = integrate(desired_pan_, last_pan_, max_acc_pan_, dt.toSec());
       pan_travel = dt.toSec() * (pan_vel + last_pan_) / 2.0;
       actual_pos_pan_ = std::max(min_pos_pan_, std::min(max_pos_pan_, actual_pos_pan_ + pan_travel));
       last_pan_ = pan_vel;
-      tilt_vel = integrate(desired_tilt_, last_tilt_, 1.0, dt.toSec());
+      tilt_vel = integrate(desired_tilt_, last_tilt_, max_acc_tilt_, dt.toSec());
       tilt_travel = dt.toSec() * (tilt_vel + last_tilt_) / 2.0;
       actual_pos_tilt_ = std::max(min_pos_tilt_, std::min(max_pos_tilt_, actual_pos_tilt_ + tilt_travel));
       last_tilt_ = tilt_vel;
@@ -554,6 +558,7 @@ public:
 private:
   int deadman_, axis_pan_, axis_tilt_;
   double max_vel_pan_, max_vel_tilt_;
+  double max_acc_pan_, max_acc_tilt_;
   double min_pos_pan_, max_pos_pan_, min_pos_tilt_, max_pos_tilt_;
   std::string head_pan_joint_, head_tilt_joint_;
   double actual_pos_pan_, actual_pos_tilt_;  // actual positions
