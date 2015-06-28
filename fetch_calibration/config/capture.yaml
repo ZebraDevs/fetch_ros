@@ -21,6 +21,8 @@ features:
     type: robot_calibration/LedFinder
     action: /gripper_controller/led_action
     topic: /head_camera/depth_registered/points
+    camera_sensor_name: camera
+    chain_sensor_name: arm
     threshold: 500.0
     max_iterations: 25
     debug_image: false

@@ -20,3 +20,5 @@ features:
   checkerboard_finder:
     type: robot_calibration/CheckerboardFinder
     topic: /head_camera/depth_registered/points
+    camera_sensor_name: camera
+    chain_sensor_name: arm
