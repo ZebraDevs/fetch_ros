@@ -40,11 +40,11 @@ free_frames:
    yaw: true
  - name: checkerboard
    x: true
-   y: true
+   y: false
    z: true
    roll: false
    pitch: true
-   yaw: true
+   yaw: false
 error_blocks:
  - name: hand_eye
    type: camera3d_to_arm
