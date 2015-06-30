@@ -15,6 +15,7 @@
 
   <!-- move_group settings -->
   <arg name="allow_trajectory_execution" default="true"/>
+  <arg name="allow_active_sensing" default="false"/>
   <arg name="fake_execution" default="false"/>
   <arg name="max_safe_path_cost" default="1"/>
   <arg name="jiggle_fraction" default="0.05" />
@@ -34,7 +35,8 @@
   </include>
 
   <!-- Sensors Functionality -->
-  <include ns="move_group" file="$(find fetch_moveit_config)/launch/sensor_manager.launch.xml" if="$(arg allow_trajectory_execution)">
+  <rosparam command="delete" param="move_group/sensors" />
+  <include ns="move_group" file="$(find fetch_moveit_config)/launch/sensor_manager.launch.xml" if="$(arg allow_active_sensing)">
     <arg name="moveit_sensor_manager" value="fetch" />
   </include>
 
