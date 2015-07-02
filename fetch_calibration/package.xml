@@ -11,5 +11,5 @@
   
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>robot_calibration</run_depend>
+  <run_depend version_gte="0.5.1">robot_calibration</run_depend>
 </package>
