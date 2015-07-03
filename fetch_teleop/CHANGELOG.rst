@@ -2,6 +2,12 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* make pan/tilt acceleration parameterized
+* update head tilt joint limits in teleop
+* Contributors: Michael Ferguson
+
 0.6.0 (2015-06-23)
 ------------------
 * install tuck_arm.py

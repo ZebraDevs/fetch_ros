@@ -2,6 +2,14 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* delete old parameters before reloading
+* use dated temp files to avoid permissions issues, fixes `#9 <https://github.com/fetchrobotics/fetch_ros/issues/9>`_
+* specify camera/chain names
+* add checkboard based calibration config
+* Contributors: Michael Ferguson
+
 0.6.0 (2015-06-23)
 ------------------
 * update capture for new multi_sensor branch of calibration
