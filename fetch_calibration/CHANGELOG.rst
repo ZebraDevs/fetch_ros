@@ -2,8 +2,8 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.6.1 (2015-07-03)
+------------------
 * delete old parameters before reloading
 * use dated temp files to avoid permissions issues, fixes `#9 <https://github.com/fetchrobotics/fetch_ros/issues/9>`_
 * specify camera/chain names
