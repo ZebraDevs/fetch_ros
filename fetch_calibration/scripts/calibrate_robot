@@ -49,8 +49,8 @@ def copy_file(current, new):
 ## @param install_dir The directory to install to
 def update_robot_launch(launch, calibration, install_dir):
     # backup robot.launch
-    if subprocess.call(["sudo", "cp", launch, "%s.bk" % launch]) != 0:
-        print("Failed to backup robot.launch")
+    if not copy_file(launch, "%s.bk" % launch):
+        print("Failed to backup %s" % launch)
 
     launch_xml = etree.parse(launch)
     for child in launch_xml.getroot():
@@ -75,16 +75,24 @@ def update_robot_launch(launch, calibration, install_dir):
         except KeyError:
             pass
 
-    launch_xml.write("/tmp/robot.launch")
-    copy_file("/tmp/robot.launch", os.path.join(install_dir, "robot.launch"))
+    # Generate output to a local temp file
+    temp_launch = "/tmp/robot"+strftime("%Y_%m_%d_%H_%M_%S")+".launch"
+    launch_xml.write(temp_launch)
+
+    # Copy to system (using sudo if necessary)
+    copy_file(temp_launch, os.path.join(install_dir, "robot.launch"))
 
 def get_calibration_dict(directory, calibration = None):
     if calibration == None:
         calibration = dict()
     # Load file
     try:
-        calfile = open(os.path.join(directory, "calibration.yaml"))
-    except IOError:
+        # Get name of latest file
+        files = [f for f in os.listdir(directory) if f.startswith("calibration_") and f.endswith(".yaml")]
+        files.sort()
+        # Open it
+        calfile = open(os.path.join(directory, files[-1]))
+    except IndexError, IOError:
         print("Cannot open calibration.yaml")
         return calibration
     # Parse YAML
@@ -112,8 +120,12 @@ def get_base_calibration_dict(directory, calibration = None):
         calibration = dict()
     # Load file
     try:
-        calfile = open(os.path.join(directory, "base_calibration.yaml"))
-    except IOError:
+        # Get name of latest file
+        files = [f for f in os.listdir(directory) if f.startswith("base_calibration_") and f.endswith(".yaml")]
+        files.sort()
+        # Open it
+        calfile = open(os.path.join(directory, files[-1]))
+    except IndexError, IOError:
         print("Cannot open base_calibration.yaml")
         return calibration
     # Parse YAML
@@ -127,7 +139,7 @@ def get_base_calibration_dict(directory, calibration = None):
     calibration["/imu/gyro_scale"] = str(calyaml["imu"])
     return calibration
 
-def move_calibration(current_directory, new_directory, rosdistro):
+def move_calibration(current_directory, new_directory):
     calibration = get_calibration_dict(current_directory)
     calibration = get_base_calibration_dict(current_directory, calibration)
 
@@ -140,7 +152,7 @@ def move_calibration(current_directory, new_directory, rosdistro):
             print("Unable to copy %s" % name)
 
     # update the robot.launch
-    update_robot_launch("/etc/ros/%s/robot.launch" % rosdistro, calibration, new_directory)
+    update_robot_launch(os.path.join(new_directory, "robot.launch"), calibration, new_directory)
 
 def get_calibration_date(rosdistro):
     launch_xml = etree.parse("/etc/ros/%s/robot.launch" % rosdistro)
@@ -206,7 +218,7 @@ if __name__ == "__main__":
             exit(-1)
 
     if args.install or args.arm or args.base:
-        move_calibration(args.directory, "/etc/ros/%s" % rosdistro, rosdistro)
+        move_calibration(args.directory, "/etc/ros/%s" % rosdistro)
         restart = True
 
     if restart:
