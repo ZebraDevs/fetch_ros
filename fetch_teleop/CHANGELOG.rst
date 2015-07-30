@@ -2,6 +2,9 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.6.1 (2015-07-03)
 ------------------
 * make pan/tilt acceleration parameterized

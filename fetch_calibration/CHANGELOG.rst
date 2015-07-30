@@ -2,6 +2,11 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* fix parameter delete
+* Contributors: Michael Ferguson
+
 0.6.1 (2015-07-03)
 ------------------
 * delete old parameters before reloading

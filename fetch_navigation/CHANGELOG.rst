@@ -2,6 +2,9 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.6.1 (2015-07-03)
 ------------------
 
