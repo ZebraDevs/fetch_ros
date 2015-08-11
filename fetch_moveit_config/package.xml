@@ -27,10 +27,9 @@
   <run_depend>moveit_ros_visualization</run_depend>
   <run_depend>moveit_simple_controller_manager</run_depend>
   <run_depend>robot_state_publisher</run_depend>
+  <run_depend>rospy</run_depend>
   <run_depend>xacro</run_depend>
 
-  <test_depend>moveit_python</test_depend>
-  <test_depend>rospy</test_depend>
   <test_depend>rostest</test_depend>
   
 </package>
