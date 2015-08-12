@@ -264,23 +264,51 @@ void FetchDepthLayer::depthImageCallback(
 // cv::Vec3f transform;
   try
   {
-   listener.lookupTransform("/base_link", "/head_camera_depth_optical_frame", ros::Time(0), transform);
+ //  listener.lookupTransform("/base_link", "/head_camera_depth_optical_frame", ros::Time(0), transform);
     for (size_t i=0; i<points_on_plane.rows; i++)
     { 
-     tf::Stamped<tf::Vector3> point = tf::Stamped<tf::Vector3>(points_on_plane.at<cv::Vec3f>(i,0)[0], points_on_plane.at<cv::Vec3f>(i,0)[1], points_on_plane.at<cv::Vec3f>(i,0)[2] );
-     tf::Point point_transformed;
+   //  tf::Stamped<tf::Vector3> point = (points_on_plane.at<cv::Vec3f>(i,0)[0], points_on_plane.at<cv::Vec3f>(i,0)[1], points_on_plane.at<cv::Vec3f>(i,0)[2] );
+    tf::Stamped<tf::Point> point;
+    point.frame_id_ = msg->header.frame_id;
+    point.setX( points_on_plane.at<cv::Vec3f>(i,0)[0]);
+point.setY( points_on_plane.at<cv::Vec3f>(i,0)[1]); 
+point.setZ( points_on_plane.at<cv::Vec3f>(i,0)[2]);  
+    tf::Stamped<tf::Point> point_transformed;
     //  std::cout<<point.x<<std::endl; 
   listener.transformPoint("base_link", point , point_transformed);
-  points_on_plane.push_back(point_transformed);
+  cv::Vec3f point_transform;
+  point_transform[0] = point_transformed.x();
+  point_transform[1] = point_transformed.y();
+  point_transform[2] = point_transformed.z();
+
+//std::cout<<point_transform[0]<<std::endl;
+  points_on_plane_transformed.push_back(point_transform);
      // listener.lookupTransform("/base_link", "/head_camera_depth_optical_frame", ros::Time(0), transform);
 
     }
   }
- 
+// std::cout<<points_on_plane_transformed.at<cv::Vec3f>(0,0)[2]<<std::endl;
  catch(tf::TransformException &ex) {
         ROS_ERROR("%s",ex.what());
         ros::Duration(1.0).sleep();
-     } 
+     }
+
+  cv::Vec3f V0 = points_on_plane_transformed.at<cv::Vec3f>(0,0);
+  cv::Vec3f V1 = points_on_plane_transformed.at<cv::Vec3f>(1,0);
+  cv::Vec3f V2 = points_on_plane_transformed.at<cv::Vec3f>(2,0);
+
+  cv::Vec3f normal = (V2-V0).cross(V1-V0);
+  cv::Vec4f plane_transformed;
+  float distance = sqrt (normal[0] * normal[0] + normal[1] * normal[1] + normal[2] * normal[2]);
+  plane_transformed[0] = normal[0] / distance;
+  plane_transformed[1] = normal[1] / distance;
+  plane_transformed[2] = normal[2] /distance;
+  plane_transformed[3] = - V0.dot(normal/distance);
+
+  double angle = acos (normal[2]/distance) * 180/M_PI;//3.1415 ;  
+  std::cout<<angle<<std::endl; 
+// std::cout<<points_on_plane_transformed.at<cv::Vec3f>(0,0)[2]<<std::endl;
+ 
  /*tf::Vector3 translation =transform.getOrigin();
 //s d::cout<<translation[0]<<std::endl;
   cv::Mat translation_vector ;
@@ -308,7 +336,7 @@ void FetchDepthLayer::depthImageCallback(
   
   //geometry_msgs::Point32 normal = cross(point_on_plane_2 - point_on_plane_1, point_on_plane_3 - point_on_plane_1);  
 
-
+//cv::Vec3f normal = (points_on_plane_transformed - point_on_plane_1).cross(point_on_plane_3 - point_on_plane_1);
    //plane_coeff = 
 
   cv::Vec4f ground_plane;
