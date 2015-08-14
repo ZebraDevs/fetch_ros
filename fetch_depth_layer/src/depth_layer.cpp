@@ -252,46 +252,34 @@ void FetchDepthLayer::depthImageCallback(
   points_on_plane.push_back(point_on_plane_3);
   
   cv::Mat points_on_plane_transformed;
-  //tf::TransformListener listener; 
-   //std::cout<<points_on_plane.at<cv::Vec3f>(2,0)[0]<<std::endl;
-  //std::cout<<point_on_plane_1[1]<<std::endl;
-  // std::cout<<point_on_plane_1[2]<<std::endl;
-   
-//  std::cout<<"row"<<points_on_plane.rows<<std::endl; 
-//  std::cout<<points_on_plane.cols<<std::endl; 
+  
+  tf::StampedTransform transform;
 
- tf::StampedTransform transform;
-// cv::Vec3f transform;
   try
   {
- //  listener.lookupTransform("/base_link", "/head_camera_depth_optical_frame", ros::Time(0), transform);
     for (size_t i=0; i<points_on_plane.rows; i++)
     { 
-   //  tf::Stamped<tf::Vector3> point = (points_on_plane.at<cv::Vec3f>(i,0)[0], points_on_plane.at<cv::Vec3f>(i,0)[1], points_on_plane.at<cv::Vec3f>(i,0)[2] );
-    tf::Stamped<tf::Point> point;
-    point.frame_id_ = msg->header.frame_id;
-    point.setX( points_on_plane.at<cv::Vec3f>(i,0)[0]);
-point.setY( points_on_plane.at<cv::Vec3f>(i,0)[1]); 
-point.setZ( points_on_plane.at<cv::Vec3f>(i,0)[2]);  
-    tf::Stamped<tf::Point> point_transformed;
-    //  std::cout<<point.x<<std::endl; 
-  listener.transformPoint("base_link", point , point_transformed);
-  cv::Vec3f point_transform;
-  point_transform[0] = point_transformed.x();
-  point_transform[1] = point_transformed.y();
-  point_transform[2] = point_transformed.z();
+      tf::Stamped<tf::Point> point;
+      point.frame_id_ = msg->header.frame_id;
+      point.setX( points_on_plane.at<cv::Vec3f>(i,0)[0]);
+      point.setY( points_on_plane.at<cv::Vec3f>(i,0)[1]); 
+      point.setZ( points_on_plane.at<cv::Vec3f>(i,0)[2]);  
+      tf::Stamped<tf::Point> point_transformed;
+     
+      listener.transformPoint("base_link", point , point_transformed);
+      cv::Vec3f point_transform;
+      point_transform[0] = point_transformed.x();
+      point_transform[1] = point_transformed.y();
+      point_transform[2] = point_transformed.z();
 
-//std::cout<<point_transform[0]<<std::endl;
-  points_on_plane_transformed.push_back(point_transform);
-     // listener.lookupTransform("/base_link", "/head_camera_depth_optical_frame", ros::Time(0), transform);
-
+      points_on_plane_transformed.push_back(point_transform);
     }
   }
-// std::cout<<points_on_plane_transformed.at<cv::Vec3f>(0,0)[2]<<std::endl;
- catch(tf::TransformException &ex) {
-        ROS_ERROR("%s",ex.what());
-        ros::Duration(1.0).sleep();
-     }
+  catch(tf::TransformException &ex) 
+  {
+    ROS_ERROR("%s",ex.what());
+    ros::Duration(1.0).sleep();
+  }
 
   cv::Vec3f V0 = points_on_plane_transformed.at<cv::Vec3f>(0,0);
   cv::Vec3f V1 = points_on_plane_transformed.at<cv::Vec3f>(1,0);
@@ -305,39 +293,8 @@ point.setZ( points_on_plane.at<cv::Vec3f>(i,0)[2]);
   plane_transformed[2] = normal[2] /distance;
   plane_transformed[3] = - V0.dot(normal/distance);
 
-  double angle = acos (normal[2]/distance) * 180/M_PI;//3.1415 ;  
+  double angle = acos (normal[2]/distance) * 180/M_PI;  
   std::cout<<angle<<std::endl; 
-// std::cout<<points_on_plane_transformed.at<cv::Vec3f>(0,0)[2]<<std::endl;
- 
- /*tf::Vector3 translation =transform.getOrigin();
-//s d::cout<<translation[0]<<std::endl;
-  cv::Mat translation_vector ;
-  translation_vector.push_back(translation[0]);
-  translation_vector.push_back(translation[1]);
-  translation_vector.push_back(translation[2]);
-
-  tf::Quaternion rot_mat = transform.getRotation();
-//  cv::Mat rot;
-
-  //std::cout<<rot_mat.length()<<std::endl;
-  tf::Matrix3x3 m(rot_mat);
-  double roll, pitch, yaw;
-  m.getRPY(roll,pitch,yaw);
-  //std::cout<<roll<<std::endl;
-  cv::Vec3f normal = (point_on_plane_2 - point_on_plane_1).cross(point_on_plane_3 - point_on_plane_1);  
-   
-  cv::Mat rot_roll = (cv::Mat_<double>(3,3) << 1, 0, 0, 0, cos(roll), -sin(roll), 0, sin(roll), cos(roll));
-  cv::Mat rot_pitch = (cv::Mat_<double>(3,3) << cos(pitch), 0, sin(pitch), 0, 1, 0, -sin(pitch), cos(pitch));
-  cv::Mat rot_yaw = (cv::Mat_<double>(3,3) << cos(yaw), -sin(yaw), 0, sin(yaw), cos(yaw), 0 , 0, 0, 1);
-
-  cv::Mat rot = rot_yaw * rot_pitch * rot_roll;
-*/
-  
-  
-  //geometry_msgs::Point32 normal = cross(point_on_plane_2 - point_on_plane_1, point_on_plane_3 - point_on_plane_1);  
-
-//cv::Vec3f normal = (points_on_plane_transformed - point_on_plane_1).cross(point_on_plane_3 - point_on_plane_1);
-   //plane_coeff = 
 
   cv::Vec4f ground_plane;
   for (size_t i = 0; i < plane_coefficients.size(); i++)
