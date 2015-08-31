@@ -254,8 +254,14 @@ void FetchDepthLayer::depthImageCallback(
   
   // transform them to the base frame
   cv::Mat points_on_plane_transformed;
+<<<<<<< HEAD
   tf::StampedTransform transform;
  
+=======
+  
+  tf::StampedTransform transform;
+
+>>>>>>> 3a43637835f8510c8f7b722681447e8b61800257
   try
   {
     for (size_t i=0; i<points_on_plane.rows; i++)
@@ -266,7 +272,11 @@ void FetchDepthLayer::depthImageCallback(
       point.setY( points_on_plane.at<cv::Vec3f>(i,0)[1]); 
       point.setZ( points_on_plane.at<cv::Vec3f>(i,0)[2]);  
       tf::Stamped<tf::Point> point_transformed;
+<<<<<<< HEAD
     
+=======
+     
+>>>>>>> 3a43637835f8510c8f7b722681447e8b61800257
       listener.transformPoint("base_link", point , point_transformed);
       cv::Vec3f point_transform;
       point_transform[0] = point_transformed.x();
@@ -295,9 +305,8 @@ void FetchDepthLayer::depthImageCallback(
   plane_transformed[2] = normal[2] /distance;
   plane_transformed[3] = - V0.dot(normal/distance);
 
-  double angle = acos (normal[2]/distance) * 180/M_PI;//3.1415 ;  
-//  std::cout<<angle<<std::endl;  
-
+  double angle = acos (normal[2]/distance) * 180/M_PI;  
+  
   cv::Vec4f ground_plane;
   for (size_t i = 0; i < plane_coefficients.size(); i++)
   {
@@ -318,7 +327,6 @@ void FetchDepthLayer::depthImageCallback(
     return;
   }
 
- 
   cv::split(points3d, channels);
 
   sensor_msgs::PointCloud clearing_points;
