@@ -254,14 +254,8 @@ void FetchDepthLayer::depthImageCallback(
   
   // transform them to the base frame
   cv::Mat points_on_plane_transformed;
-<<<<<<< HEAD
-  tf::StampedTransform transform;
- 
-=======
-  
   tf::StampedTransform transform;
 
->>>>>>> 3a43637835f8510c8f7b722681447e8b61800257
   try
   {
     for (size_t i=0; i<points_on_plane.rows; i++)
@@ -272,11 +266,7 @@ void FetchDepthLayer::depthImageCallback(
       point.setY( points_on_plane.at<cv::Vec3f>(i,0)[1]); 
       point.setZ( points_on_plane.at<cv::Vec3f>(i,0)[2]);  
       tf::Stamped<tf::Point> point_transformed;
-<<<<<<< HEAD
-    
-=======
-     
->>>>>>> 3a43637835f8510c8f7b722681447e8b61800257
+
       listener.transformPoint("base_link", point , point_transformed);
       cv::Vec3f point_transform;
       point_transform[0] = point_transformed.x();
