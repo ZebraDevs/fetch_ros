@@ -242,6 +242,11 @@ void FetchDepthLayer::depthImageCallback(
   std::vector<cv::Vec4f> plane_coefficients;
   (*plane_estimator_)(points3d, normals, planes_mask, plane_coefficients);
  
+ // if (plane_coefficients[0][0]==0 && plane_coefficients[0][1] == 0  && plane_coefficients[0][2] == 0 && plane_coefficients[0][3] == 0)
+  if (plane_coefficients.empty())
+  {
+   return; 
+  }
   //find 3 points on the plane
   cv::Vec3f point_on_plane_1( 0, 0 , - plane_coefficients[0][3]/plane_coefficients[0][2]);
   cv::Vec3f point_on_plane_2( 0, - plane_coefficients[0][3]/plane_coefficients[0][1], 0);
@@ -266,7 +271,8 @@ void FetchDepthLayer::depthImageCallback(
       point.setY( points_on_plane.at<cv::Vec3f>(i,0)[1]); 
       point.setZ( points_on_plane.at<cv::Vec3f>(i,0)[2]);  
       tf::Stamped<tf::Point> point_transformed;
-
+      listener.waitForTransform("/base_link", "/head_camera_depth_optical_frame",
+                              ros::Time(0), ros::Duration(3.0));
       listener.transformPoint("base_link", point , point_transformed);
       cv::Vec3f point_transform;
       point_transform[0] = point_transformed.x();
@@ -301,8 +307,11 @@ void FetchDepthLayer::depthImageCallback(
   for (size_t i = 0; i < plane_coefficients.size(); i++)
   {
     //distance of point (1,1,0) from the ground in base link and check for walls
-    if ((fabs( plane_transformed[0] + plane_transformed[1] + plane_transformed[3]) < 0.5) 
-         && (angle<70 || angle >110))
+//    if ((fabs( plane_transformed[0] + plane_transformed[1] + plane_transformed[3]) < 0.5) 
+  //       && (angle<70 || angle >110))
+    if ((fabs(0.0 - plane_coefficients[i][0]) <= ground_threshold_) &&
+        (fabs(1.0 + plane_coefficients[i][1]) <= ground_threshold_) &&
+        (fabs(0.0 - plane_coefficients[i][2]) <= ground_threshold_))
     {
       ground_plane = plane_coefficients[i];
       break;
