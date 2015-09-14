@@ -7,6 +7,10 @@
   <arg name="map_keepout_file" default="$(find fetch_navigation)/maps/4_26_15_keepout.yaml" />
   <arg name="use_keepout" default="false" />
 
+  <!-- Navigation parameter files -->
+  <arg name="move_base_include" default="$(find fetch_navigation)/launch/include/move_base.launch.xml" />
+  <arg name="amcl_include" default="$(find fetch_navigation)/launch/include/amcl.launch.xml" />
+
   <!-- serve up a map -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
@@ -19,10 +23,10 @@
   </group>
 
   <!-- localize the robot -->
-  <include file="$(find fetch_navigation)/launch/include/amcl.launch.xml" />
+  <include file="$(arg amcl_include)" />
 
   <!-- move the robot -->
-  <include file="$(find fetch_navigation)/launch/include/move_base.launch.xml" >
+  <include file="$(arg move_base_include)" >
     <arg name="name" value="fetch" />
     <arg if="$(arg use_keepout)" name="map_topic" value="map_keepout" />
   </include>
