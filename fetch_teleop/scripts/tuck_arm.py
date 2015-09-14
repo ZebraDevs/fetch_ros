@@ -60,6 +60,7 @@ def is_moveit_running():
     return True
 
 def tuck():
+    move_thread = None
     if not is_moveit_running():
         rospy.loginfo("starting moveit")
         move_thread = MoveItThread()
@@ -83,7 +84,8 @@ def tuck():
                                             max_velocity_scaling_factor=0.5)
         if result.error_code.val == MoveItErrorCodes.SUCCESS:
             scene.removeCollisionObject("keepout")
-            move_thread.stop()
+            if move_thread:
+                move_thread.stop()
             return
 
 class TuckArmTeleop:
