@@ -3,8 +3,8 @@
   <!-- Navigation requires at least one map.
        In addition, it is sometimes desirable to have a "keepout" map
        which is used for costmaps, but not localization -->
-  <arg name="map_file" default="$(find fetch_maps)/maps/4_26_15.yaml" />
-  <arg name="map_keepout_file" default="$(find fetch_maps)/maps/4_26_15_keepout.yaml" />
+  <arg name="map_file" default="$(find fetch_maps)/maps/9_16_15.yaml" />
+  <arg name="map_keepout_file" default="$(find fetch_maps)/maps/9_16_15_keepout.yaml" />
   <arg name="use_keepout" default="false" />
 
   <!-- Navigation parameter files -->
