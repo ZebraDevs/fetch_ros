@@ -15,11 +15,6 @@ install(
 )
 
 install(
-  DIRECTORY maps
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-install(
   PROGRAMS scripts/tilt_head.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
