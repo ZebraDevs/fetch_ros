@@ -92,6 +92,7 @@ class TuckArmTeleop:
 
     def __init__(self):
         self.tuck_button = rospy.get_param("~tuck_button", 6)  # default button is the down button
+        self.deadman = rospy.get_param("~deadman_button", 10)
         self.tucking = False
 
         self.pressed = False
@@ -104,7 +105,7 @@ class TuckArmTeleop:
             # only run once
             return
         try:
-            if msg.buttons[self.tuck_button] > 0:
+            if msg.buttons[self.tuck_button] > 0 and msg.buttons[self.deadman] > 0:
                 if not self.pressed:
                     self.pressed_last = rospy.Time.now()
                     self.pressed = True
