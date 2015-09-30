@@ -2,6 +2,12 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* update limits of wrist flex
+* remove duplicated inertia entries, fixes `#14 <https://github.com/fetchrobotics/fetch_ros/issues/14>`_
+* Contributors: Michael Ferguson
+
 0.6.2 (2015-07-30)
 ------------------
 

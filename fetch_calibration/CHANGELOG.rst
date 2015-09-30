@@ -2,6 +2,11 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* added support for ground plane calibration
+* Contributors: Niharika Arora
+
 0.6.2 (2015-07-30)
 ------------------
 * fix parameter delete

@@ -2,6 +2,12 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Use fetch_maps package for maps
+* Allow overriding of move base & amcl param files
+* Contributors: Aaron Blasdel, Ian Danforth
+
 0.6.2 (2015-07-30)
 ------------------
 
