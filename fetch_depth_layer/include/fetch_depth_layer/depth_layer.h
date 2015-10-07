@@ -28,6 +28,7 @@
 #include <image_transport/image_transport.h>
 #include <opencv2/rgbd/rgbd.hpp>
 #include <sensor_msgs/image_encodings.h>
+ #include <tf/transform_listener.h>
 
 namespace costmap_2d
 {
@@ -88,6 +89,7 @@ private:
 
   //distortion multipler;
   std::vector<double> multiplier;
+//  tf::TransformListener listener; 
 
   // clean the depth image
   cv::Ptr<cv::DepthCleaner> depth_cleaner_;
