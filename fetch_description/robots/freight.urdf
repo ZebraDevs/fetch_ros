@@ -128,7 +128,7 @@
     </collision>
   </link>
   <joint name="laser_joint" type="fixed">
-    <origin rpy="3.1415 0 0" xyz="0.235 0 0.2878" />
+    <origin rpy="3.14159265359 0 0" xyz="0.235 0 0.2878" />
     <parent link="base_link" />
     <child link="laser_link" />
     <axis xyz="0 0 0" />
