@@ -1,0 +1,87 @@
+<?xml version="1.0"?>
+<robot name="fetch_gripper" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find fetch_description)/robots/materials.xacro" />
+  <xacro:include filename="$(find fetch_description)/robots/inertials.xacro" /> 
+  
+  <property name="pi" value="3.1415926535897931" />
+  <property name="zeroes" value="0 0 0" />
+ 
+  <property name="gripper_axis" value="0 1 0"/>
+
+  <property name="r_gripper_finger_axis" value="0 1 0"/>
+  <property name="r_gripper_finger_damping" value="100.0"/>
+ 
+  <property name="l_gripper_finger_axis" value="0 -1 0"/>
+  <property name="l_gripper_finger_damping" value="100.0"/>
+
+  <link name="gripper_link">
+    <xacro:gripper_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/gripper_link.dae" />
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/gripper_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="gripper_axis" type="fixed">
+    <origin rpy="${zeroes}" xyz="0.16645 0 0" />
+    <parent link="wrist_roll_link" />
+    <child link="gripper_link" />
+    <axis xyz="${gripper_axis}" />
+  </joint>
+
+ <link name="r_gripper_finger_link">
+    <xacro:r_gripper_finger_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="0 0.101425 0" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/r_gripper_finger_link.STL" />
+      </geometry>
+      <material name="fetch_gripper_color"/>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="0 0.101425 0" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/r_gripper_finger_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="r_gripper_finger_joint" type="prismatic">
+    <origin rpy="${zeroes}" xyz="0 0.015425 0" />
+    <parent link="gripper_link" />
+    <child link="r_gripper_finger_link" />
+    <axis xyz="${r_gripper_finger_axis}" />
+  <limit effort="60" lower="0.0" upper="0.05" velocity="0.05" />
+  <dynamics damping="${r_gripper_finger_damping}" />
+  </joint>
+  
+  <link name="l_gripper_finger_link">
+    <xacro:l_gripper_finger_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="0 -0.101425 0" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/l_gripper_finger_link.STL" />
+      </geometry>
+      <material name="fetch_gripper_color"/>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="0 -0.101425 0" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/l_gripper_finger_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="l_gripper_finger_joint" type="prismatic">
+    <origin rpy="${zeroes}" xyz="0 -0.015425 0" />
+    <parent link="gripper_link" />
+    <child link="l_gripper_finger_link" />
+    <axis xyz="${l_gripper_finger_axis}" />
+  <limit effort="60" lower="0.0" upper="0.05" velocity="0.05" />
+  <dynamics damping="${l_gripper_finger_damping}" /></joint>
+</robot>

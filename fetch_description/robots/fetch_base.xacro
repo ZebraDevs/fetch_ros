@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<robot name="fetch_base" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find fetch_description)/robots/materials.xacro" />
+  <xacro:include filename="$(find fetch_description)/robots/inertials.xacro" />
+
+  <property name="pi" value="3.1415926535897931" />
+  <property name="zeroes" value="0 0 0" />
+  <property name="base_mass" value="70.1294"/> 
+  <property name="wheel_mass" value="4.3542"/>
+  
+ <link name="base_link">
+   <xacro:base_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/base_link.dae" />
+      </geometry>
+      <material name="base_color"/>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/base_link_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+  
+ <xacro:macro name="wheels" params="prefix wheel_position parent"> 
+    <link name="${prefix}_wheel_link">
+      <xacro:wheel_inertial/>
+      <visual>
+        <origin xyz="${zeroes}" rpy="${zeroes}" /> 
+        <geometry>
+          <mesh filename="package://fetch_description/meshes/${prefix}_wheel_link.STL" />
+        </geometry>
+        <material name="wheel_color" />
+      </visual>
+    </link>
+    <joint name="${prefix}_wheel_joint" type="continuous">
+    <origin rpy="-6.123E-17 0 0" xyz="${wheel_position}" />
+    <parent link="${parent}" />
+    <child link="${prefix}_wheel_link" />
+    <axis xyz="0 1 0" />
+  <limit effort="8.85" velocity="17.4" /></joint>
+  </xacro:macro>
+
+  <wheels prefix="r"  parent="base_link" wheel_position="0.0012914 -0.18738 0.055325"/>
+  <wheels prefix="l"  parent="base_link" wheel_position="0.0012914 0.18738 0.055325"/>
+   
+</robot>
+

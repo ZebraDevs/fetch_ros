@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<robot name="fetch_arm" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <xacro:include filename="$(find fetch_description)/robots/materials.xacro" />
+  <xacro:include filename="$(find fetch_description)/robots/inertials.xacro" />
+
+  <property name="pi" value="3.1415926535897931" />
+  <property name="zeroes" value="0 0 0" />
+   
+  <property name="shoulder_pan_damping" value="1.0"/>
+  <property name="shoulder_pan_axis" value="0 0 1"/>
+
+  <property name="shoulder_lift_damping" value="1.0"/>
+  <property name="shoulder_lift_axis" value="0 1 0"/>
+
+  <property name="upperarm_roll_damping" value="5.0"/>
+  <property name="upperarm_roll_axis" value="1 0 0"/>
+
+  <property name="elbow_flex_damping" value="1.0"/>
+  <property name="elbow_flex_axis" value="0 1 0"/>
+
+  <property name="forearm_roll_damping" value="5.0"/>
+  <property name="forearm_roll_axis" value="1 0 0"/>
+
+  <property name="wrist_flex_damping" value="1.0"/>
+  <property name="wrist_flex_axis" value="0 1 0"/>
+
+  <property name="wrist_roll_damping" value="5.0"/>
+  <property name="wrist_roll_axis" value="1 0 0"/>
+
+<!--Shoulder Pan Link-->
+<xacro:macro name="shoulder_pan_link" params="joint_rpy joint_xyz limit_effort limit_lower limit_upper limit_velocity"> 
+<link name="shoulder_pan_link">
+    <xacro:shoulder_pan_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/shoulder_pan_link.dae" />
+      </geometry>
+      <material name="fetch_black"/>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/shoulder_pan_link_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="shoulder_pan_joint" type="revolute">
+    <origin rpy="${joint_rpy}" xyz="${joint_xyz}" />
+    <parent link="torso_lift_link" />
+    <child link="shoulder_pan_link" />
+    <axis xyz="${shoulder_pan_axis}" />
+    <dynamics damping="${shoulder_pan_damping}" />
+    <limit effort="${limit_effort}" lower="${limit_lower}" upper="${limit_upper}" velocity="${limit_velocity}" />
+  </joint>
+</xacro:macro>
+
+<!--Shoulder Lift Link-->
+<xacro:macro name="shoulder_lift_link" params="joint_rpy joint_xyz limit_effort limit_lower limit_upper limit_velocity">
+  <link name="shoulder_lift_link">
+    <xacro:shoulder_lift_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/shoulder_lift_link.dae" />
+      </geometry>
+      <material name="fetch_black"/>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/shoulder_lift_link_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="shoulder_lift_joint" type="revolute">
+    <origin rpy="${joint_rpy}" xyz="${joint_xyz}" />
+    <parent link="shoulder_pan_link" />
+    <child link="shoulder_lift_link" />
+    <axis xyz="${shoulder_lift_axis}" />
+    <dynamics damping="${shoulder_lift_damping}" />
+    <limit effort="${limit_effort}" lower="${limit_lower}" upper="${limit_upper}" velocity="${limit_velocity}" />
+  </joint>
+</xacro:macro>
+
+<!--Upper Roll Link-->
+<xacro:macro name="upper_roll_link" params="joint_rpy joint_xyz limit_effort limit_lower limit_upper limit_velocity">
+  <link name="upperarm_roll_link">
+    <xacro:upperarm_roll_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/upperarm_roll_link.dae" />
+      </geometry>
+      <material name="fetch_black"/>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/upperarm_roll_link_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="upperarm_roll_joint" type="continuous">
+    <origin rpy="${joint_rpy}" xyz="${joint_xyz}" />
+    <parent link="shoulder_lift_link" />
+    <child link="upperarm_roll_link" />
+    <axis xyz="${upperarm_roll_axis}" />
+    <dynamics damping="${upperarm_roll_damping}" />
+    <limit effort="${limit_effort}" velocity="${limit_velocity}" />
+  </joint>
+</xacro:macro>
+
+<!--Elbow Flex Link-->
+<xacro:macro name="elbow_flex_link" params="joint_rpy joint_xyz limit_effort limit_lower limit_upper limit_velocity">  
+  <link name="elbow_flex_link">
+    <xacro:elbow_flex_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/elbow_flex_link.dae" />
+      </geometry>
+      <material name="fetch_white"/>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/elbow_flex_link_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="elbow_flex_joint" type="revolute">
+    <origin rpy="${joint_rpy}" xyz="${joint_xyz}" />
+    <parent link="upperarm_roll_link" />
+    <child link="elbow_flex_link" />
+    <axis xyz="${elbow_flex_axis}" />
+    <dynamics damping="${elbow_flex_damping}" />
+    <limit effort="${limit_effort}" lower="${limit_lower}" upper="${limit_upper}" velocity="${limit_velocity}" />
+  </joint>
+</xacro:macro>
+
+<!--Forearm Roll Link-->
+<xacro:macro name="forearm_roll_link" params="joint_rpy joint_xyz limit_effort limit_lower limit_upper limit_velocity">  
+  <link name="forearm_roll_link">  
+    <xacro:forearm_roll_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/forearm_roll_link.dae" />
+      </geometry>
+      <material name="fetch_black"/>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/forearm_roll_link_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="forearm_roll_joint" type="continuous">
+    <origin rpy="${joint_rpy}" xyz="${joint_xyz}" />
+    <parent link="elbow_flex_link" />
+    <child link="forearm_roll_link" />
+    <axis xyz="${forearm_roll_axis}" />
+    <dynamics damping="${forearm_roll_damping}" />
+    <limit effort="${limit_effort}" velocity="${limit_velocity}" />
+  </joint>
+</xacro:macro>
+
+<!--Wrist Flex Link-->
+<xacro:macro name="wrist_flex_link" params="joint_rpy joint_xyz limit_effort limit_lower limit_upper limit_velocity">
+ <link name="wrist_flex_link">
+  <xacro:wrist_flex_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/wrist_flex_link.dae" />
+      </geometry>
+      <material name="fetch_black"/>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/wrist_flex_link_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wrist_flex_joint" type="revolute">
+    <origin rpy="${joint_rpy}" xyz="${joint_xyz}" />
+    <parent link="forearm_roll_link" />
+    <child link="wrist_flex_link" />
+    <axis xyz="${wrist_flex_axis}" />
+    <dynamics damping="${wrist_flex_damping}" />
+    <limit effort="${limit_effort}" lower="${limit_lower}" upper="${limit_upper}" velocity="${limit_velocity}" />
+  </joint>
+</xacro:macro>
+
+<!--Wrist Roll Link-->
+<xacro:macro name="wrist_roll_link" params="joint_rpy joint_xyz limit_effort limit_lower limit_upper limit_velocity">
+   <link name="wrist_roll_link">
+    <xacro:wrist_roll_inertial/>
+    <visual>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/wrist_roll_link.dae" />
+      </geometry>
+      <material name="fetch_black"/>
+    </visual>
+    <collision>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+      <geometry>
+        <mesh filename="package://fetch_description/meshes/wrist_roll_link_collision.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint name="wrist_roll_joint" type="continuous">
+    <origin rpy="${joint_rpy}" xyz="${joint_xyz}" />
+    <parent link="wrist_flex_link" />
+    <child link="wrist_roll_link" />
+    <axis xyz="${wrist_roll_axis}" />
+    <limit effort="${limit_effort}" velocity="${limit_velocity}" />
+    <dynamics damping="${wrist_roll_damping}" />
+  </joint>
+</xacro:macro>
+
+
+<!--XACRO Definitions-->
+
+<shoulder_pan_link joint_rpy="0 0 0" joint_xyz="0.119525 0 0.34858" limit_effort="33.82" limit_lower="-1.6056" limit_upper="1.6056" limit_velocity="1.256"/>
+
+<shoulder_lift_link joint_rpy="0 0 0" joint_xyz="0.117 0 0.0599999999999999" limit_effort="131.76" limit_lower="-1.221" limit_upper="1.518" limit_velocity="1.454"/>
+
+<upper_roll_link joint_rpy="0 0 0" joint_xyz="0.219 0 0" limit_effort="76.94" limit_lower="0" limit_upper="0" limit_velocity="1.571"/>
+
+<elbow_flex_link joint_rpy="0 0 0" joint_xyz="0.133 0 0" limit_effort="66.18" limit_lower="-2.251" limit_upper="2.251" limit_velocity="1.521"/>
+
+<forearm_roll_link joint_rpy="0 0 0" joint_xyz="0.197 0 0" limit_effort="29.35" limit_lower="0" limit_upper="0" limit_velocity="1.571"/>
+
+<wrist_flex_link joint_rpy="0 0 0" joint_xyz="0.1245 0 0" limit_effort="25.7" limit_lower="-2.16" limit_upper="2.16" limit_velocity="2.268"/>
+
+<wrist_roll_link joint_rpy="0 0 0" joint_xyz="0.1385 0 0" limit_effort="7.36" limit_lower="0" limit_upper="0" limit_velocity="2.268"/>
+
+</robot>
+

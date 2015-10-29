@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+   <property name="shoulder_pan_mass" value="2.5587"/>
+   <property name="shoulder_lift_mass" value="2.6615"/>
+   <property name="upperarm_roll_mass" value="2.3311"/>
+   <property name="elbow_flex_mass" value="2.1299"/>
+   <property name="forearm_roll_mass" value="1.6563"/>
+   <property name="wrist_flex_mass" value="1.725"/>
+   <property name="gripper_mass" value="1.5175"/>
+   <property name="r_gripper_finger_mass" value="0.0798"/>
+   <property name="l_gripper_finger_mass" value="0.0798"/> 
+
+   <!--Base Inertials--> 
+   <xacro:macro name="base_inertial">
+     <inertial>
+      <origin rpy="${zeroes}" xyz="-0.0036 0.0 0.0014" />
+      <mass value="${base_mass}" />
+      <inertia ixx="1.225" ixy="0.0099" ixz="0.0062" iyy="1.2853" iyz="-0.0034" izz="0.987" />
+    </inertial>
+    </xacro:macro>
+    
+
+   <xacro:macro name="wheel_inertial">
+     <inertial>
+      <origin rpy="${zeroes}" xyz="${zeroes}" />
+       <mass value="${wheel_mass}" />
+      <inertia ixx="0.0045" ixy="0" ixz="0" iyy="0.005" iyz="0" izz="0.0045" />
+    </inertial>
+    </xacro:macro>
+
+  <!--Arm Inertials-->
+   <xacro:macro name="shoulder_lift_inertial">
+     <inertial>
+      <origin rpy="${zeroes}" xyz="0.0927 -0.0056 0.0564" />
+      <mass value="${shoulder_lift_mass}" />
+      <inertia ixx="0.0043" ixy="-0.0001" ixz="0.001" iyy="0.0087" iyz="-0.0001" izz="0.0087" />
+    </inertial>
+    </xacro:macro>
+
+   <xacro:macro name="shoulder_pan_inertial">
+     <inertial>
+      <origin rpy="${zeroes}" xyz="0.1432 0.0072 -0.0001" />
+      <mass value="${shoulder_lift_mass}" />
+      <inertia ixx="0.0028" ixy="-0.0021" ixz="-0.0" iyy="0.0111" iyz="-0.0" izz="0.0112" />
+    </inertial>
+    </xacro:macro>
+
+   <xacro:macro name="upperarm_roll_inertial">
+     <inertial>
+      <origin rpy="${zeroes}" xyz="0.1165 0.0014 0.0000" />
+      <mass value="${upperarm_roll_mass}" />
+      <inertia ixx="0.0019" ixy="-0.0001" ixz="0.0" iyy="0.0045" iyz="0.0" izz="0.0047" />
+    </inertial>
+    </xacro:macro>
+
+   <xacro:macro name="elbow_flex_inertial">
+    <inertial>
+      <origin rpy="${zeroes}" xyz="0.1279 0.0073 0.0000" />
+      <mass value="${elbow_flex_mass}" />
+      <inertia ixx="0.0024" ixy="-0.0016" ixz="0.0" iyy="0.0082" iyz="-0.0" izz="0.0084" />
+    </inertial>
+    </xacro:macro>
+
+  <xacro:macro name="forearm_roll_inertial">
+    <inertial>
+      <origin rpy="${zeroes}" xyz="0.1097 -0.0266 0.0000" />
+      <mass value="${forearm_roll_mass}" />
+      <inertia ixx="0.0016" ixy="-0.0003" ixz="0.0" iyy="0.003" iyz="-0.0" izz="0.0035" />
+    </inertial>
+    </xacro:macro>
+
+  <xacro:macro name="wrist_flex_inertial">
+    <inertial>
+      <origin rpy="${zeroes}" xyz="0.0882 0.0009 -0.0001" />
+      <mass value="${wrist_flex_mass}" />
+      <inertia ixx="0.0018" ixy="-0.0001" ixz="-0.0" iyy="0.0042" iyz="0.0" izz="0.0042" />
+    </inertial>
+    </xacro:macro>
+
+  <xacro:macro name="wrist_roll_inertial">
+  <inertial>
+      <origin rpy="${zeroes}" xyz="0.0095 0.0004 -0.0002" />
+      <mass value="0.1354" />
+      <inertia ixx="0.0001" ixy="0.0" ixz="0.0" iyy="0.0001" iyz="0.0" izz="0.0001" />
+    </inertial>
+  </xacro:macro>
+
+  <!--Gripper Inertials-->
+  <xacro:macro name="gripper_inertial">
+  <inertial>
+      <origin rpy="${zeroes}" xyz="-0.0900 -0.0001 -0.0017" />
+      <mass value="${gripper_mass}" />
+      <inertia ixx="0.0013" ixy="-0.0" ixz="0.0" iyy="0.0019" iyz="-0.0" izz="0.0024" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="r_gripper_finger_inertial">
+  <inertial>
+      <origin rpy="${zeroes}" xyz="-0.01 0 0" />
+      <mass value="${r_gripper_finger_mass}" />
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+  </xacro:macro>
+
+  <xacro:macro name="l_gripper_finger_inertial">
+  <inertial>
+      <origin rpy="${zeroes}" xyz="-0.01 0 0" />
+      <mass value="${l_gripper_finger_mass}" />
+      <inertia ixx="0.002" ixy="0" ixz="0" iyy="0" iyz="0" izz="0" />
+    </inertial>
+  </xacro:macro>
+</robot>
