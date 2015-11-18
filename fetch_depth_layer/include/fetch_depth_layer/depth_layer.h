@@ -28,6 +28,7 @@
 #include <image_transport/image_transport.h>
 #include <opencv2/rgbd/rgbd.hpp>
 #include <sensor_msgs/image_encodings.h>
+ #include <tf/transform_listener.h>
 
 namespace costmap_2d
 {
@@ -66,7 +67,7 @@ private:
   bool publish_observations_;
   double ground_threshold_;
   double observations_threshold_;
-
+   
   // retrieves depth image from head_camera
   // used to fit ground plane to
   ros::Subscriber depth_image_sub_;
@@ -84,6 +85,11 @@ private:
   // camera intrinsics
   boost::mutex mutex_K_;
   cv::Mat K_;
+  double total_size=0;
+
+  //distortion multipler;
+  std::vector<double> multiplier;
+//  tf::TransformListener listener; 
 
   // clean the depth image
   cv::Ptr<cv::DepthCleaner> depth_cleaner_;
