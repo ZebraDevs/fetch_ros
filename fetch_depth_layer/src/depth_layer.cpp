@@ -199,7 +199,7 @@ void FetchDepthLayer::depthImageCallback(
     }
   }
 
-  // check that ground plane actually exists, so walls don't count as clearing observations
+  // check that ground plane actually exists, so it doesn't count as marking observations
   if (ground_plane[0] == 0.0 && ground_plane[1] == 0.0 &&
       ground_plane[2] == 0.0 && ground_plane[3] == 0.0)
   {
@@ -218,13 +218,13 @@ void FetchDepthLayer::depthImageCallback(
   marking_points.header.stamp = msg->header.stamp;
   marking_points.header.frame_id = msg->header.frame_id;
 
-  // Points at edges of image can be very noisy, exclude them
-  int skip = 10;  // TODO should be ROS param
+  // Points at edges of image can be very noisy, exclude them from marking (not from clearing!).
+  const int skip = 20;  // TODO should be ROS param
 
   // Put points in clearing/marking clouds
-  for (size_t i=skip; i<points3d.rows-skip; i++)
+  for (size_t i = 0; i < points3d.rows; i++)
   {
-    for (size_t j=skip; j<points3d.cols-skip; j++)
+    for (size_t j = 0; j < points3d.cols; j++)
     {
       // Get next point
       geometry_msgs::Point32 current_point;
@@ -239,51 +239,56 @@ void FetchDepthLayer::depthImageCallback(
           !isnan(current_point.y) &&
           !isnan(current_point.z))
       {
+        // Mark all points for clearance.
+        clearing_points.points.push_back(current_point);
+
+        // Do not consider boundary points for obstacles marking since they are very noisy.
+        if (i < skip || i >= points3d.rows - skip || j < skip || j >= points3d.cols - skip)
+        {
+          continue;
+        }
+
         // Check if point is part of the ground plane
         if (fabs(ground_plane[0] * current_point.x +
                  ground_plane[1] * current_point.y +
                  ground_plane[2] * current_point.z +
                  ground_plane[3]) <= observations_threshold_)
         {
-          clearing_points.points.push_back(current_point);
+          continue;  // Do not mark points near the floor.
         }
-        else
+
+        // Check for outliers, mark non-outliers as obstacles.
+        int num_valid = 0;
+        for (int x = -1; x < 2; x++)
         {
-          // Not inlier, should it be outlier?
-          int num_valid = 0;
-          for (int x=-1; x < 2; x++)
+          for (int y = -1; y < 2; y++)
           {
-            for (int y=-1; y < 2; y++)
+            if (x == 0 && y == 0)
             {
-              if (x == 0 && y == 0)
-                continue;
-              geometry_msgs::Point32 test_point;
-              test_point.x = channels[0].at<float>(i+x, j+y);
-              test_point.y = channels[1].at<float>(i+x, j+y);
-              test_point.z = channels[2].at<float>(i+x, j+y);
-              if (test_point.x != 0.0 &&
-                  test_point.y != 0.0 &&
-                  test_point.z != 0.0 &&
-                  !isnan(test_point.x) &&
-                  !isnan(test_point.y) &&
-                  !isnan(test_point.z))
+              continue;
+            }
+            float px = channels[0].at<float>(i+x, j+y);
+            float py = channels[1].at<float>(i+x, j+y);
+            float pz = channels[2].at<float>(i+x, j+y);
+            if (px != 0.0 && py != 0.0 && pz != 0.0 &&
+                !isnan(px) && !isnan(py) && !isnan(pz))
+            {
+              if ( fabs(px - current_point.x) < 0.1 &&
+                    fabs(py - current_point.y) < 0.1 &&
+                    fabs(pz - current_point.z) < 0.1)
               {
-                if ( fabs(test_point.x - current_point.x) < 0.1 &&
-                     fabs(test_point.y - current_point.y) < 0.1 &&
-                     fabs(test_point.z - current_point.z) < 0.1)
-                {
-                  num_valid++;
-                }
+                num_valid++;
               }
-            }  // for y
-          }  // for x
-          if (num_valid >= 7)
-          {
-            marking_points.points.push_back(current_point);
-          }
+            }
+          }  // for y
+        }  // for x
+
+        if (num_valid >= 7)
+        {
+          marking_points.points.push_back(current_point);
         }
-      }
-    }
+      }  // for j (y)
+    }  // for i (x)
   }
 
   if (clearing_points.points.size() > 0)
