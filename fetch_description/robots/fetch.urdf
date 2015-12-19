@@ -104,7 +104,7 @@
     <parent link="base_link" />
     <child link="torso_lift_link" />
     <axis xyz="0 0 1" />
-    <limit effort="450.0" lower="0" upper="0.4" velocity="0.1" />
+    <limit effort="450.0" lower="0" upper="0.38615" velocity="0.1" />
   <dynamics damping="100.0" /></joint>
   <link name="head_pan_link">
     <inertial>
