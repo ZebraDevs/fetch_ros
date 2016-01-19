@@ -85,14 +85,16 @@ void FetchDepthLayer::onInitialize()
     marking_pub_ = private_nh.advertise<sensor_msgs::PointCloud>("marking_obs", 1);
   }
 
-  // TODO add params for topic names
-
+  // subscribe to camera/info topics
+  std::string camera_depth_topic, camera_info_topic;
+  private_nh.param("depth_topic", camera_depth_topic,
+                   std::string("/head_camera/depth_downsample/image_raw"));
+  private_nh.param("info_topic", camera_info_topic,
+                   std::string("/head_camera/depth_downsample/camera_info"));
   camera_info_sub_ = private_nh.subscribe<sensor_msgs::CameraInfo>(
-    "/head_camera/depth_downsample/camera_info",
-    10, &FetchDepthLayer::cameraInfoCallback, this);
+    camera_info_topic, 10, &FetchDepthLayer::cameraInfoCallback, this);
   depth_image_sub_ = private_nh.subscribe<sensor_msgs::Image>(
-    "/head_camera/depth_downsample/image_raw",
-    10, &FetchDepthLayer::depthImageCallback, this);
+    camera_depth_topic, 10, &FetchDepthLayer::depthImageCallback, this);
 }
 
 FetchDepthLayer::~FetchDepthLayer()
