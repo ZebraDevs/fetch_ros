@@ -72,9 +72,19 @@ private:
   boost::shared_ptr<costmap_2d::ObservationBuffer> marking_buf_;
   boost::shared_ptr<costmap_2d::ObservationBuffer> clearing_buf_;
 
+  // should we publish the marking/clearing observations
   bool publish_observations_;
-  double ground_threshold_;
+
+  // distance away from ground plane at which
+  // something is considered an obstacle
   double observations_threshold_;
+
+  // should we dynamically find the ground plane?
+  bool find_ground_plane_;
+
+  // if finding ground plane, limit the tilt
+  // with respect to base_link frame
+  double ground_threshold_;
 
   // retrieves depth image from head_camera
   // used to fit ground plane to
