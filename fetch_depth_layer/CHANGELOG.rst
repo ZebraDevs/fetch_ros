@@ -2,6 +2,14 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add parameters for topic names
+* add support for static camera based on tf transform
+* Improved local costmap clearing by considering all points for clearance.
+* re-license fetch_depth_layer as BSD
+* Contributors: Marek Fiser, Michael Ferguson
+
 0.7.0 (2015-09-29)
 ------------------
 
