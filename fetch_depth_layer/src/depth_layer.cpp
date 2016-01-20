@@ -73,8 +73,11 @@ void FetchDepthLayer::onInitialize()
   ros::NodeHandle private_nh("~/" + name_);
 
   private_nh.param("publish_observations", publish_observations_, false);
-  private_nh.param("ground_orientation_threshold", ground_threshold_, 0.9);
   private_nh.param("observations_separation_threshold", observations_threshold_, 0.06);
+
+  // Optionally detect the ground plane
+  private_nh.param("find_ground_plane", find_ground_plane_, true);
+  private_nh.param("ground_orientation_threshold", ground_threshold_, 0.9);
 
   if (publish_observations_)
   {
@@ -82,14 +85,16 @@ void FetchDepthLayer::onInitialize()
     marking_pub_ = private_nh.advertise<sensor_msgs::PointCloud>("marking_obs", 1);
   }
 
-  // TODO add params for topic names
-
+  // subscribe to camera/info topics
+  std::string camera_depth_topic, camera_info_topic;
+  private_nh.param("depth_topic", camera_depth_topic,
+                   std::string("/head_camera/depth_downsample/image_raw"));
+  private_nh.param("info_topic", camera_info_topic,
+                   std::string("/head_camera/depth_downsample/camera_info"));
   camera_info_sub_ = private_nh.subscribe<sensor_msgs::CameraInfo>(
-    "/head_camera/depth_downsample/camera_info",
-    10, &FetchDepthLayer::cameraInfoCallback, this);
+    camera_info_topic, 10, &FetchDepthLayer::cameraInfoCallback, this);
   depth_image_sub_ = private_nh.subscribe<sensor_msgs::Image>(
-    "/head_camera/depth_downsample/image_raw",
-    10, &FetchDepthLayer::depthImageCallback, this);
+    camera_depth_topic, 10, &FetchDepthLayer::depthImageCallback, this);
 }
 
 FetchDepthLayer::~FetchDepthLayer()
@@ -156,47 +161,66 @@ void FetchDepthLayer::depthImageCallback(
   cv::Mat points3d;
   cv::depthTo3d(cv_ptr->image, K_, points3d);
 
-  // Get normals
-  if (normals_estimator_.empty())
-  {
-    normals_estimator_ = new cv::RgbdNormals(cv_ptr->image.rows,
-                                             cv_ptr->image.cols,
-                                             cv_ptr->image.depth(),
-                                             K_);
-  }
-  cv::Mat normals;
-  (*normals_estimator_)(points3d, normals);
-
-  // Find plane(s)
-  if (plane_estimator_.empty())
-  {
-    plane_estimator_ = cv::Algorithm::create<cv::RgbdPlane>("RGBD.RgbdPlane");
-    // Model parameters are based on notes in opencv_candidate
-    plane_estimator_->set("sensor_error_a", 0.0075);
-    plane_estimator_->set("sensor_error_b", 0.0);
-    plane_estimator_->set("sensor_error_c", 0.0);
-    // Image/cloud height/width must be multiple of block size
-    plane_estimator_->set("block_size", 40);
-    // Distance a point can be from plane and still be part of it
-    plane_estimator_->set("threshold", observations_threshold_);
-    // Minimum cluster size to be a plane
-    plane_estimator_->set("min_size", 1000);
-  }
-  cv::Mat planes_mask;
-  std::vector<cv::Vec4f> plane_coefficients;
-  (*plane_estimator_)(points3d, normals, planes_mask, plane_coefficients);
-
+  // Determine ground plane, either through camera or TF
   cv::Vec4f ground_plane;
-  for (size_t i=0; i < plane_coefficients.size(); i++)
+  if (find_ground_plane_)
   {
-    // check plane orientation
-    if ((fabs(0.0 - plane_coefficients[i][0]) <= ground_threshold_) &&
-        (fabs(1.0 + plane_coefficients[i][1]) <= ground_threshold_) &&
-        (fabs(0.0 - plane_coefficients[i][2]) <= ground_threshold_))
+    // Get normals
+    if (normals_estimator_.empty())
     {
-      ground_plane = plane_coefficients[i];
-      break;
+      normals_estimator_ = new cv::RgbdNormals(cv_ptr->image.rows,
+                                               cv_ptr->image.cols,
+                                               cv_ptr->image.depth(),
+                                               K_);
     }
+    cv::Mat normals;
+    (*normals_estimator_)(points3d, normals);
+
+    // Find plane(s)
+    if (plane_estimator_.empty())
+    {
+      plane_estimator_ = cv::Algorithm::create<cv::RgbdPlane>("RGBD.RgbdPlane");
+      // Model parameters are based on notes in opencv_candidate
+      plane_estimator_->set("sensor_error_a", 0.0075);
+      plane_estimator_->set("sensor_error_b", 0.0);
+      plane_estimator_->set("sensor_error_c", 0.0);
+      // Image/cloud height/width must be multiple of block size
+      plane_estimator_->set("block_size", 40);
+      // Distance a point can be from plane and still be part of it
+      plane_estimator_->set("threshold", observations_threshold_);
+      // Minimum cluster size to be a plane
+      plane_estimator_->set("min_size", 1000);
+    }
+    cv::Mat planes_mask;
+    std::vector<cv::Vec4f> plane_coefficients;
+    (*plane_estimator_)(points3d, normals, planes_mask, plane_coefficients);
+
+    for (size_t i = 0; i < plane_coefficients.size(); i++)
+    {
+      // check plane orientation
+      if ((fabs(0.0 - plane_coefficients[i][0]) <= ground_threshold_) &&
+          (fabs(1.0 + plane_coefficients[i][1]) <= ground_threshold_) &&
+          (fabs(0.0 - plane_coefficients[i][2]) <= ground_threshold_))
+      {
+        ground_plane = plane_coefficients[i];
+        break;
+      }
+    }
+  }
+  else
+  {
+    // find ground plane in camera coordinates using tf
+    // transform normal axis
+    tf::Stamped<tf::Vector3> vector(tf::Vector3(0, 0, 1), ros::Time(0), "base_link");
+    tf_->transformVector(msg->header.frame_id, vector, vector);
+    ground_plane[0] = vector.getX();
+    ground_plane[1] = vector.getY();
+    ground_plane[2] = vector.getZ();
+
+    // find offset
+    tf::StampedTransform transform;
+    tf_->lookupTransform("base_link", msg->header.frame_id, ros::Time(0), transform);
+    ground_plane[3] = transform.getOrigin().getZ();
   }
 
   // check that ground plane actually exists, so it doesn't count as marking observations
