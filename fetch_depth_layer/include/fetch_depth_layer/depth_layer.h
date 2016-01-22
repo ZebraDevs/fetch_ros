@@ -86,6 +86,9 @@ private:
   // with respect to base_link frame
   double ground_threshold_;
 
+  // should NANs be treated as +inf and used for clearing
+  bool clear_nans_;
+
   // retrieves depth image from head_camera
   // used to fit ground plane to
   ros::Subscriber depth_image_sub_;
