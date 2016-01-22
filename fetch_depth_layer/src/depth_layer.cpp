@@ -79,6 +79,9 @@ void FetchDepthLayer::onInitialize()
   private_nh.param("find_ground_plane", find_ground_plane_, true);
   private_nh.param("ground_orientation_threshold", ground_threshold_, 0.9);
 
+  // Should NANs be used as clearing observations?
+  private_nh.param("clear_nans", clear_nans_, false);
+
   if (publish_observations_)
   {
     clearing_pub_ = private_nh.advertise<sensor_msgs::PointCloud>("clearing_obs", 1);
@@ -155,6 +158,16 @@ void FetchDepthLayer::depthImageCallback(
   {
     ROS_ERROR("cv_bridge exception: %s", e.what());
     return;
+  }
+
+  // Clear with NANs?
+  if (clear_nans_)
+  {
+    for (int i = 0; i < cv_ptr->image.rows * cv_ptr->image.cols; i++)
+    {
+      if (isnan(cv_ptr->image.at<float>(i)))
+        cv_ptr->image.at<float>(i) = 25.0;
+    }
   }
 
   // Convert to 3d
