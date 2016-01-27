@@ -86,7 +86,7 @@ void FetchDepthLayer::onInitialize()
 
   clearing_buf_ =  boost::shared_ptr<costmap_2d::ObservationBuffer> (
   	new costmap_2d::ObservationBuffer(topic, observation_keep_time,
-  	  expected_update_rate, min_obstacle_height, max_clearing_height,
+  	  expected_update_rate, min_clearing_height, max_clearing_height,
   	  obstacle_range, raytrace_range, *tf_, global_frame_,
   	  sensor_frame, transform_tolerance));
   clearing_buffers_.push_back(clearing_buf_);
