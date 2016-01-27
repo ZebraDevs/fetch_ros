@@ -47,14 +47,33 @@ void FetchDepthLayer::onInitialize()
 
   double observation_keep_time = 0.0;
   double expected_update_rate = 0.0;
-  double min_obstacle_height = 0.0;
-  double max_obstacle_height = 2.0;
-  double max_clearing_height = std::numeric_limits<double>::infinity();
   double transform_tolerance = 0.5;
   double obstacle_range = 2.5;
   double raytrace_range = 3.0;
+  double min_obstacle_height;
+  double max_obstacle_height;
+  double min_clearing_height;
+  double max_clearing_height;
   std::string topic = "";
   std::string sensor_frame = "";
+
+  ros::NodeHandle private_nh("~/" + name_);
+
+  private_nh.param("publish_observations", publish_observations_, false);
+  private_nh.param("observations_separation_threshold", observations_threshold_, 0.06);
+
+  // Optionally detect the ground plane
+  private_nh.param("find_ground_plane", find_ground_plane_, true);
+  private_nh.param("ground_orientation_threshold", ground_threshold_, 0.9);
+
+  // Should NANs be used as clearing observations?
+  private_nh.param("clear_nans", clear_nans_, false);
+
+  // Observation range values for both marking and claering
+  private_nh.param("min_obstacle_height", min_obstacle_height, 0.0);
+  private_nh.param("max_obstacle_height", max_obstacle_height, 2.0);
+  private_nh.param("min_clearing_height", min_clearing_height, 0.0);
+  private_nh.param("max_clearing_height", max_clearing_height, std::numeric_limits<double>::infinity());
 
   marking_buf_ = boost::shared_ptr<costmap_2d::ObservationBuffer> (
   	new costmap_2d::ObservationBuffer(topic, observation_keep_time,
@@ -71,18 +90,6 @@ void FetchDepthLayer::onInitialize()
   	  obstacle_range, raytrace_range, *tf_, global_frame_,
   	  sensor_frame, transform_tolerance));
   clearing_buffers_.push_back(clearing_buf_);
-
-  ros::NodeHandle private_nh("~/" + name_);
-
-  private_nh.param("publish_observations", publish_observations_, false);
-  private_nh.param("observations_separation_threshold", observations_threshold_, 0.06);
-
-  // Optionally detect the ground plane
-  private_nh.param("find_ground_plane", find_ground_plane_, true);
-  private_nh.param("ground_orientation_threshold", ground_threshold_, 0.9);
-
-  // Should NANs be used as clearing observations?
-  private_nh.param("clear_nans", clear_nans_, false);
 
   if (publish_observations_)
   {
