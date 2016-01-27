@@ -48,6 +48,7 @@ void FetchDepthLayer::onInitialize()
   double expected_update_rate = 0.0;
   double min_obstacle_height = 0.0;
   double max_obstacle_height = 2.0;
+  double max_clearing_height = std::numeric_limits<double>::infinity();
   double transform_tolerance = 0.5;
   double obstacle_range = 2.5;
   double raytrace_range = 3.0;
@@ -65,7 +66,7 @@ void FetchDepthLayer::onInitialize()
 
   clearing_buf_ =  boost::shared_ptr<costmap_2d::ObservationBuffer> (
   	new costmap_2d::ObservationBuffer(topic, observation_keep_time,
-  	  expected_update_rate, min_obstacle_height, max_obstacle_height,
+  	  expected_update_rate, min_obstacle_height, max_clearing_height,
   	  obstacle_range, raytrace_range, *tf_, global_frame_,
   	  sensor_frame, transform_tolerance));
   clearing_buffers_.push_back(clearing_buf_);
