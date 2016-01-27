@@ -30,6 +30,7 @@
 
 #include <pluginlib/class_list_macros.h>
 #include <fetch_depth_layer/depth_layer.h>
+#include <limits>
 
 PLUGINLIB_EXPORT_CLASS(costmap_2d::FetchDepthLayer, costmap_2d::Layer)
 
