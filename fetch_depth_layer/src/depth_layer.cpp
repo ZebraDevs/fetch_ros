@@ -30,6 +30,7 @@
 
 #include <pluginlib/class_list_macros.h>
 #include <fetch_depth_layer/depth_layer.h>
+#include <limits>
 
 PLUGINLIB_EXPORT_CLASS(costmap_2d::FetchDepthLayer, costmap_2d::Layer)
 
@@ -46,29 +47,15 @@ void FetchDepthLayer::onInitialize()
 
   double observation_keep_time = 0.0;
   double expected_update_rate = 0.0;
-  double min_obstacle_height = 0.0;
-  double max_obstacle_height = 2.0;
   double transform_tolerance = 0.5;
   double obstacle_range = 2.5;
   double raytrace_range = 3.0;
+  double min_obstacle_height;
+  double max_obstacle_height;
+  double min_clearing_height;
+  double max_clearing_height;
   std::string topic = "";
   std::string sensor_frame = "";
-
-  marking_buf_ = boost::shared_ptr<costmap_2d::ObservationBuffer> (
-  	new costmap_2d::ObservationBuffer(topic, observation_keep_time,
-  	  expected_update_rate, min_obstacle_height, max_obstacle_height,
-  	  obstacle_range, raytrace_range, *tf_, global_frame_,
-  	  sensor_frame, transform_tolerance));
-  marking_buffers_.push_back(marking_buf_);
-
-  min_obstacle_height = 0.0;
-
-  clearing_buf_ =  boost::shared_ptr<costmap_2d::ObservationBuffer> (
-  	new costmap_2d::ObservationBuffer(topic, observation_keep_time,
-  	  expected_update_rate, min_obstacle_height, max_obstacle_height,
-  	  obstacle_range, raytrace_range, *tf_, global_frame_,
-  	  sensor_frame, transform_tolerance));
-  clearing_buffers_.push_back(clearing_buf_);
 
   ros::NodeHandle private_nh("~/" + name_);
 
@@ -81,6 +68,28 @@ void FetchDepthLayer::onInitialize()
 
   // Should NANs be used as clearing observations?
   private_nh.param("clear_nans", clear_nans_, false);
+
+  // Observation range values for both marking and claering
+  private_nh.param("min_obstacle_height", min_obstacle_height, 0.0);
+  private_nh.param("max_obstacle_height", max_obstacle_height, 2.0);
+  private_nh.param("min_clearing_height", min_clearing_height, 0.0);
+  private_nh.param("max_clearing_height", max_clearing_height, std::numeric_limits<double>::infinity());
+
+  marking_buf_ = boost::shared_ptr<costmap_2d::ObservationBuffer> (
+  	new costmap_2d::ObservationBuffer(topic, observation_keep_time,
+  	  expected_update_rate, min_obstacle_height, max_obstacle_height,
+  	  obstacle_range, raytrace_range, *tf_, global_frame_,
+  	  sensor_frame, transform_tolerance));
+  marking_buffers_.push_back(marking_buf_);
+
+  min_obstacle_height = 0.0;
+
+  clearing_buf_ =  boost::shared_ptr<costmap_2d::ObservationBuffer> (
+  	new costmap_2d::ObservationBuffer(topic, observation_keep_time,
+  	  expected_update_rate, min_clearing_height, max_clearing_height,
+  	  obstacle_range, raytrace_range, *tf_, global_frame_,
+  	  sensor_frame, transform_tolerance));
+  clearing_buffers_.push_back(clearing_buf_);
 
   if (publish_observations_)
   {
