@@ -72,7 +72,7 @@ void FetchDepthLayer::onInitialize()
   // Observation range values for both marking and claering
   private_nh.param("min_obstacle_height", min_obstacle_height, 0.0);
   private_nh.param("max_obstacle_height", max_obstacle_height, 2.0);
-  private_nh.param("min_clearing_height", min_clearing_height, 0.0);
+  private_nh.param("min_clearing_height", min_clearing_height, -std::numeric_limits<double>::infinity());
   private_nh.param("max_clearing_height", max_clearing_height, std::numeric_limits<double>::infinity());
 
   marking_buf_ = boost::shared_ptr<costmap_2d::ObservationBuffer> (
