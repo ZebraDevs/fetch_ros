@@ -89,6 +89,15 @@ private:
   // should NANs be treated as +inf and used for clearing
   bool clear_nans_;
 
+  // skipping of potentially noisy rays near the edge of the image
+  int skip_rays_bottom_;
+  int skip_rays_top_;
+  int skip_rays_left_;
+  int skip_rays_right_;
+
+  // should skipped edge rays be used for clearing?
+  bool clear_with_skipped_rays_;
+
   // retrieves depth image from head_camera
   // used to fit ground plane to
   ros::Subscriber depth_image_sub_;
