@@ -19,9 +19,12 @@ recovery_behaviors:
     type: "clear_costmap_recovery/ClearCostmapRecovery"
   - name: "rotate_recovery"
     type: "rotate_recovery/RotateRecovery"
-    frequency: 20.0
-    sim_granularity: 0.017
   - name: "aggressive_reset"
     type: "clear_costmap_recovery/ClearCostmapRecovery"
-conservative_reset: {reset_distance: 3.0}
-aggressive_reset: {reset_distance: 0.5}
+conservative_reset:
+  reset_distance: 3.0
+rotate_recovery:
+  frequency: 20.0
+  sim_granularity: 0.017
+aggressive_reset: 
+  reset_distance: 0.5
