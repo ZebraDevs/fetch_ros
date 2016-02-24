@@ -69,11 +69,20 @@ void FetchDepthLayer::onInitialize()
   // Should NANs be used as clearing observations?
   private_nh.param("clear_nans", clear_nans_, false);
 
-  // Observation range values for both marking and claering
+  // Observation range values for both marking and clearing
   private_nh.param("min_obstacle_height", min_obstacle_height, 0.0);
   private_nh.param("max_obstacle_height", max_obstacle_height, 2.0);
-  private_nh.param("min_clearing_height", min_clearing_height, 0.0);
+  private_nh.param("min_clearing_height", min_clearing_height, -std::numeric_limits<double>::infinity());
   private_nh.param("max_clearing_height", max_clearing_height, std::numeric_limits<double>::infinity());
+
+  // Skipping of potentially noisy rays near the edge of the image
+  private_nh.param("skip_rays_bottom", skip_rays_bottom_, 20);
+  private_nh.param("skip_rays_top",    skip_rays_top_,    20);
+  private_nh.param("skip_rays_left",   skip_rays_left_,   20);
+  private_nh.param("skip_rays_right",  skip_rays_right_,  20);
+
+  // Should skipped edge rays be used for clearing?
+  private_nh.param("clear_with_skipped_rays", clear_with_skipped_rays_, false);
 
   marking_buf_ = boost::shared_ptr<costmap_2d::ObservationBuffer> (
   	new costmap_2d::ObservationBuffer(topic, observation_keep_time,
@@ -264,9 +273,6 @@ void FetchDepthLayer::depthImageCallback(
   marking_points.header.stamp = msg->header.stamp;
   marking_points.header.frame_id = msg->header.frame_id;
 
-  // Points at edges of image can be very noisy, exclude them from marking (not from clearing!).
-  const int skip = 20;  // TODO should be ROS param
-
   // Put points in clearing/marking clouds
   for (size_t i = 0; i < points3d.rows; i++)
   {
@@ -285,13 +291,25 @@ void FetchDepthLayer::depthImageCallback(
           !isnan(current_point.y) &&
           !isnan(current_point.z))
       {
-        // Mark all points for clearance.
-        clearing_points.points.push_back(current_point);
+        if (clear_with_skipped_rays_)
+        {
+          // If edge rays are to be used for clearing, go ahead and add them now.
+          clearing_points.points.push_back(current_point);
+        }
 
         // Do not consider boundary points for obstacles marking since they are very noisy.
-        if (i < skip || i >= points3d.rows - skip || j < skip || j >= points3d.cols - skip)
+        if (i < skip_rays_top_ ||
+            i >= points3d.rows - skip_rays_bottom_ ||
+            j < skip_rays_left_ ||
+            j >= points3d.cols - skip_rays_right_)
         {
           continue;
+        }
+
+        if (!clear_with_skipped_rays_)
+        {
+          // If edge rays are not to be used for clearing, only add them after the edge check.
+          clearing_points.points.push_back(current_point);
         }
 
         // Check if point is part of the ground plane
