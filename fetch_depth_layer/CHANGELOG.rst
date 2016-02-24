@@ -2,8 +2,8 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.2 (2016-02-24)
+------------------
 * Add option to clear with NANs
 * Add ROS param clear_with_skipped_rays to re-enable clearing with edge rays
 * Add ROS param to control size of skip region on edges

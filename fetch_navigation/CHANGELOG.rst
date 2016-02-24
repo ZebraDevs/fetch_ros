@@ -2,8 +2,8 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.2 (2016-02-24)
+------------------
 * Fix location of recovery behavior parameters in yaml configs
 * Contributors: Kei Okada, Michael Ferguson
 
