@@ -2,6 +2,15 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Add option to clear with NANs
+* Add ROS param clear_with_skipped_rays to re-enable clearing with edge rays
+* Add ROS param to control size of skip region on edges
+* Change min_clearing_height to -infinity
+* Change max_clearing_height to +infinity
+* Contributors: Aaron Hoy, Michael Ferguson
+
 0.7.1 (2016-01-20)
 ------------------
 * add parameters for topic names

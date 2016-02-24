@@ -2,6 +2,9 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.7.1 (2016-01-20)
 ------------------
 * update torso throw to match rev2 hardware
