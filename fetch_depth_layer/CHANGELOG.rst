@@ -2,6 +2,9 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.7.2 (2016-02-24)
 ------------------
 * Add option to clear with NANs

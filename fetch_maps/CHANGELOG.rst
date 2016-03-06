@@ -2,6 +2,11 @@
 Changelog for package fetch_maps
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* 3_1_16 new map
+* Contributors: Aaron Blasdel
+
 0.7.2 (2016-02-24)
 ------------------
 
