@@ -114,8 +114,11 @@ void FetchDepthLayer::onInitialize()
                    std::string("/head_camera/depth_downsample/camera_info"));
   camera_info_sub_ = private_nh.subscribe<sensor_msgs::CameraInfo>(
     camera_info_topic, 10, &FetchDepthLayer::cameraInfoCallback, this);
-  depth_image_sub_ = private_nh.subscribe<sensor_msgs::Image>(
-    camera_depth_topic, 10, &FetchDepthLayer::depthImageCallback, this);
+
+  depth_image_sub_.subscribe(private_nh, camera_depth_topic, 10);
+  depth_image_filter_ = boost::shared_ptr< tf::MessageFilter<sensor_msgs::Image> >(
+    new tf::MessageFilter<sensor_msgs::Image>(depth_image_sub_, *tf_, global_frame_, 10));
+  depth_image_filter_->registerCallback(boost::bind(&FetchDepthLayer::depthImageCallback, this, _1));
 }
 
 FetchDepthLayer::~FetchDepthLayer()

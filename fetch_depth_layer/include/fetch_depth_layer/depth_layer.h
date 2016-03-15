@@ -32,11 +32,14 @@
 #define FETCH_DEPTH_LAYER_DEPTH_LAYER_H
 
 #include <boost/thread/mutex.hpp>
+#include <boost/shared_ptr.hpp>
 #include <costmap_2d/voxel_layer.h>
 #include <cv_bridge/cv_bridge.h>
 #include <image_transport/image_transport.h>
 #include <opencv2/rgbd/rgbd.hpp>
 #include <sensor_msgs/image_encodings.h>
+#include <tf/message_filter.h>
+#include <message_filters/subscriber.h>
 
 namespace costmap_2d
 {
@@ -100,7 +103,8 @@ private:
 
   // retrieves depth image from head_camera
   // used to fit ground plane to
-  ros::Subscriber depth_image_sub_;
+  message_filters::Subscriber<sensor_msgs::Image> depth_image_sub_;
+  boost::shared_ptr< tf::MessageFilter<sensor_msgs::Image> > depth_image_filter_;
 
   // retrieves camera matrix for head_camera
   // used in calculating ground plane
