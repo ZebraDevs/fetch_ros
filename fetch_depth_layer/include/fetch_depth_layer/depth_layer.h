@@ -66,6 +66,16 @@ public:
    */
   virtual void onInitialize();
 
+  /**
+   * @brief Reinitializes class
+   */
+  virtual void activate();
+
+  /**
+   * @brief Unsubscribes from topics
+   */
+  virtual void deactivate();
+
 private:
   void cameraInfoCallback(
     const sensor_msgs::CameraInfo::ConstPtr& msg);
