@@ -398,4 +398,16 @@ void FetchDepthLayer::depthImageCallback(
   }
 }
 
+void FetchDepthLayer::activate()
+{
+  onInitialize();
+}
+
+void FetchDepthLayer::deactivate()
+{
+  camera_info_sub_.shutdown();
+  depth_image_sub_.unsubscribe();
+  depth_image_filter_->clear();
+}
+
 }  // namespace costmap_2d
