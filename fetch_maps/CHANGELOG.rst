@@ -2,6 +2,9 @@
 Changelog for package fetch_maps
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.7.3 (2016-03-05)
 ------------------
 * 3_1_16 new map

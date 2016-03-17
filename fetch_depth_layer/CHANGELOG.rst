@@ -2,6 +2,12 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* activate/deactivate for fetch depth layer
+* Added transform filtering to depth layer depth data callback
+* Contributors: Levon Avagyan
+
 0.7.3 (2016-03-05)
 ------------------
 
