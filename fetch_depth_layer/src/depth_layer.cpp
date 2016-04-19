@@ -45,11 +45,11 @@ void FetchDepthLayer::onInitialize()
 {
   VoxelLayer::onInitialize();
 
-  double observation_keep_time = 0.0;
-  double expected_update_rate = 0.0;
-  double transform_tolerance = 0.5;
-  double obstacle_range = 2.5;
-  double raytrace_range = 3.0;
+  double observation_keep_time;
+  double expected_update_rate;
+  double transform_tolerance;
+  double obstacle_range;
+  double raytrace_range;
   double min_obstacle_height;
   double max_obstacle_height;
   double min_clearing_height;
@@ -83,6 +83,31 @@ void FetchDepthLayer::onInitialize()
 
   // Should skipped edge rays be used for clearing?
   private_nh.param("clear_with_skipped_rays", clear_with_skipped_rays_, false);
+
+  // How long should observations persist?
+  private_nh.param("observation_persistence", observation_keep_time, 0.0);
+
+  // How often should we expect to get sensor updates?
+  private_nh.param("expected_update_rate", expected_update_rate, 0.0);
+
+  // How long to wait for transforms to be available?
+  private_nh.param("transform_tolerance", transform_tolerance, 0.5);
+
+  std::string raytrace_range_param_name, obstacle_range_param_name;
+
+  // get the obstacle range for the sensor
+  obstacle_range = 2.5;
+  if (private_nh.searchParam("obstacle_range", obstacle_range_param_name))
+  {
+    private_nh.getParam(obstacle_range_param_name, obstacle_range);
+  }
+
+  // get the raytrace range for the sensor
+  raytrace_range = 3.0;
+  if (private_nh.searchParam("raytrace_range", raytrace_range_param_name))
+  {
+    private_nh.getParam(raytrace_range_param_name, raytrace_range);
+  }
 
   marking_buf_ = boost::shared_ptr<costmap_2d::ObservationBuffer> (
   	new costmap_2d::ObservationBuffer(topic, observation_keep_time,
