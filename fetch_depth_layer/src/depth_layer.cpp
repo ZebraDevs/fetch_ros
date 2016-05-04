@@ -90,6 +90,7 @@ void FetchDepthLayer::onInitialize()
   	  obstacle_range, raytrace_range, *tf_, global_frame_,
   	  sensor_frame, transform_tolerance));
   marking_buffers_.push_back(marking_buf_);
+  observation_buffers_.push_back(marking_buf_);
 
   min_obstacle_height = 0.0;
 
@@ -99,6 +100,7 @@ void FetchDepthLayer::onInitialize()
   	  obstacle_range, raytrace_range, *tf_, global_frame_,
   	  sensor_frame, transform_tolerance));
   clearing_buffers_.push_back(clearing_buf_);
+  observation_buffers_.push_back(clearing_buf_);
 
   if (publish_observations_)
   {
@@ -115,10 +117,13 @@ void FetchDepthLayer::onInitialize()
   camera_info_sub_ = private_nh.subscribe<sensor_msgs::CameraInfo>(
     camera_info_topic, 10, &FetchDepthLayer::cameraInfoCallback, this);
 
-  depth_image_sub_.subscribe(private_nh, camera_depth_topic, 10);
+  depth_image_sub_.reset(new message_filters::Subscriber<sensor_msgs::Image>(private_nh, camera_depth_topic, 10));
   depth_image_filter_ = boost::shared_ptr< tf::MessageFilter<sensor_msgs::Image> >(
-    new tf::MessageFilter<sensor_msgs::Image>(depth_image_sub_, *tf_, global_frame_, 10));
+    new tf::MessageFilter<sensor_msgs::Image>(*depth_image_sub_, *tf_, global_frame_, 10));
   depth_image_filter_->registerCallback(boost::bind(&FetchDepthLayer::depthImageCallback, this, _1));
+  observation_subscribers_.push_back(depth_image_sub_);
+  observation_notifiers_.push_back(depth_image_filter_);
+  observation_notifiers_.back()->setTolerance(ros::Duration(0.05));
 }
 
 FetchDepthLayer::~FetchDepthLayer()
@@ -396,18 +401,6 @@ void FetchDepthLayer::depthImageCallback(
     marking_buf_->bufferCloud(marking_cloud2);
     marking_buf_->unlock();
   }
-}
-
-void FetchDepthLayer::activate()
-{
-  onInitialize();
-}
-
-void FetchDepthLayer::deactivate()
-{
-  camera_info_sub_.shutdown();
-  depth_image_sub_.unsubscribe();
-  depth_image_filter_->clear();
 }
 
 }  // namespace costmap_2d

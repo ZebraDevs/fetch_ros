@@ -66,16 +66,6 @@ public:
    */
   virtual void onInitialize();
 
-  /**
-   * @brief Reinitializes class
-   */
-  virtual void activate();
-
-  /**
-   * @brief Unsubscribes from topics
-   */
-  virtual void deactivate();
-
 private:
   void cameraInfoCallback(
     const sensor_msgs::CameraInfo::ConstPtr& msg);
@@ -113,7 +103,7 @@ private:
 
   // retrieves depth image from head_camera
   // used to fit ground plane to
-  message_filters::Subscriber<sensor_msgs::Image> depth_image_sub_;
+  boost::shared_ptr< message_filters::Subscriber<sensor_msgs::Image> > depth_image_sub_;
   boost::shared_ptr< tf::MessageFilter<sensor_msgs::Image> > depth_image_filter_;
 
   // retrieves camera matrix for head_camera
