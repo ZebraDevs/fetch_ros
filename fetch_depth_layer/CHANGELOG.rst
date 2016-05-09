@@ -2,6 +2,12 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fixed activate and deactivate to avoid errors
+* Parameterizing inputs for ObservationBuffer to match parent layers.
+* Contributors: Aaron Hoy, Alex Henning, Michael Ferguson
+
 0.7.4 (2016-03-16)
 ------------------
 * activate/deactivate for fetch depth layer
