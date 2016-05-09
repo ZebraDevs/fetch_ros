@@ -2,8 +2,8 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.5 (2016-05-08)
+------------------
 * Control gripper via keyboard
 * Contributors: Kentaro Wada
 
