@@ -388,44 +388,40 @@ void FetchDepthLayer::depthImageCallback(
     }  // for i (x)
   }
 
-  if (clearing_points.points.size() > 0)
+  // Publish and buffer our clearing point cloud
+  if (publish_observations_)
   {
-    if (publish_observations_)
-    {
-      clearing_pub_.publish(clearing_points);
-    }
-
-    sensor_msgs::PointCloud2 clearing_cloud2;
-    if (!sensor_msgs::convertPointCloudToPointCloud2(clearing_points, clearing_cloud2))
-    {
-      ROS_ERROR("Failed to convert a PointCloud to a PointCloud2, dropping message");
-      return;
-    }
-
-    // buffer the ground plane observation
-    clearing_buf_->lock();
-    clearing_buf_->bufferCloud(clearing_cloud2);
-    clearing_buf_->unlock();
+    clearing_pub_.publish(clearing_points);
   }
 
-  if (marking_points.points.size() > 0)
+  sensor_msgs::PointCloud2 clearing_cloud2;
+  if (!sensor_msgs::convertPointCloudToPointCloud2(clearing_points, clearing_cloud2))
   {
-    if (publish_observations_)
-    {
-      marking_pub_.publish(marking_points);
-    }
-
-    sensor_msgs::PointCloud2 marking_cloud2;
-    if (!sensor_msgs::convertPointCloudToPointCloud2(marking_points, marking_cloud2))
-    {
-      ROS_ERROR("Failed to convert a PointCloud to a PointCloud2, dropping message");
-      return;
-    }
-
-    marking_buf_->lock();
-    marking_buf_->bufferCloud(marking_cloud2);
-    marking_buf_->unlock();
+    ROS_ERROR("Failed to convert a PointCloud to a PointCloud2, dropping message");
+    return;
   }
+
+  // buffer the ground plane observation
+  clearing_buf_->lock();
+  clearing_buf_->bufferCloud(clearing_cloud2);
+  clearing_buf_->unlock();
+
+  // Publish and buffer our marking point cloud
+  if (publish_observations_)
+  {
+    marking_pub_.publish(marking_points);
+  }
+
+  sensor_msgs::PointCloud2 marking_cloud2;
+  if (!sensor_msgs::convertPointCloudToPointCloud2(marking_points, marking_cloud2))
+  {
+    ROS_ERROR("Failed to convert a PointCloud to a PointCloud2, dropping message");
+    return;
+  }
+
+  marking_buf_->lock();
+  marking_buf_->bufferCloud(marking_cloud2);
+  marking_buf_->unlock();
 }
 
 }  // namespace costmap_2d
