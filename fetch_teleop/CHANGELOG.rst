@@ -2,8 +2,8 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.6 (2016-05-26)
+------------------
 * fix attribute error when moveit does not return
 * Contributors: Michael Ferguson
 
