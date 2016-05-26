@@ -2,6 +2,13 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Allow FetchDepthLayer to send empty clouds
+  This keeps the "current"-ness of observationbuffers up-to-date even when
+  sensors return zero points due to being in a large open area.
+* Contributors: Aaron Hoy
+
 0.7.5 (2016-05-08)
 ------------------
 * Fixed activate and deactivate to avoid errors
