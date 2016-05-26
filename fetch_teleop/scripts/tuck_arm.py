@@ -90,7 +90,7 @@ class TuckThread(Thread):
                                                      pose,
                                                      0.0,
                                                      max_velocity_scaling_factor=0.5)
-            if result.error_code.val == MoveItErrorCodes.SUCCESS:
+            if result and result.error_code.val == MoveItErrorCodes.SUCCESS:
                 scene.removeCollisionObject("keepout")
                 if move_thread:
                     move_thread.stop()
