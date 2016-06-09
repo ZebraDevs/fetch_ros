@@ -186,4 +186,10 @@
     <axis
       xyz="0 0 0" />
   </joint>
+  <link name="base_camera_optical_frame" />
+  <joint name="base_camera_optical_joint" type="fixed">
+    <origin rpy="-1.5707963267966 0 0" xyz="0 0 0" />
+    <parent link="base_camera_link" />
+    <child link="base_camera_optical_frame" />
+  </joint>
 </robot>
