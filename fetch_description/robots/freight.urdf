@@ -178,7 +178,7 @@
     type="fixed">
     <origin
       xyz="0.264511452618556 -0.00793916712988701 0.198680360086821"
-      rpy="-6.21748940377806E-17 -0.17453292519943 1.07965570462949E-17" />
+      rpy="0 -0.17453292519943 0" />
     <parent
       link="base_link" />
     <child
@@ -188,7 +188,7 @@
   </joint>
   <link name="base_camera_optical_frame" />
   <joint name="base_camera_optical_joint" type="fixed">
-    <origin rpy="-1.5707963267966 0 0" xyz="0 0 0" />
+    <origin rpy="1.5707963267966 0 1.5707963267966" xyz="0 0 0" />
     <parent link="base_camera_link" />
     <child link="base_camera_optical_frame" />
   </joint>
