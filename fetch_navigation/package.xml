@@ -9,7 +9,9 @@
   <buildtool_depend>catkin</buildtool_depend>
 
   <run_depend>fetch_depth_layer</run_depend>
-  <run_depend>navigation</run_depend>
+  <run_depend>map_server</run_depend>
+  <run_depend>amcl</run_depend>
+  <run_depend>move_base</run_depend>
   <run_depend>fetch_maps</run_depend>
   <run_depend>slam_karto</run_depend>
 </package>
