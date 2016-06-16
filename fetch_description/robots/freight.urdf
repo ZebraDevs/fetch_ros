@@ -133,4 +133,63 @@
     <child link="laser_link" />
     <axis xyz="0 0 0" />
   </joint>
+ <link
+    name="base_camera_link">
+    <inertial>
+      <origin
+        xyz="-5.000000000005E-05 -0.00301833774752248 2.77555756156289E-17"
+        rpy="0 0 0" />
+      <mass
+        value="1.52235477189066E-05" />
+      <inertia
+        ixx="1.03983633297402E-09"
+        ixy="-2.82787329326897E-24"
+        ixz="-1.08567455397585E-24"
+        iyy="1.09705387231965E-10"
+        iyz="5.07721309677765E-25"
+        izz="9.30156318321584E-10" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://fetch_description/meshes/base_camera_link.DAE" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="0.792156862745098 0.819607843137255 0.933333333333333 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="package://fetch_description/meshes/base_camera_link.DAE" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="base_camera_joint"
+    type="fixed">
+    <origin
+      xyz="0.264511452618556 -0.00793916712988701 0.198680360086821"
+      rpy="0 -0.17453292519943 0" />
+    <parent
+      link="base_link" />
+    <child
+      link="base_camera_link" />
+    <axis
+      xyz="0 0 0" />
+  </joint>
+  <link name="base_camera_optical_frame" />
+  <joint name="base_camera_optical_joint" type="fixed">
+    <origin rpy="1.5707963267966 0 1.5707963267966" xyz="0 0 0" />
+    <parent link="base_camera_link" />
+    <child link="base_camera_optical_frame" />
+  </joint>
 </robot>
