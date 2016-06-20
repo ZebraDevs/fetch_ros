@@ -2,6 +2,9 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.7.6 (2016-05-26)
 ------------------
 * Allow FetchDepthLayer to send empty clouds
