@@ -2,8 +2,8 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.7 (2016-06-20)
+------------------
 * remove run_depend on metapackage
 * Contributors: Michael Ferguson
 

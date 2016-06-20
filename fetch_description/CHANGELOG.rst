@@ -2,8 +2,8 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.7 (2016-06-20)
+------------------
 * add base camera links to freight URDF
 * Contributors: Michael Ferguson
 
