@@ -4,6 +4,7 @@
   <description>
     Launch and configuration files for calibrating Freight using the 'robot_calibration' package.
   </description>
+  <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>
   <maintainer email="narora@fetchrobotics.com">Niharika Arora</maintainer>
   <license>Apache2</license>
   
