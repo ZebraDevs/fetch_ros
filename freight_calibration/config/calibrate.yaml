@@ -9,9 +9,9 @@ free_frames:
  - name: base_camera_joint
    x: false
    y: false
-   z: true
-   roll: true
-   pitch: false
+   z: false
+   roll: false
+   pitch: true
    yaw: false
 error_blocks:
  - name: ground_plane
