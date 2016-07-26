@@ -2,8 +2,8 @@
 Changelog for package freight_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.9 (2016-07-26)
+------------------
 * updated script and corrected calibration parameters
 * Contributors: narora1
 
