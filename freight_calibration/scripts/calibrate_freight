@@ -57,19 +57,6 @@ def update_robot_launch(launch, calibration, install_dir):
                 if child.get("name") == "calibration_date":
                     child.set("value", strftime("%Y-%m-%d %H:%M:%S"))
 
-                elif child.get("name") == "robot_description":
-                    child.set("textfile", os.path.join(install_dir, calibration["robot_description"]))
-
-                elif child.get("name") in calibration.keys():
-                    child.set("value", calibration[child.get("name")])
-
-            if child.tag == "arg":
-                if child.get("name") == "rgb_camera_info_url":
-                    child.set("default", "file://%s" % os.path.join(install_dir, calibration["depth_camera_info_url"]))
-
-                elif child.get("name") == "depth_camera_info_url":
-                    child.set("default", "file://%s" % os.path.join(install_dir, calibration["depth_camera_info_url"]))
-
         except KeyError:
             pass
 
