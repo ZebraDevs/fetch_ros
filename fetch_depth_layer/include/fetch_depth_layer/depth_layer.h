@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2015, Fetch Robotics Inc.
+ * Copyright (c) 2015-2016, Fetch Robotics Inc.
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,10 +36,23 @@
 #include <costmap_2d/voxel_layer.h>
 #include <cv_bridge/cv_bridge.h>
 #include <image_transport/image_transport.h>
-#include <opencv2/rgbd/rgbd.hpp>
 #include <sensor_msgs/image_encodings.h>
 #include <tf/message_filter.h>
 #include <message_filters/subscriber.h>
+
+#if CV_MAJOR_VERSION == 3
+  #include <opencv2/rgbd.hpp>
+  using cv::rgbd::DepthCleaner;
+  using cv::rgbd::RgbdNormals;
+  using cv::rgbd::RgbdPlane;
+  using cv::rgbd::depthTo3d;
+#else
+  #include <opencv2/rgbd/rgbd.hpp>
+  using cv::DepthCleaner;
+  using cv::RgbdNormals;
+  using cv::RgbdPlane;
+  using cv::depthTo3d;
+#endif
 
 namespace costmap_2d
 {
@@ -121,11 +134,11 @@ private:
   cv::Mat K_;
 
   // clean the depth image
-  cv::Ptr<cv::DepthCleaner> depth_cleaner_;
+  cv::Ptr<DepthCleaner> depth_cleaner_;
 
   // depth image estimation
-  cv::Ptr<cv::RgbdNormals> normals_estimator_;
-  cv::Ptr<cv::RgbdPlane> plane_estimator_;
+  cv::Ptr<RgbdNormals> normals_estimator_;
+  cv::Ptr<RgbdPlane> plane_estimator_;
 };
 
 }  // namespace costmap_2d
