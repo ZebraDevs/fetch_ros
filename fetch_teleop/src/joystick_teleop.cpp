@@ -35,17 +35,21 @@
 
 #include <algorithm>
 #include <boost/thread/mutex.hpp>
+#include <string>
 
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
 
 #include <control_msgs/FollowJointTrajectoryAction.h>
 #include <control_msgs/GripperCommandAction.h>
-#include <geometry_msgs/Twist.h>
+//#include <geometry_msgs/Twist.h>
+#include <geometry_msgs/TwistStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <sensor_msgs/JointState.h>
 #include <sensor_msgs/Joy.h>
 #include <topic_tools/MuxSelect.h>
+
+#include <iostream>
 
 double integrate(double desired, double present, double max_rate, double dt)
 {
@@ -116,7 +120,7 @@ public:
     if(use_mux_)
     {
       mux_ = nh.serviceClient<topic_tools::MuxSelect>("/cmd_vel_mux/select");
-    }
+    } 
 
     cmd_vel_pub_ = nh.advertise<geometry_msgs::Twist>("/teleop/cmd_vel", 1);
     odom_sub_ = nh.subscribe("/odom", 1, &BaseTeleop::odomCallback, this);
@@ -366,7 +370,6 @@ private:
   boost::shared_ptr<client_t> client_;
 };
 
-
 // Gripper Teleop
 class GripperTeleop : public TeleopComponent
 {
@@ -525,9 +528,11 @@ public:
       double tilt = std::max(min_pos_tilt_, std::min(max_pos_tilt_, actual_pos_tilt_ + tilt_travel));
       // Publish message
       control_msgs::FollowJointTrajectoryGoal goal;
+      //geometry_msgs::Twist goal;
       goal.trajectory.joint_names.push_back(head_pan_joint_);
       goal.trajectory.joint_names.push_back(head_tilt_joint_);
       trajectory_msgs::JointTrajectoryPoint p;
+
       p.positions.push_back(pan);
       p.positions.push_back(tilt);
       p.velocities.push_back(pan_vel);
@@ -567,6 +572,208 @@ private:
   boost::shared_ptr<client_t> client_;
 };
 
+class ArmTeleop : public TeleopComponent
+{
+public:
+  ArmTeleop(const std::string& name, ros::NodeHandle& nh)
+  {
+    ros::NodeHandle pnh(nh, name);
+
+    // Button mapping
+    pnh.param("button_deadarm_up", deadarm_up_, 11);
+    pnh.param("button_deadarm_down", deadarm_down_, 9);
+    pnh.param("axis_x", axis_x_, 3);
+    pnh.param("axis_y", axis_y_, 2);
+    pnh.param("axis_y", axis_z_, 1);
+    pnh.param("button_body_frame", button_body_frame_, 0);
+    pnh.param("button_end_frame", button_end_frame_, 3);
+
+    // Base limits
+    pnh.param("max_vel_x", max_vel_x_, 5.0);
+    pnh.param("max_vel_y", max_vel_y_, 5.0);
+    pnh.param("max_vel_z", max_vel_z_, 5.0);
+    pnh.param("max_acc_x", max_acc_x_, 20.0);
+    pnh.param("max_acc_y", max_acc_y_, 20.0);
+    pnh.param("max_acc_z", max_acc_z_, 20.0);
+
+    pnh.param("max_vel_roll", max_vel_roll_, 10.0);
+    pnh.param("max_vel_pitch", max_vel_pitch_, 10.0);
+    pnh.param("max_vel_yaw", max_vel_yaw_, 10.0);
+    pnh.param("max_acc_roll", max_acc_roll_, 50.0);
+    pnh.param("max_acc_pitch", max_acc_pitch_, 50.0);
+    pnh.param("max_acc_yaw", max_acc_yaw_, 50.0);
+
+    // Maximum windup of acceleration ramping
+    pnh.param("max_windup_time", max_windup_time, 0.25);
+
+    // Mux for overriding navigation, etc.
+    //pnh.param("use_mux", use_mux_, true);
+
+    //if(use_mux_)
+    //{
+    //  mux_ = nh.serviceClient<topic_tools::MuxSelect>("/cmd_vel_mux/select");
+    //} 
+
+    cmd_vel_pub_ = nh.advertise<geometry_msgs::TwistStamped>("/arm_twist/command", 10);
+    //odom_sub_ = nh.subscribe("/odom", 1, &BaseTeleop::odomCallback, this);
+  }
+
+  virtual bool update(const sensor_msgs::Joy::ConstPtr& joy,
+                      const sensor_msgs::JointState::ConstPtr& state)
+  {
+    bool deadarm_up_pressed = joy->buttons[deadarm_up_];
+    bool deadarm_down_pressed = joy->buttons[deadarm_down_];
+
+    if (!(deadarm_up_pressed||deadarm_down_pressed))
+    {
+      stop();
+      return false;
+    }
+
+    start();
+
+    if(deadarm_up_pressed)
+    {
+      if(joy->buttons[button_body_frame_])
+        ref_frame_ = "tll_f";
+      else if(joy->buttons[button_end_frame_])
+        ref_frame_ = "wrl_f";
+
+      
+      desired_.twist.linear.x = joy->axes[axis_x_] * max_vel_x_;
+      desired_.twist.linear.y = joy->axes[axis_y_] * max_vel_y_;
+      desired_.twist.linear.z = joy->axes[axis_z_] * max_vel_z_;
+    }
+    else if(deadarm_down_pressed)
+    {
+      if(joy->buttons[button_body_frame_])
+        ref_frame_ = "tll_f";
+      else if(joy->buttons[button_end_frame_])
+        ref_frame_ = "wrl_f";
+
+      //last_.header.frame_id = ref_frame_;
+      desired_.twist.angular.x = joy->axes[axis_x_] * max_vel_roll_;
+      desired_.twist.angular.y = joy->axes[axis_y_] * max_vel_pitch_;
+      desired_.twist.angular.z = joy->axes[axis_z_] * max_vel_yaw_;
+    }
+    last_.header.frame_id = ref_frame_;
+    // We are active, don't process lower priority components
+    return true;
+  }
+
+  virtual void publish(const ros::Duration& dt)
+  {
+    if (active_)
+    {
+      /*
+      {
+        boost::mutex::scoped_lock lock(odom_mutex_);
+        // Make sure base is actually keeping up with commands
+        // When accelerating (in either direction) do not continue to ramp our
+        //   acceleration more than max_windup_time ahead of actually attained speeds.
+        // This is especially important if robot gets stuck.
+        if (last_.linear.x >= 0)
+          last_.linear.x = std::min(last_.linear.x, odom_.twist.twist.linear.x + max_acc_x_ * max_windup_time);
+        else
+          last_.linear.x = std::max(last_.linear.x, odom_.twist.twist.linear.x - max_acc_x_ * max_windup_time);
+        if (last_.angular.z >= 0)
+          last_.angular.z = std::min(last_.angular.z, odom_.twist.twist.angular.z + max_acc_w_ * max_windup_time);
+        else
+          last_.angular.z = std::max(last_.angular.z, odom_.twist.twist.angular.z - max_acc_w_ * max_windup_time);
+      }
+      */
+
+      // Ramp commands based on acceleration limits
+      last_.twist.linear.x = integrate(desired_.twist.linear.x, last_.twist.linear.x, max_acc_x_, dt.toSec());
+      last_.twist.linear.y = integrate(desired_.twist.linear.y, last_.twist.linear.y, max_acc_y_, dt.toSec());
+      last_.twist.linear.z = integrate(desired_.twist.linear.z, last_.twist.linear.z, max_acc_z_, dt.toSec());
+      last_.twist.angular.x = integrate(desired_.twist.angular.x, last_.twist.angular.x, max_acc_roll_, dt.toSec());
+      last_.twist.angular.y = integrate(desired_.twist.angular.y, last_.twist.angular.y, max_acc_pitch_, dt.toSec());
+      last_.twist.angular.z = integrate(desired_.twist.angular.z, last_.twist.angular.z, max_acc_yaw_, dt.toSec());
+      //last_.angular.z = integrate(desired_.angular.z, last_.angular.z, max_acc_w_, dt.toSec());
+      cmd_vel_pub_.publish(last_);
+    }
+  }
+
+  
+  virtual bool start()
+  {
+    /*
+    if (!active_ && use_mux_)
+    {
+      // Connect mux
+      topic_tools::MuxSelect req;
+      req.request.topic = cmd_vel_pub_.getTopic();
+      if (mux_.call(req))
+      {
+        prev_mux_topic_ = req.response.prev_topic;
+      }
+      else
+      {
+        ROS_ERROR("Unable to switch mux");
+      }
+    }*/
+    active_ = true;
+    return active_;
+  }
+  
+
+  virtual bool stop()
+  {
+    // Publish stop message
+    last_ = desired_ = geometry_msgs::TwistStamped();
+    cmd_vel_pub_.publish(last_);
+    // Disconnect mux
+    /*
+    if (active_ && use_mux_)
+    {
+      topic_tools::MuxSelect req;
+      req.request.topic = prev_mux_topic_;
+      if (!mux_.call(req))
+      {
+        ROS_ERROR("-----------Unable to switch mux");
+        return active_;
+      }
+    }*/
+    active_ = false;
+    return active_;
+  }
+
+private:
+  
+  // Buttons from params
+  int deadarm_up_, deadarm_down_, axis_x_, axis_y_, axis_z_;
+  int button_body_frame_, button_end_frame_;
+
+  // Limits from params
+  double max_vel_x_, max_vel_y_, max_vel_z_;
+  double max_vel_roll_, max_vel_pitch_, max_vel_yaw_;
+  double max_acc_x_, max_acc_y_, max_acc_z_;
+  double max_acc_roll_, max_acc_pitch_, max_acc_yaw_;
+
+  // Support for multiplexor between teleop and application base commands
+  bool use_mux_;
+  std::string prev_mux_topic_;
+  ros::ServiceClient mux_;
+
+  // Twist output, odometry feedback
+  ros::Publisher cmd_vel_pub_;
+  //ros::Subscriber odom_sub_;
+
+  // Latest feedback, mutex around it
+  boost::mutex odom_mutex_;
+  // nav_msgs::Odometry odom_;
+  // Maximum timestep that our ramping can get ahead of actual velocities
+  double max_windup_time;
+  std::string ref_frame_;
+
+  //geometry_msgs::Twist desired_;
+  //geometry_msgs::Twist last_;
+
+  geometry_msgs::TwistStamped desired_;
+  geometry_msgs::TwistStamped last_;
+
+};
 
 // This pulls all the components together
 class Teleop
@@ -596,6 +803,9 @@ public:
       c.reset(new HeadTeleop("head", nh));
       components_.push_back(c);
     }
+
+    c.reset(new ArmTeleop("arm_lin", nh));
+    components_.push_back(c);
 
     // BaseTeleop goes last
     c.reset(new BaseTeleop("base", nh));
