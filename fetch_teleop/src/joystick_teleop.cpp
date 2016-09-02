@@ -383,7 +383,8 @@ public:
     ros::NodeHandle pnh(nh, name);
 
     // Button mapping
-    pnh.param("button_deadman", deadman_, 10);
+    pnh.param("button_deadman", deadman_body_, 9);
+    pnh.param("button_deadman", deadman_end_, 11);
     pnh.param("button_open", open_button_, 0);
     pnh.param("button_close", close_button_, 3);
 
@@ -405,9 +406,10 @@ public:
   virtual bool update(const sensor_msgs::Joy::ConstPtr& joy,
                       const sensor_msgs::JointState::ConstPtr& state)
   {
-    bool deadman_pressed = joy->buttons[deadman_];
+    bool deadman_body_pressed = joy->buttons[deadman_body_];
+    bool deadman_end_pressed = joy->buttons[deadman_end_];
 
-    if (deadman_pressed)
+    if (deadman_body_pressed||deadman_end_pressed)
     {
       if (joy->buttons[open_button_])
         req_open_ = true;
@@ -440,7 +442,7 @@ public:
   }
 
 private:
-  int deadman_, open_button_, close_button_;
+  int deadman_body_, deadman_end_, open_button_, close_button_;
   double min_position_, max_position_, max_effort_;
   bool req_close_, req_open_;
   boost::shared_ptr<client_t> client_;
@@ -575,18 +577,24 @@ private:
 class ArmTeleop : public TeleopComponent
 {
 public:
-  ArmTeleop(const std::string& name, ros::NodeHandle& nh)
+  ArmTeleop(const std::string& name, ros::NodeHandle& nh) : 
+    init_point_(0)
   {
     ros::NodeHandle pnh(nh, name);
 
     // Button mapping
-    pnh.param("button_deadarm_up", deadarm_up_, 11);
-    pnh.param("button_deadarm_down", deadarm_down_, 9);
+    //pnh.param("button_deadarm_up", deadarm_up_, 11);
+    //pnh.param("button_deadarm_down", deadarm_down_, 9);
     pnh.param("axis_x", axis_x_, 3);
-    pnh.param("axis_y", axis_y_, 2);
+    pnh.param("axis_y", axis_y_, 0);
     pnh.param("axis_y", axis_z_, 1);
-    pnh.param("button_body_frame", button_body_frame_, 0);
-    pnh.param("button_end_frame", button_end_frame_, 3);
+    pnh.param("axis_roll", axis_roll_, 4);
+    pnh.param("axis_pitch", axis_pitch_, 5);
+    pnh.param("axis_yaw", axis_yaw_, 2);
+
+    pnh.param("button_body_frame", button_body_frame_, 9);
+    pnh.param("button_end_frame", button_end_frame_, 11);
+    pnh.param("button_roll_pitch", button_roll_pitch_, 2);
 
     // Base limits
     pnh.param("max_vel_x", max_vel_x_, 5.0);
@@ -596,7 +604,7 @@ public:
     pnh.param("max_acc_y", max_acc_y_, 20.0);
     pnh.param("max_acc_z", max_acc_z_, 20.0);
 
-    pnh.param("max_vel_roll", max_vel_roll_, 10.0);
+    pnh.param("max_vel_roll", max_vel_roll_, -10.0);
     pnh.param("max_vel_pitch", max_vel_pitch_, 10.0);
     pnh.param("max_vel_yaw", max_vel_yaw_, 10.0);
     pnh.param("max_acc_roll", max_acc_roll_, 50.0);
@@ -614,17 +622,18 @@ public:
     //  mux_ = nh.serviceClient<topic_tools::MuxSelect>("/cmd_vel_mux/select");
     //} 
 
-    cmd_vel_pub_ = nh.advertise<geometry_msgs::TwistStamped>("/arm_twist/command", 10);
+    cmd_vel_pub_ = nh.advertise<geometry_msgs::TwistStamped>("/arm_twist/command", 1);
     //odom_sub_ = nh.subscribe("/odom", 1, &BaseTeleop::odomCallback, this);
   }
 
   virtual bool update(const sensor_msgs::Joy::ConstPtr& joy,
                       const sensor_msgs::JointState::ConstPtr& state)
   {
-    bool deadarm_up_pressed = joy->buttons[deadarm_up_];
-    bool deadarm_down_pressed = joy->buttons[deadarm_down_];
+    bool button_body_frame_pressed = joy->buttons[button_body_frame_];
+    bool button_end_frame_pressed = joy->buttons[button_end_frame_];
+    bool button_roll_pitch_pressed = joy->buttons[button_roll_pitch_];
 
-    if (!(deadarm_up_pressed||deadarm_down_pressed))
+    if (!(button_body_frame_pressed||button_end_frame_pressed))
     {
       stop();
       return false;
@@ -632,30 +641,63 @@ public:
 
     start();
 
-    if(deadarm_up_pressed)
+    if(button_body_frame_pressed)
     {
-      if(joy->buttons[button_body_frame_])
-        ref_frame_ = "tll_f";
-      else if(joy->buttons[button_end_frame_])
-        ref_frame_ = "wrl_f";
+      if(button_roll_pitch_pressed)
+      {
+        if(init_point_ == 0)
+        {
+          roll_offset_ = joy->axes[axis_roll_];
+          pitch_offset_ = joy->axes[axis_pitch_];
+        }
+        
+        desired_.twist.angular.x = (joy->axes[axis_roll_] - roll_offset_) * max_vel_roll_;
+        desired_.twist.angular.y = (joy->axes[axis_pitch_] - pitch_offset_) * max_vel_pitch_;
 
-      
+        init_point_++;
+      }
+      else
+      {
+        desired_.twist.angular.x = 0.0;
+        desired_.twist.angular.y = 0.0;
+        init_point_ = 0;
+      }
+
+      ref_frame_ = "tll_f";
       desired_.twist.linear.x = joy->axes[axis_x_] * max_vel_x_;
       desired_.twist.linear.y = joy->axes[axis_y_] * max_vel_y_;
       desired_.twist.linear.z = joy->axes[axis_z_] * max_vel_z_;
+      desired_.twist.angular.z = joy->axes[axis_yaw_] * max_vel_yaw_;
     }
-    else if(deadarm_down_pressed)
+    else if(button_end_frame_pressed)
     {
-      if(joy->buttons[button_body_frame_])
-        ref_frame_ = "tll_f";
-      else if(joy->buttons[button_end_frame_])
-        ref_frame_ = "wrl_f";
+      if(button_roll_pitch_pressed)
+      {
+        if(init_point_ == 0)
+        {
+          roll_offset_ = joy->axes[axis_roll_];
+          pitch_offset_ = joy->axes[axis_pitch_];
+        }
 
-      //last_.header.frame_id = ref_frame_;
-      desired_.twist.angular.x = joy->axes[axis_x_] * max_vel_roll_;
-      desired_.twist.angular.y = joy->axes[axis_y_] * max_vel_pitch_;
-      desired_.twist.angular.z = joy->axes[axis_z_] * max_vel_yaw_;
+        desired_.twist.angular.x = (joy->axes[axis_roll_] - roll_offset_) * max_vel_roll_;
+        desired_.twist.angular.y = (joy->axes[axis_pitch_] - pitch_offset_) * max_vel_pitch_;
+
+        init_point_++;
+      }
+      else
+      {
+        desired_.twist.angular.x = 0.0;
+        desired_.twist.angular.y = 0.0;
+        init_point_ = 0;
+      }
+
+      ref_frame_ = "wrl_f";
+      desired_.twist.linear.x = joy->axes[axis_x_] * max_vel_x_;
+      desired_.twist.linear.y = joy->axes[axis_y_] * max_vel_y_;
+      desired_.twist.linear.z = joy->axes[axis_z_] * max_vel_z_;
+      desired_.twist.angular.z = joy->axes[axis_yaw_] * max_vel_yaw_;
     }
+
     last_.header.frame_id = ref_frame_;
     // We are active, don't process lower priority components
     return true;
@@ -687,9 +729,17 @@ public:
       last_.twist.linear.x = integrate(desired_.twist.linear.x, last_.twist.linear.x, max_acc_x_, dt.toSec());
       last_.twist.linear.y = integrate(desired_.twist.linear.y, last_.twist.linear.y, max_acc_y_, dt.toSec());
       last_.twist.linear.z = integrate(desired_.twist.linear.z, last_.twist.linear.z, max_acc_z_, dt.toSec());
+      
       last_.twist.angular.x = integrate(desired_.twist.angular.x, last_.twist.angular.x, max_acc_roll_, dt.toSec());
       last_.twist.angular.y = integrate(desired_.twist.angular.y, last_.twist.angular.y, max_acc_pitch_, dt.toSec());
+      // differential control
+      //last_.twist.angular.x = integrate((desired_.twist.angular.x-prev_roll_)/dt.toSec(), last_.twist.angular.x, max_acc_roll_, dt.toSec());
+      //last_.twist.angular.y = integrate((desired_.twist.angular.y-prev_pitch_)/dt.toSec(), last_.twist.angular.y, max_acc_pitch_, dt.toSec());
       last_.twist.angular.z = integrate(desired_.twist.angular.z, last_.twist.angular.z, max_acc_yaw_, dt.toSec());
+
+      //prev_roll_ = desired_.twist.angular.x;
+      //prev_pitch_ = desired_.twist.angular.y;
+
       //last_.angular.z = integrate(desired_.angular.z, last_.angular.z, max_acc_w_, dt.toSec());
       cmd_vel_pub_.publish(last_);
     }
@@ -742,14 +792,17 @@ public:
 private:
   
   // Buttons from params
-  int deadarm_up_, deadarm_down_, axis_x_, axis_y_, axis_z_;
-  int button_body_frame_, button_end_frame_;
+  int axis_x_, axis_y_, axis_z_, axis_roll_, axis_pitch_, axis_yaw_;
+  int button_body_frame_, button_end_frame_, button_roll_pitch_;
+  int init_point_;
 
   // Limits from params
   double max_vel_x_, max_vel_y_, max_vel_z_;
   double max_vel_roll_, max_vel_pitch_, max_vel_yaw_;
   double max_acc_x_, max_acc_y_, max_acc_z_;
   double max_acc_roll_, max_acc_pitch_, max_acc_yaw_;
+  double prev_roll_, prev_pitch_;
+  double roll_offset_, pitch_offset_;
 
   // Support for multiplexor between teleop and application base commands
   bool use_mux_;
