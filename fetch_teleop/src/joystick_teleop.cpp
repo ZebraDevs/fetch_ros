@@ -35,7 +35,6 @@
 
 #include <algorithm>
 #include <boost/thread/mutex.hpp>
-#include <string>
 
 #include <ros/ros.h>
 #include <actionlib/client/simple_action_client.h>
@@ -114,10 +113,10 @@ public:
 
     // Mux for overriding navigation, etc.
     pnh.param("use_mux", use_mux_, true);
-    if(use_mux_)
+    if (use_mux_)
     {
       mux_ = nh.serviceClient<topic_tools::MuxSelect>("/cmd_vel_mux/select");
-    } 
+    }
 
     cmd_vel_pub_ = nh.advertise<geometry_msgs::Twist>("/teleop/cmd_vel", 1);
     odom_sub_ = nh.subscribe("/odom", 1, &BaseTeleop::odomCallback, this);
@@ -381,7 +380,7 @@ public:
 
     // Button mapping
     pnh.param("button_deadman", deadman_body_, 9);
-    pnh.param("button_deadman", deadman_end_, 11);
+    pnh.param("button_deadman_arm", deadman_arm_, 11);
     pnh.param("button_open", open_button_, 0);
     pnh.param("button_close", close_button_, 3);
 
@@ -404,9 +403,9 @@ public:
                       const sensor_msgs::JointState::ConstPtr& state)
   {
     bool deadman_body_pressed = joy->buttons[deadman_body_];
-    bool deadman_end_pressed = joy->buttons[deadman_end_];
+    bool deadman_arm_pressed = joy->buttons[deadman_arm_];
 
-    if (deadman_body_pressed||deadman_end_pressed)
+    if (deadman_body_pressed||deadman_arm_pressed)
     {
       if (joy->buttons[open_button_])
         req_open_ = true;
@@ -439,7 +438,7 @@ public:
   }
 
 private:
-  int deadman_body_, deadman_end_, open_button_, close_button_;
+  int deadman_body_, deadman_arm_, open_button_, close_button_;
   double min_position_, max_position_, max_effort_;
   bool req_close_, req_open_;
   boost::shared_ptr<client_t> client_;
@@ -527,11 +526,9 @@ public:
       double tilt = std::max(min_pos_tilt_, std::min(max_pos_tilt_, actual_pos_tilt_ + tilt_travel));
       // Publish message
       control_msgs::FollowJointTrajectoryGoal goal;
-      //geometry_msgs::Twist goal;
       goal.trajectory.joint_names.push_back(head_pan_joint_);
       goal.trajectory.joint_names.push_back(head_tilt_joint_);
       trajectory_msgs::JointTrajectoryPoint p;
-
       p.positions.push_back(pan);
       p.positions.push_back(tilt);
       p.velocities.push_back(pan_vel);
@@ -587,7 +584,7 @@ public:
     pnh.param("axis_yaw", axis_yaw_, 2);
 
     pnh.param("button_body_frame", button_body_frame_, 9);
-    pnh.param("button_end_frame", button_end_frame_, 11);
+    pnh.param("button_end_effector_frame", button_end_effector_frame_, 11);
     pnh.param("button_roll_pitch", button_roll_pitch_, 2);
 
     // Base limits
@@ -607,17 +604,17 @@ public:
 
     // Maximum windup of acceleration ramping
     pnh.param("max_windup_time", max_windup_time, 0.25);
-    cmd_vel_pub_ = nh.advertise<geometry_msgs::TwistStamped>("/arm_twist/command", 10);
+    cmd_vel_pub_ = nh.advertise<geometry_msgs::TwistStamped>("/arm_controller/cartesian_twist/command", 10);
   }
 
   virtual bool update(const sensor_msgs::Joy::ConstPtr& joy,
                       const sensor_msgs::JointState::ConstPtr& state)
   {
     bool button_body_frame_pressed = joy->buttons[button_body_frame_];
-    bool button_end_frame_pressed = joy->buttons[button_end_frame_];
+    bool button_end_effector_frame_pressed = joy->buttons[button_end_effector_frame_];
     bool button_roll_pitch_pressed = joy->buttons[button_roll_pitch_];
 
-    if (!(button_body_frame_pressed||button_end_frame_pressed))
+    if (!(button_body_frame_pressed||button_end_effector_frame_pressed))
     {
       stop();
       return false;
@@ -625,11 +622,11 @@ public:
 
     start();
 
-    if(button_body_frame_pressed)
+    if (button_body_frame_pressed)
     {
-      if(button_roll_pitch_pressed)
+      if (button_roll_pitch_pressed)
       {
-        if(init_point_ == 0)
+        if (init_point_ == 0)
         {
           roll_offset_ = joy->axes[axis_roll_];
           pitch_offset_ = joy->axes[axis_pitch_];
@@ -653,11 +650,11 @@ public:
       desired_.twist.linear.z = joy->axes[axis_z_] * max_vel_z_;
       desired_.twist.angular.z = joy->axes[axis_yaw_] * max_vel_yaw_;
     }
-    else if(button_end_frame_pressed)
+    else if (button_end_effector_frame_pressed)
     {
-      if(button_roll_pitch_pressed)
+      if (button_roll_pitch_pressed)
       {
-        if(init_point_ == 0)
+        if (init_point_ == 0)
         {
           roll_offset_ = joy->axes[axis_roll_];
           pitch_offset_ = joy->axes[axis_pitch_];
@@ -725,7 +722,7 @@ private:
   
   // Buttons from params
   int axis_x_, axis_y_, axis_z_, axis_roll_, axis_pitch_, axis_yaw_;
-  int button_body_frame_, button_end_frame_, button_roll_pitch_;
+  int button_body_frame_, button_end_effector_frame_, button_roll_pitch_;
   int init_point_;
 
   // Limits from params
@@ -782,10 +779,10 @@ public:
       // Head overrides base
       c.reset(new HeadTeleop("head", nh));
       components_.push_back(c);
-    }
 
-    c.reset(new ArmTeleop("arm", nh));
-    components_.push_back(c);
+      c.reset(new ArmTeleop("arm", nh));
+      components_.push_back(c);
+    }
 
     // BaseTeleop goes last
     c.reset(new BaseTeleop("base", nh));
