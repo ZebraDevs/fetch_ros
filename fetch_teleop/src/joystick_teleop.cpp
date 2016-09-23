@@ -622,7 +622,7 @@ public:
 
     start();
 
-    if (button_body_frame_pressed)
+    if (button_body_frame_pressed && !button_end_effector_frame_pressed)
     {
       if (button_roll_pitch_pressed)
       {
@@ -650,7 +650,7 @@ public:
       desired_.twist.linear.z = joy->axes[axis_z_] * max_vel_z_;
       desired_.twist.angular.z = joy->axes[axis_yaw_] * max_vel_yaw_;
     }
-    else if (button_end_effector_frame_pressed)
+    else if (!button_body_frame_pressed && button_end_effector_frame_pressed)
     {
       if (button_roll_pitch_pressed)
       {
@@ -680,7 +680,6 @@ public:
     }
 
     last_.header.frame_id = ref_frame_;
-    // We are active, don't process lower priority components
     return true;
   }
 
