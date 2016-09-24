@@ -614,7 +614,7 @@ public:
     bool button_end_effector_frame_pressed = joy->buttons[button_end_effector_frame_];
     bool button_roll_pitch_pressed = joy->buttons[button_roll_pitch_];
 
-    if (!(button_body_frame_pressed||button_end_effector_frame_pressed))
+    if (!(button_body_frame_pressed || button_end_effector_frame_pressed) && (ros::Time::now() - last_update_ > ros::Duration(0.5)))
     {
       stop();
       return false;
@@ -649,6 +649,7 @@ public:
       desired_.twist.linear.y = joy->axes[axis_y_] * max_vel_y_;
       desired_.twist.linear.z = joy->axes[axis_z_] * max_vel_z_;
       desired_.twist.angular.z = joy->axes[axis_yaw_] * max_vel_yaw_;
+      last_update_ = ros::Time::now();
     }
     else if (!button_body_frame_pressed && button_end_effector_frame_pressed)
     {
@@ -660,7 +661,7 @@ public:
           pitch_offset_ = joy->axes[axis_pitch_];
         }
 
-        desired_.twist.angular.x = (joy->axes[axis_roll_] - roll_offset_) * max_vel_roll_;
+        desired_.twist.angular.x = -(joy->axes[axis_roll_] - roll_offset_) * max_vel_roll_;
         desired_.twist.angular.y = (joy->axes[axis_pitch_] - pitch_offset_) * max_vel_pitch_;
 
         init_point_++;
@@ -677,10 +678,10 @@ public:
       desired_.twist.linear.y = joy->axes[axis_y_] * max_vel_y_;
       desired_.twist.linear.z = joy->axes[axis_z_] * max_vel_z_;
       desired_.twist.angular.z = joy->axes[axis_yaw_] * max_vel_yaw_;
+      last_update_ = ros::Time::now();
     }
 
     last_.header.frame_id = ref_frame_;
-    last_update_ = ros::Time::now();
     return true;
   }
 
