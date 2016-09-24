@@ -379,7 +379,8 @@ public:
     ros::NodeHandle pnh(nh, name);
 
     // Button mapping
-    pnh.param("button_deadman", deadman_body_, 9);
+    pnh.param("button_deadman", deadman_, 10);
+    pnh.param("button_deadman_body", deadman_body_, 9);
     pnh.param("button_deadman_arm", deadman_arm_, 11);
     pnh.param("button_open", open_button_, 0);
     pnh.param("button_close", close_button_, 3);
@@ -402,10 +403,11 @@ public:
   virtual bool update(const sensor_msgs::Joy::ConstPtr& joy,
                       const sensor_msgs::JointState::ConstPtr& state)
   {
+    bool deadman_pressed = joy->buttons[deadman_];
     bool deadman_body_pressed = joy->buttons[deadman_body_];
     bool deadman_arm_pressed = joy->buttons[deadman_arm_];
 
-    if (deadman_body_pressed||deadman_arm_pressed)
+    if (deadman_pressed || deadman_body_pressed || deadman_arm_pressed)
     {
       if (joy->buttons[open_button_])
         req_open_ = true;
@@ -438,7 +440,7 @@ public:
   }
 
 private:
-  int deadman_body_, deadman_arm_, open_button_, close_button_;
+  int deadman_, deadman_body_, deadman_arm_, open_button_, close_button_;
   double min_position_, max_position_, max_effort_;
   bool req_close_, req_open_;
   boost::shared_ptr<client_t> client_;
@@ -587,7 +589,7 @@ public:
     pnh.param("button_end_effector_frame", button_end_effector_frame_, 11);
     pnh.param("button_roll_pitch", button_roll_pitch_, 2);
 
-    // Base limits
+    // Twist limits
     pnh.param("max_vel_x", max_vel_x_, 1.0);
     pnh.param("max_vel_y", max_vel_y_, 1.0);
     pnh.param("max_vel_z", max_vel_z_, 1.0);
@@ -595,16 +597,14 @@ public:
     pnh.param("max_acc_y", max_acc_y_, 10.0);
     pnh.param("max_acc_z", max_acc_z_, 10.0);
 
-    pnh.param("max_vel_roll", max_vel_roll_, -2.0);
+    pnh.param("max_vel_roll", max_vel_roll_, 2.0);
     pnh.param("max_vel_pitch", max_vel_pitch_, 2.0);
     pnh.param("max_vel_yaw", max_vel_yaw_, 2.0);
     pnh.param("max_acc_roll", max_acc_roll_, 10.0);
     pnh.param("max_acc_pitch", max_acc_pitch_, 10.0);
     pnh.param("max_acc_yaw", max_acc_yaw_, 10.0);
 
-    // Maximum windup of acceleration ramping
-    pnh.param("max_windup_time", max_windup_time, 0.25);
-    cmd_vel_pub_ = nh.advertise<geometry_msgs::TwistStamped>("/arm_controller/cartesian_twist/command", 10);
+    cmd_pub_ = nh.advertise<geometry_msgs::TwistStamped>("/arm_controller/cartesian_twist/command", 10);
   }
 
   virtual bool update(const sensor_msgs::Joy::ConstPtr& joy,
@@ -619,7 +619,7 @@ public:
       stop();
       return false;
     }
-
+    
     start();
 
     if (button_body_frame_pressed && !button_end_effector_frame_pressed)
@@ -632,7 +632,7 @@ public:
           pitch_offset_ = joy->axes[axis_pitch_];
         }
         
-        desired_.twist.angular.x = (joy->axes[axis_roll_] - roll_offset_) * max_vel_roll_;
+        desired_.twist.angular.x = -(joy->axes[axis_roll_] - roll_offset_) * max_vel_roll_;
         desired_.twist.angular.y = (joy->axes[axis_pitch_] - pitch_offset_) * max_vel_pitch_;
 
         init_point_++;
@@ -680,6 +680,7 @@ public:
     }
 
     last_.header.frame_id = ref_frame_;
+    last_update_ = ros::Time::now();
     return true;
   }
 
@@ -696,7 +697,7 @@ public:
       last_.twist.angular.y = integrate(desired_.twist.angular.y, last_.twist.angular.y, max_acc_pitch_, dt.toSec());
       last_.twist.angular.z = integrate(desired_.twist.angular.z, last_.twist.angular.z, max_acc_yaw_, dt.toSec());
 
-      cmd_vel_pub_.publish(last_);
+      cmd_pub_.publish(last_);
     }
   }
   
@@ -711,7 +712,7 @@ public:
   {
     // Publish stop message
     last_ = desired_ = geometry_msgs::TwistStamped();
-    cmd_vel_pub_.publish(last_);
+    cmd_pub_.publish(last_);
     
     active_ = false;
     return active_;
@@ -737,18 +738,15 @@ private:
   std::string prev_mux_topic_;
   ros::ServiceClient mux_;
 
-  // Twist output, odometry feedback
-  ros::Publisher cmd_vel_pub_;
+  // Twist output
+  ros::Publisher cmd_pub_;
 
-  // Latest feedback, mutex around it
-  boost::mutex odom_mutex_;
-
-  // Maximum timestep that our ramping can get ahead of actual velocities
-  double max_windup_time;
+  // Reference frame of twist command
   std::string ref_frame_;
 
   geometry_msgs::TwistStamped desired_;
   geometry_msgs::TwistStamped last_;
+  ros::Time last_update_;
 };
 
 // This pulls all the components together
