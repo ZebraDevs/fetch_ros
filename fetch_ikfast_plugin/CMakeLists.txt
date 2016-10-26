@@ -8,6 +8,10 @@ find_package(catkin REQUIRED COMPONENTS
   tf_conversions
 )
 
+if(${moveit_core_VERSION_MINOR} GREATER 8)
+  add_compile_options(-std=c++11)
+endif()
+
 include_directories(${catkin_INCLUDE_DIRS})
 
 catkin_package(

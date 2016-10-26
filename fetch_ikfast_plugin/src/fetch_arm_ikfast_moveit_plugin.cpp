@@ -55,6 +55,21 @@ const double LIMIT_TOLERANCE = .0000001;
 /// \brief Search modes for searchPositionIK(), see there
 enum SEARCH_MODE { OPTIMIZE_FREE_JOINT=1, OPTIMIZE_MAX_JOINT=2 };
 
+#ifndef URDF_MODEL_TYPES_H
+  // hacky, but older versions of urdf_model don't define types
+  namespace urdf
+  {
+    typedef boost::shared_ptr<Link> LinkSharedPtr;
+    typedef boost::shared_ptr<Joint> JointSharedPtr;
+
+    template<class T, class U>
+    boost::shared_ptr<T> const_pointer_cast(boost::shared_ptr<U> const & r)
+    {
+      return boost::const_pointer_cast<T>(r);
+    }
+  }
+#endif
+
 namespace ikfast_kinematics_plugin
 {
 
@@ -357,12 +372,12 @@ bool IKFastKinematicsPlugin::initialize(const std::string &robot_description,
 
   ROS_DEBUG_STREAM_NAMED("ikfast","Reading joints and links from URDF");
 
-  boost::shared_ptr<urdf::Link> link = boost::const_pointer_cast<urdf::Link>(robot_model.getLink(getTipFrame()));
+  urdf::LinkSharedPtr link = urdf::const_pointer_cast<urdf::Link>(robot_model.getLink(getTipFrame()));
   while(link->name != base_frame_ && joint_names_.size() <= num_joints_)
   {
     ROS_DEBUG_NAMED("ikfast","Link %s",link->name.c_str());
     link_names_.push_back(link->name);
-    boost::shared_ptr<urdf::Joint> joint = link->parent_joint;
+    urdf::JointSharedPtr joint = link->parent_joint;
     if(joint)
     {
       if (joint->type != urdf::Joint::UNKNOWN && joint->type != urdf::Joint::FIXED)
