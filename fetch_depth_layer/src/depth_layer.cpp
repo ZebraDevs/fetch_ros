@@ -216,7 +216,7 @@ void FetchDepthLayer::depthImageCallback(
   {
     for (int i = 0; i < cv_ptr->image.rows * cv_ptr->image.cols; i++)
     {
-      if (isnan(cv_ptr->image.at<float>(i)))
+      if (std::isnan(cv_ptr->image.at<float>(i)))
         cv_ptr->image.at<float>(i) = 25.0;
     }
   }
@@ -334,9 +334,9 @@ void FetchDepthLayer::depthImageCallback(
       if (current_point.x != 0.0 &&
           current_point.y != 0.0 &&
           current_point.z != 0.0 &&
-          !isnan(current_point.x) &&
-          !isnan(current_point.y) &&
-          !isnan(current_point.z))
+          !std::isnan(current_point.x) &&
+          !std::isnan(current_point.y) &&
+          !std::isnan(current_point.z))
       {
         if (clear_with_skipped_rays_)
         {
@@ -382,7 +382,7 @@ void FetchDepthLayer::depthImageCallback(
             float py = channels[1].at<float>(i+x, j+y);
             float pz = channels[2].at<float>(i+x, j+y);
             if (px != 0.0 && py != 0.0 && pz != 0.0 &&
-                !isnan(px) && !isnan(py) && !isnan(pz))
+                !std::isnan(px) && !std::isnan(py) && !std::isnan(pz))
             {
               if ( fabs(px - current_point.x) < 0.1 &&
                     fabs(py - current_point.y) < 0.1 &&
