@@ -2,6 +2,11 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* updates to handle OpenCV3 changes
+* Contributors: Michael Ferguson
+
 0.7.9 (2016-07-26)
 ------------------
 
