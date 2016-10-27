@@ -2,8 +2,8 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.10 (2016-10-27)
+-------------------
 * update package.xmls, add depend on fetch_ikfast_plugin
 * load the ikfast kinematics plugin
 * Contributors: Di Sun, Michael Ferguson

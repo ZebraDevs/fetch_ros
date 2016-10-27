@@ -2,8 +2,8 @@
 Changelog for package fetch_ikfast_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.10 (2016-10-27)
+-------------------
 * fix build with urdf on kinetic
 * update package.xmls, add depend on fetch_ikfast_plugin
 * get a version of ikfast plugin working on fetch
