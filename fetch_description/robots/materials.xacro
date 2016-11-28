@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<robot>
+  <material name="base_color">
+    <color rgba="0.356 0.361 0.376 1" />
+  </material>
+  <material name="wheel_color">
+    <color rgba="0.086 0.506 0.767 1" />
+  </material>
+  <material name="fetch_black">
+    <color rgba="1 1 1 1" />
+  </material>
+  <material name="fetch_white">
+    <color rgba="0.086 0.506 0.767 1" />
+  </material>
+  <material name="fetch_gripper_color">
+        <color rgba="0.356 0.361 0.376 1" />
+  </material>
+</robot> 
