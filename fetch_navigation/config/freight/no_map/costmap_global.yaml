@@ -1,0 +1,5 @@
+plugins:
+ - {name: obstacles,  type: "costmap_2d::VoxelLayer"}
+ - {name: inflater,   type: "costmap_2d::InflationLayer"}
+ - {name: social_proxemics,  type: "social_navigation_layers::ProxemicLayer"}
+ - {name: social_passing,  type: "social_navigation_layers::PassingLayer"}
