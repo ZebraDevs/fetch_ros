@@ -1,3 +1,0 @@
-[submodule "fetch_navigation/third_party/navigation_layers"]
-	path = fetch_navigation/third_party/navigation_layers
-	url = git@github.com:DLu/navigation_layers.git
