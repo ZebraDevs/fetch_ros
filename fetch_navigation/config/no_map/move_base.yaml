@@ -13,7 +13,7 @@ planner_frequency: 0.0
 planner_patience: 5.0
 NavfnROS:
   allow_unknown: true  # TODO: investigate this
-  default_tolerance: 0.0
+  default_tolerance: 1.0
   # do not restrict planner
   planner_window_x: 0.0
   planner_window_y: 0.0
