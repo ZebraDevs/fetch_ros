@@ -1,4 +1,4 @@
-global_frame: map
+global_frame: odom
 
 update_frequency: 5.0
 publish_frequency: 0.0
