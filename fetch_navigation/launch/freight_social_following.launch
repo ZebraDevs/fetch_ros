@@ -11,7 +11,7 @@
 
   <!-- Navigation parameter files -->
   <arg name="move_base_include" default="$(find fetch_navigation)/launch/include/no_map/move_base.launch.xml" />
-  <!--arg name="amcl_include" default="$(find fetch_navigation)/launch/include/amcl.launch.xml" /-->
+  <arg name="amcl_include" default="$(find fetch_navigation)/launch/include/amcl.launch.xml" />
 
   <!-- serve up a map -->
   <!--node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" /-->
