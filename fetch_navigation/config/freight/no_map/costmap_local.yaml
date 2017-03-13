@@ -8,4 +8,4 @@ plugins:
  - {name: obstacles,  type: "costmap_2d::VoxelLayer"}
  - {name: inflater,  type: "costmap_2d::InflationLayer"}
 social_proxemics:
-    cutoff: 50
+    cutoff: 25
