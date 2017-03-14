@@ -13,18 +13,16 @@ TrajectoryPlannerROS:
   holonomic_robot: false
 
 # Recovery behaviors
-recovery_behavior_enabled: true
+recovery_behavior_enabled: false
 recovery_behaviors:
   - name: "conservative_reset"
     type: "clear_costmap_recovery/ClearCostmapRecovery"
-  - name: "rotate_recovery"
-    type: "rotate_recovery/RotateRecovery"
   - name: "aggressive_reset"
     type: "clear_costmap_recovery/ClearCostmapRecovery"
 conservative_reset:
   reset_distance: 3.0
-rotate_recovery:
-  frequency: 20.0
-  sim_granularity: 0.017
+# rotate_recovery:
+#   frequency: 20.0
+#   sim_granularity: 0.017
 aggressive_reset: 
   reset_distance: 0.5
