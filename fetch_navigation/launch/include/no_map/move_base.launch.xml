@@ -11,6 +11,7 @@
   <!-- planners, costmaps, etc -->
   <node pkg="move_base" type="move_base" name="move_base" respawn="true" output="screen">
       <param name="base_global_planner" value="carrot_planner/CarrotPlanner" />
+      <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
       <rosparam file="$(find fetch_navigation)/config/no_map/costmap_common.yaml" command="load" ns="global_costmap" />
       <rosparam file="$(find fetch_navigation)/config/$(arg name)/no_map/costmap_common.yaml" command="load" ns="global_costmap" />
       <rosparam file="$(find fetch_navigation)/config/no_map/costmap_common.yaml" command="load" ns="local_costmap" />

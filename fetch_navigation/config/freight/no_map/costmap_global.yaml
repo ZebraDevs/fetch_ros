@@ -5,7 +5,7 @@ origin_x: 0.0
 origin_y: 0.0
 
 plugins:
- - {name: obstacles,  type: "costmap_2d::VoxelLayer"}
- - {name: inflater,   type: "costmap_2d::InflationLayer"}
+ - {name: obstacles,  type: "costmap_2d::ObstacleLayer"}
+# - {name: inflater,   type: "costmap_2d::InflationLayer"}
  - {name: social_proxemics,  type: "social_navigation_layers::ProxemicLayer"}
  - {name: social_passing,  type: "social_navigation_layers::PassingLayer"}

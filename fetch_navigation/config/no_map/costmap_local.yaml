@@ -1,7 +1,7 @@
 global_frame: odom
 
 rolling_window: true
-publish_frequency: 2.0
+publish_frequency: 5.0
 
 # size of costmap is specified in robot folder
 
