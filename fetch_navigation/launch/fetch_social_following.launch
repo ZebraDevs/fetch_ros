@@ -39,6 +39,8 @@
   </include>
 
   <include file="$(find leg_tracker)/launch/individual_leg_tracker.launch" ns="people_tracker"/>
+    <param name="scan_topic" value="/base_scan" />
+    <param name="fixed_frame" value="odom"/>
   <!-- Navigation requires at least one map.
        In addition, it is sometimes desirable to have a "keepout" map
        which is used for costmaps, but not localization -->
