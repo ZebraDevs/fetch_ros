@@ -1,6 +1,6 @@
 width: 4.0
 height: 4.0
-resolution: 0.05
+resolution: 0.025
 
 plugins:
  - {name: social_proxemics,  type: "social_navigation_layers::ProxemicLayer",  output: "screen"}
