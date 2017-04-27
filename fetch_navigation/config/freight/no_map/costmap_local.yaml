@@ -1,11 +1,10 @@
 width: 4.0
 height: 4.0
-resolution: 0.025
+resolution: 0.03
 
 plugins:
  - {name: social_proxemics,  type: "social_navigation_layers::ProxemicLayer",  output: "screen"}
  - {name: social_passing,  type: "social_navigation_layers::PassingLayer",  output: "screen"}
  - {name: obstacles,  type: "costmap_2d::VoxelLayer"}
  - {name: inflater,  type: "costmap_2d::InflationLayer"}
-social_proxemics:
-    cutoff: 50
+publish_frequency: 2.0

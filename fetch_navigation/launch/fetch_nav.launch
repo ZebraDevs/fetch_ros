@@ -3,7 +3,7 @@
   <!-- Navigation requires at least one map.
        In addition, it is sometimes desirable to have a "keepout" map
        which is used for costmaps, but not localization -->
-  <arg name="map_file" default="$(find fetch_maps)/maps/3_1_16_localization.yaml" />
+  <arg name="map_file" default="/home/zephire/student_space.yaml" />
   <arg name="map_keepout_file" default="$(find fetch_maps)/maps/3_1_16_keepout.yaml" />
   <arg name="use_keepout" default="false" />
 
@@ -31,7 +31,7 @@
     <arg if="$(arg use_keepout)" name="map_topic" value="map_keepout" />
   </include>
 
-  <!-- tilt the head -->
-  <node pkg="fetch_navigation" type="tilt_head.py" name="tilt_head_node" />
+  <!-- tilt the head >
+  <node pkg="fetch_navigation" type="tilt_head.py" name="tilt_head_node" /-->
 
 </launch>

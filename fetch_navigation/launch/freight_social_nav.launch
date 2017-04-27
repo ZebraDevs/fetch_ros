@@ -1,5 +1,7 @@
 <launch>
 
+  <!-- Includes -->
+  <include file="$(find leg_tracker)/launch/joint_leg_tracker.launch" ns="people_tracker"/>
   <!-- Navigation requires at least one map.
        In addition, it is sometimes desirable to have a "keepout" map
        which is used for costmaps, but not localization -->
