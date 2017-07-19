@@ -26,7 +26,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-// Author: Michael Ferguson
+// Author: Michael Ferguson, Hanjun Song
 
 /*
  * This is still a work in progress
@@ -41,7 +41,7 @@
 
 #include <control_msgs/FollowJointTrajectoryAction.h>
 #include <control_msgs/GripperCommandAction.h>
-#include <geometry_msgs/Twist.h>
+#include <geometry_msgs/TwistStamped.h>
 #include <nav_msgs/Odometry.h>
 #include <sensor_msgs/JointState.h>
 #include <sensor_msgs/Joy.h>
@@ -98,7 +98,7 @@ public:
 
     // Button mapping
     pnh.param("button_deadman", deadman_, 10);
-    pnh.param("axis_x", axis_x_, 3);
+    pnh.param("axis_x", axis_x_, 1);
     pnh.param("axis_w", axis_w_, 0);
 
     // Base limits
@@ -113,7 +113,7 @@ public:
 
     // Mux for overriding navigation, etc.
     pnh.param("use_mux", use_mux_, true);
-    if(use_mux_)
+    if (use_mux_)
     {
       mux_ = nh.serviceClient<topic_tools::MuxSelect>("/cmd_vel_mux/select");
     }
@@ -366,7 +366,6 @@ private:
   boost::shared_ptr<client_t> client_;
 };
 
-
 // Gripper Teleop
 class GripperTeleop : public TeleopComponent
 {
@@ -380,7 +379,9 @@ public:
     ros::NodeHandle pnh(nh, name);
 
     // Button mapping
+    pnh.param("button_deadman_body", deadman_body_, 9);
     pnh.param("button_deadman", deadman_, 10);
+    pnh.param("button_deadman_arm", deadman_arm_, 11);
     pnh.param("button_open", open_button_, 0);
     pnh.param("button_close", close_button_, 3);
 
@@ -403,8 +404,10 @@ public:
                       const sensor_msgs::JointState::ConstPtr& state)
   {
     bool deadman_pressed = joy->buttons[deadman_];
+    bool deadman_body_pressed = joy->buttons[deadman_body_];
+    bool deadman_arm_pressed = joy->buttons[deadman_arm_];
 
-    if (deadman_pressed)
+    if (deadman_pressed || deadman_body_pressed || deadman_arm_pressed)
     {
       if (joy->buttons[open_button_])
         req_open_ = true;
@@ -412,32 +415,50 @@ public:
         req_close_ = true;
     }
 
+    if (req_open_)
+      {
+        control_msgs::GripperCommandGoal goal;
+        goal.command.position = max_position_;
+        goal.command.max_effort = max_effort_;
+        client_->sendGoal(goal);
+        req_open_ = false;
+      }
+    else if (req_close_)
+      {
+        control_msgs::GripperCommandGoal goal;
+        goal.command.position = min_position_;
+        goal.command.max_effort = max_effort_;
+        client_->sendGoal(goal);
+        req_close_ = false;
+      }
+
     return false;
   }
 
   // This gets called at set frequency
   virtual void publish(const ros::Duration& dt)
   {
-    if (req_open_)
-    {
-      control_msgs::GripperCommandGoal goal;
-      goal.command.position = max_position_;
-      goal.command.max_effort = max_effort_;
-      client_->sendGoal(goal);
-      req_open_ = false;
-    }
-    else if (req_close_)
-    {
-      control_msgs::GripperCommandGoal goal;
-      goal.command.position = min_position_;
-      goal.command.max_effort = max_effort_;
-      client_->sendGoal(goal);
-      req_close_ = false;
-    }
   }
+  //   if (req_open_)
+  //   {
+  //     control_msgs::GripperCommandGoal goal;
+  //     goal.command.position = max_position_;
+  //     goal.command.max_effort = max_effort_;
+  //     client_->sendGoal(goal);
+  //     req_open_ = false;
+  //   }
+  //   else if (req_close_)
+  //   {
+  //     control_msgs::GripperCommandGoal goal;
+  //     goal.command.position = min_position_;
+  //     goal.command.max_effort = max_effort_;
+  //     client_->sendGoal(goal);
+  //     req_close_ = false;
+  //   }
+  // }
 
 private:
-  int deadman_, open_button_, close_button_;
+  int deadman_, deadman_body_, deadman_arm_, open_button_, close_button_;
   double min_position_, max_position_, max_effort_;
   bool req_close_, req_open_;
   boost::shared_ptr<client_t> client_;
@@ -457,8 +478,8 @@ public:
     ros::NodeHandle pnh(nh, name);
 
     // Button mapping
-    pnh.param("button_deadman", deadman_, 8);
-    pnh.param("axis_pan", axis_pan_, 0);
+    pnh.param("button_deadman", deadman_, 10);
+    pnh.param("axis_pan", axis_pan_, 2);
     pnh.param("axis_tilt", axis_tilt_, 3);
 
     // Joint limits
@@ -500,14 +521,13 @@ public:
         if (state->name[i] == head_tilt_joint_)
           actual_pos_tilt_ = state->position[i];
       }
-      return false;
     }
 
     desired_pan_ = joy->axes[axis_pan_] * max_vel_pan_;
     desired_tilt_ = joy->axes[axis_tilt_] * max_vel_tilt_;
     start();
 
-    return true;
+    return false;
   }
 
   // This gets called at set frequency
@@ -567,6 +587,150 @@ private:
   boost::shared_ptr<client_t> client_;
 };
 
+class ArmTeleop : public TeleopComponent
+{
+public:
+  ArmTeleop(const std::string& name, ros::NodeHandle& nh) : 
+    init_point_(0)
+  {
+    ros::NodeHandle pnh(nh, name);
+
+    pnh.param("axis_x", axis_x_, 1);
+    pnh.param("axis_y", axis_y_, 0);
+    pnh.param("axis_z", axis_z_, 3);
+    
+    pnh.param("axis_roll", axis_roll_, 5);
+    pnh.param("axis_pitch", axis_pitch_, 4);
+    pnh.param("axis_yaw", axis_yaw_, 6);
+
+    pnh.param("button_deadman", button_deadman_, 11);
+    pnh.param("button_angular", button_angular_, 9);
+
+    // Twist limits
+    pnh.param("max_vel_x", max_vel_x_, 1.0);
+    pnh.param("max_vel_y", max_vel_y_, 1.0);
+    pnh.param("max_vel_z", max_vel_z_, 1.0);
+    pnh.param("max_acc_x", max_acc_x_, 10.0);
+    pnh.param("max_acc_y", max_acc_y_, 10.0);
+    pnh.param("max_acc_z", max_acc_z_, 10.0);
+
+    pnh.param("max_vel_roll", max_vel_roll_, 2.0);
+    pnh.param("max_vel_pitch", max_vel_pitch_, 2.0);
+    pnh.param("max_vel_yaw", max_vel_yaw_, 2.0);
+    pnh.param("max_acc_roll", max_acc_roll_, 10.0);
+    pnh.param("max_acc_pitch", max_acc_pitch_, 10.0);
+    pnh.param("max_acc_yaw", max_acc_yaw_, 10.0);
+
+    cmd_pub_ = nh.advertise<geometry_msgs::TwistStamped>("/arm_controller/cartesian_twist/command", 10);
+  }
+
+  virtual bool update(const sensor_msgs::Joy::ConstPtr& joy,
+                      const sensor_msgs::JointState::ConstPtr& state)
+  {
+    bool button_angular_pressed = joy->buttons[button_angular_];
+    bool button_deadman_pressed = joy->buttons[button_deadman_];
+
+    if (!button_deadman_pressed && (ros::Time::now() - last_update_ > ros::Duration(0.3)))
+    {
+      stop();
+      return false;
+    }
+   
+    if (!button_deadman_pressed) 
+	return false;
+    start();
+
+    last_update_ = ros::Time::now();
+    last_.header.frame_id = "body_frame";
+    desired_.twist.linear.x = joy->axes[axis_x_] * max_vel_x_;
+    desired_.twist.linear.y = joy->axes[axis_y_] * max_vel_y_;
+    desired_.twist.linear.z = joy->axes[axis_z_] * max_vel_z_;
+
+    if (button_angular_pressed)
+    {
+      last_.header.frame_id = "end_effector_frame";
+      desired_.twist.linear.x = 0;
+      desired_.twist.linear.y = 0;
+      desired_.twist.linear.z = 0;
+      desired_.twist.angular.x = joy->axes[axis_x_] * max_vel_roll_;
+      desired_.twist.angular.y = joy->axes[axis_y_] * max_vel_pitch_;
+      desired_.twist.angular.z = joy->axes[axis_z_] * max_vel_yaw_;
+    } else {
+      desired_.twist.linear.x = joy->axes[axis_x_] * max_vel_x_;
+      desired_.twist.linear.y = joy->axes[axis_y_] * max_vel_y_;
+      desired_.twist.linear.z = joy->axes[axis_z_] * max_vel_z_;
+      desired_.twist.angular.x = 0;
+      desired_.twist.angular.y = 0;
+      desired_.twist.angular.z = 0;
+    }
+
+    return true;
+  }
+
+  virtual void publish(const ros::Duration& dt)
+  {
+    if (active_)
+    {
+      // Ramp commands based on acceleration limits
+      last_.twist.linear.x = integrate(desired_.twist.linear.x, last_.twist.linear.x, max_acc_x_, dt.toSec());
+      last_.twist.linear.y = integrate(desired_.twist.linear.y, last_.twist.linear.y, max_acc_y_, dt.toSec());
+      last_.twist.linear.z = integrate(desired_.twist.linear.z, last_.twist.linear.z, max_acc_z_, dt.toSec());
+      
+      last_.twist.angular.x = integrate(desired_.twist.angular.x, last_.twist.angular.x, max_acc_roll_, dt.toSec());
+      last_.twist.angular.y = integrate(desired_.twist.angular.y, last_.twist.angular.y, max_acc_pitch_, dt.toSec());
+      last_.twist.angular.z = integrate(desired_.twist.angular.z, last_.twist.angular.z, max_acc_yaw_, dt.toSec());
+
+      cmd_pub_.publish(last_);
+    }
+  }
+  
+  virtual bool start()
+  {
+    active_ = true;
+    return active_;
+  }
+  
+
+  virtual bool stop()
+  {
+    // Publish stop message
+    last_ = desired_ = geometry_msgs::TwistStamped();
+    cmd_pub_.publish(last_);
+    
+    active_ = false;
+    return active_;
+  }
+
+private:
+  
+  // Buttons from params
+  int axis_x_, axis_y_, axis_z_, axis_roll_, axis_pitch_, axis_yaw_;
+  int button_angular_, button_deadman_;
+  int init_point_;
+
+  // Limits from params
+  double max_vel_x_, max_vel_y_, max_vel_z_;
+  double max_vel_roll_, max_vel_pitch_, max_vel_yaw_;
+  double max_acc_x_, max_acc_y_, max_acc_z_;
+  double max_acc_roll_, max_acc_pitch_, max_acc_yaw_;
+  double prev_roll_, prev_pitch_;
+  double roll_offset_, pitch_offset_;
+
+  // Support for multiplexor between teleop and application base commands
+  bool use_mux_;
+  std::string prev_mux_topic_;
+  ros::ServiceClient mux_;
+
+  // Twist output
+  ros::Publisher cmd_pub_;
+
+  // Reference frame of twist command
+  std::string ref_frame_;
+
+  geometry_msgs::TwistStamped desired_;
+  geometry_msgs::TwistStamped last_;
+  ros::Time last_update_;
+};
 
 // This pulls all the components together
 class Teleop
@@ -594,6 +758,9 @@ public:
 
       // Head overrides base
       c.reset(new HeadTeleop("head", nh));
+      components_.push_back(c);
+
+      c.reset(new ArmTeleop("arm", nh));
       components_.push_back(c);
     }
 

@@ -35,6 +35,6 @@ install(
 )
 
 install(
-  PROGRAMS scripts/tuck_arm.py
+  PROGRAMS scripts/tuck_arm.py scripts/head_track.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
