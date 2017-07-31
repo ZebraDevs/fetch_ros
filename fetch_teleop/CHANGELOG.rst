@@ -2,8 +2,8 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.11 (2017-07-31)
+-------------------
 * simpified with easier controls
 * add joystick teleop for arm control
 * Contributors: Hanjun Song, Michael Ferguson
