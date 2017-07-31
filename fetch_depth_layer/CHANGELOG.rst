@@ -2,6 +2,12 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* scoped 'isnan' with 'std'
+  Fixes compilation errors while compiling with c++11 flags
+* Contributors: Priyam Parashar
+
 0.7.10 (2016-10-27)
 -------------------
 * updates to handle OpenCV3 changes

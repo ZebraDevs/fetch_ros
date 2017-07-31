@@ -2,6 +2,9 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.7.10 (2016-10-27)
 -------------------
 
