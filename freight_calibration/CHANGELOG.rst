@@ -2,6 +2,9 @@
 Changelog for package freight_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.7.11 (2017-07-31)
 -------------------
 

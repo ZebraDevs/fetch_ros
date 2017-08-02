@@ -2,6 +2,11 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add dependency for moveit
+* Contributors: Michael Ferguson
+
 0.7.11 (2017-07-31)
 -------------------
 

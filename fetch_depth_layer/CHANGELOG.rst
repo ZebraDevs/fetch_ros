@@ -2,6 +2,9 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.7.11 (2017-07-31)
 -------------------
 * scoped 'isnan' with 'std'
