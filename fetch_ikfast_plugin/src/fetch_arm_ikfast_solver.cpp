@@ -177,11 +177,11 @@ inline float IKatan2Simple(float fy, float fx) {
     return atan2f(fy,fx);
 }
 inline float IKatan2(float fy, float fx) {
-    if( isnan(fy) ) {
-        IKFAST_ASSERT(!isnan(fx)); // if both are nan, probably wrong value will be returned
+    if( std::isnan(fy) ) {
+        IKFAST_ASSERT(!std::isnan(fx)); // if both are nan, probably wrong value will be returned
         return float(IKPI_2);
     }
-    else if( isnan(fx) ) {
+    else if( std::isnan(fx) ) {
         return 0;
     }
     return atan2f(fy,fx);
@@ -190,11 +190,11 @@ inline double IKatan2Simple(double fy, double fx) {
     return atan2(fy,fx);
 }
 inline double IKatan2(double fy, double fx) {
-    if( isnan(fy) ) {
-        IKFAST_ASSERT(!isnan(fx)); // if both are nan, probably wrong value will be returned
+    if( std::isnan(fy) ) {
+        IKFAST_ASSERT(!std::isnan(fx)); // if both are nan, probably wrong value will be returned
         return IKPI_2;
     }
-    else if( isnan(fx) ) {
+    else if( std::isnan(fx) ) {
         return 0;
     }
     return atan2(fy,fx);
@@ -213,7 +213,7 @@ inline CheckValue<T> IKatan2WithCheck(T fy, T fx, T epsilon)
     CheckValue<T> ret;
     ret.valid = false;
     ret.value = 0;
-    if( !isnan(fy) && !isnan(fx) ) {
+    if( !std::isnan(fy) && !std::isnan(fx) ) {
         if( IKabs(fy) >= IKFAST_ATAN2_MAGTHRESH || IKabs(fx) > IKFAST_ATAN2_MAGTHRESH ) {
             ret.value = IKatan2Simple(fy,fx);
             ret.valid = true;
@@ -3219,7 +3219,7 @@ if( cj11array[0] >= -1-IKFAST_SINCOS_THRESH && cj11array[0] <= 1+IKFAST_SINCOS_T
     j11array[1] = -j11array[0];
     sj11array[1] = -sj11array[0];
 }
-else if( isnan(cj11array[0]) )
+else if( std::isnan(cj11array[0]) )
 {
     // probably any value will work
     j11valid[0] = true;
@@ -3285,7 +3285,7 @@ if( sj11array[0] >= -1-IKFAST_SINCOS_THRESH && sj11array[0] <= 1+IKFAST_SINCOS_T
     j11array[1] = j11array[0] > 0 ? (IKPI-j11array[0]) : (-IKPI-j11array[0]);
     cj11array[1] = -cj11array[0];
 }
-else if( isnan(sj11array[0]) )
+else if( std::isnan(sj11array[0]) )
 {
     // probably any value will work
     j11valid[0] = true;
@@ -4987,7 +4987,7 @@ if( sj11array[0] >= -1-IKFAST_SINCOS_THRESH && sj11array[0] <= 1+IKFAST_SINCOS_T
     j11array[1] = j11array[0] > 0 ? (IKPI-j11array[0]) : (-IKPI-j11array[0]);
     cj11array[1] = -cj11array[0];
 }
-else if( isnan(sj11array[0]) )
+else if( std::isnan(sj11array[0]) )
 {
     // probably any value will work
     j11valid[0] = true;
@@ -5903,7 +5903,7 @@ if( cj11array[0] >= -1-IKFAST_SINCOS_THRESH && cj11array[0] <= 1+IKFAST_SINCOS_T
     j11array[1] = -j11array[0];
     sj11array[1] = -sj11array[0];
 }
-else if( isnan(cj11array[0]) )
+else if( std::isnan(cj11array[0]) )
 {
     // probably any value will work
     j11valid[0] = true;
@@ -7502,7 +7502,7 @@ if( cj9array[0] >= -1-IKFAST_SINCOS_THRESH && cj9array[0] <= 1+IKFAST_SINCOS_THR
     j9array[1] = -j9array[0];
     sj9array[1] = -sj9array[0];
 }
-else if( isnan(cj9array[0]) )
+else if( std::isnan(cj9array[0]) )
 {
     // probably any value will work
     j9valid[0] = true;
