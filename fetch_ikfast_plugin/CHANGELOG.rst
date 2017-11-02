@@ -2,6 +2,11 @@
 Changelog for package fetch_ikfast_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* use std::isnan for c++11 support
+* Contributors: Shingo Kitagawa
+
 0.7.12 (2017-08-02)
 -------------------
 

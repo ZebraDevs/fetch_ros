@@ -2,6 +2,16 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* add apply_planning_scene
+* [moveit_config] Add CHOMP planner demo launch.
+  Enabling `CHOMP` on RViz by following the [tutorial](http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/chomp_interface_tutorial.html) (which currently included false information. I'll open a PR right after this).
+  Tested on Xenial-Kinetic
+  This commit is not necessarily intended to merged in. But would be nice to be kept for the entire MoveIt! community as a reference if possible. At least this will remain on the fork of @130s.
+  *This PR is sponsored by [PlusOne Robotics](http://plusonerobotics.com) as part of [World MoveIt! Day 2017 hackathon](http://moveit.ros.org/events/world-moveit-day-2017)*
+* Contributors: Isaac I.Y. Saito, Shingo Kitagawa
+
 0.7.12 (2017-08-02)
 -------------------
 * add dependency for moveit
