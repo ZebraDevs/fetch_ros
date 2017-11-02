@@ -2,8 +2,8 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.13 (2017-11-02)
+-------------------
 * add apply_planning_scene
 * [moveit_config] Add CHOMP planner demo launch.
   Enabling `CHOMP` on RViz by following the [tutorial](http://docs.ros.org/kinetic/api/moveit_tutorials/html/doc/chomp_interface_tutorial.html) (which currently included false information. I'll open a PR right after this).

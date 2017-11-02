@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package>
   <name>fetch_maps</name>
-  <version>0.7.12</version>
+  <version>0.7.13</version>
   <description>The fetch_maps package</description>
 
   <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>

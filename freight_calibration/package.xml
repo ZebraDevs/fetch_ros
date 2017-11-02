@@ -1,6 +1,6 @@
 <package>
   <name>freight_calibration</name>
-  <version>0.7.12</version>
+  <version>0.7.13</version>
   <description>
     Launch and configuration files for calibrating Freight using the 'robot_calibration' package.
   </description>
