@@ -8,7 +8,6 @@
     <created>2015-01-31T13:29:03</created>
     <modified>2015-01-31T13:29:03</modified>
     <unit name="meter" meter="1"/>
-    <up_axis>Z_UP</up_axis>
   </asset>
   <library_images>
     <image id="head_tilt_uv" name="head_tilt_uv">

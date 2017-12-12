@@ -8,7 +8,6 @@
     <created>2015-01-30T23:57:00</created>
     <modified>2015-01-30T23:57:00</modified>
     <unit name="meter" meter="1"/>
-    <up_axis>Z_UP</up_axis>
   </asset>
   <library_images>
     <image id="shoulder_lift_uv" name="shoulder_lift_uv">

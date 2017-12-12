@@ -8,7 +8,6 @@
     <created>2015-01-29T22:54:40</created>
     <modified>2015-01-29T22:54:40</modified>
     <unit name="meter" meter="1"/>
-    <up_axis>Z_UP</up_axis>
   </asset>
   <library_images>
     <image id="elbow_flex_uv" name="elbow_flex_uv">

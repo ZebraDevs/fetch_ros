@@ -8,7 +8,6 @@
     <created>2015-01-31T11:01:45</created>
     <modified>2015-01-31T11:01:45</modified>
     <unit name="meter" meter="1"/>
-    <up_axis>Z_UP</up_axis>
   </asset>
   <library_images>
     <image id="wrist_flex_uv" name="wrist_flex_uv">
