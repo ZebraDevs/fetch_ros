@@ -2,6 +2,17 @@
 Changelog for package fetch_ikfast_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.7.13 (2017-11-02)
+-------------------
+* use std::isnan for c++11 support
+* Contributors: Shingo Kitagawa
+
+0.7.12 (2017-08-02)
+-------------------
+
+0.7.11 (2017-07-31)
+-------------------
+
 0.7.10 (2016-10-27)
 -------------------
 * fix build with urdf on kinetic

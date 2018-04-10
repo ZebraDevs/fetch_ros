@@ -1,7 +1,7 @@
 <package>
 
   <name>fetch_moveit_config</name>
-  <version>0.7.10</version>
+  <version>0.7.13</version>
   <description>
      An automatically generated package with all the configuration and launch files for using the fetch_urdf with the MoveIt Motion Planning Framework
   </description>
@@ -22,6 +22,7 @@
   <run_depend>fetch_ikfast_plugin</run_depend>
   <run_depend>joint_state_publisher</run_depend>
   <run_depend>moveit_fake_controller_manager</run_depend>
+  <run_depend>moveit_kinematics</run_depend>
   <run_depend>moveit_ros_move_group</run_depend>
   <run_depend>moveit_planners_ompl</run_depend>
   <run_depend>moveit_python</run_depend>
