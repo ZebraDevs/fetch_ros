@@ -1,4 +1,5 @@
 <robot name="fetch">
+  <link name="dummy_link"/>
   <link name="base_link">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.0036 0.0 0.0014" />
@@ -21,6 +22,11 @@
       </geometry>
     </collision>
   </link>
+  <joint name="dummy_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="dummy_link" />
+    <child link="base_link" />
+  </joint>
   <link name="r_wheel_link">
     <inertial>
       <origin rpy="0 0 0" xyz="0 0 0" />
