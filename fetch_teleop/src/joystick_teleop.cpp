@@ -98,18 +98,18 @@ public:
 
     // Button mapping
     pnh.param("button_deadman", deadman_, 10);
-    pnh.param("axis_x", axis_x_, 3);
+    pnh.param("axis_x", axis_x_, 1);
     pnh.param("axis_w", axis_w_, 0);
 
     // Base limits
-    pnh.param("max_vel_x", max_vel_x_, 1.0);
-    pnh.param("min_vel_x", min_vel_x_, -0.5);
-    pnh.param("max_vel_w", max_vel_w_, 3.0);
-    pnh.param("max_acc_x", max_acc_x_, 1.0);
-    pnh.param("max_acc_w", max_acc_w_, 3.0);
+    pnh.param("max_vel_x", max_vel_x_, 0.25);
+    pnh.param("min_vel_x", min_vel_x_, -0.125);
+    pnh.param("max_vel_w", max_vel_w_, 0.75);
+    pnh.param("max_acc_x", max_acc_x_, 0.5);
+    pnh.param("max_acc_w", max_acc_w_, 1.5);
 
     // Maximum windup of acceleration ramping
-    pnh.param("max_windup_time", max_windup_time, 0.25);
+    pnh.param("max_windup_time", max_windup_time, 0.1);
 
     // Mux for overriding navigation, etc.
     pnh.param("use_mux", use_mux_, true);
@@ -411,29 +411,31 @@ public:
         req_close_ = true;
     }
 
+    if (req_open_)
+      {
+        control_msgs::GripperCommandGoal goal;
+        goal.command.position = max_position_;
+        goal.command.max_effort = max_effort_;
+        client_->sendGoal(goal);
+        req_open_ = false;
+      }
+    else if (req_close_)
+      {
+        control_msgs::GripperCommandGoal goal;
+        goal.command.position = min_position_;
+        goal.command.max_effort = max_effort_;
+        client_->sendGoal(goal);
+        req_close_ = false;
+      }
+
     return false;
   }
 
   // This gets called at set frequency
   virtual void publish(const ros::Duration& dt)
   {
-    if (req_open_)
-    {
-      control_msgs::GripperCommandGoal goal;
-      goal.command.position = max_position_;
-      goal.command.max_effort = max_effort_;
-      client_->sendGoal(goal);
-      req_open_ = false;
-    }
-    else if (req_close_)
-    {
-      control_msgs::GripperCommandGoal goal;
-      goal.command.position = min_position_;
-      goal.command.max_effort = max_effort_;
-      client_->sendGoal(goal);
-      req_close_ = false;
-    }
   }
+  
 
 private:
   int deadman_, open_button_, close_button_;
@@ -456,8 +458,8 @@ public:
     ros::NodeHandle pnh(nh, name);
 
     // Button mapping
-    pnh.param("button_deadman", deadman_, 8);
-    pnh.param("axis_pan", axis_pan_, 0);
+    pnh.param("button_deadman", deadman_, 10);
+    pnh.param("axis_pan", axis_pan_, 2);
     pnh.param("axis_tilt", axis_tilt_, 3);
 
     // Joint limits
@@ -506,7 +508,7 @@ public:
     desired_tilt_ = joy->axes[axis_tilt_] * max_vel_tilt_;
     start();
 
-    return true;
+    return false;
   }
 
   // This gets called at set frequency
@@ -569,34 +571,34 @@ private:
 class ArmTeleop : public TeleopComponent
 {
 public:
-  ArmTeleop(const std::string& name, ros::NodeHandle& nh)
+ ArmTeleop(const std::string& name, ros::NodeHandle& nh)
   {
     ros::NodeHandle pnh(nh, name);
 
-    pnh.param("axis_x", axis_x_, 3);
-    pnh.param("axis_y", axis_y_, 2);
-    pnh.param("axis_z", axis_z_, 1);
-    pnh.param("axis_roll", axis_roll_, 2);
-    pnh.param("axis_pitch", axis_pitch_, 3);
-    pnh.param("axis_yaw", axis_yaw_, 0);
+    pnh.param("axis_x", axis_x_, 1);
+    pnh.param("axis_y", axis_y_, 0);
+    pnh.param("axis_z", axis_z_, 3);
+    pnh.param("axis_roll", axis_roll_, 1);
+    pnh.param("axis_pitch", axis_pitch_, 0);
+    pnh.param("axis_yaw", axis_yaw_, 3);
 
-    pnh.param("button_arm_linear", button_linear_, 9);
-    pnh.param("button_arm_angular", button_angular_, 11);
+    pnh.param("button_arm_linear", button_linear_, 11);
+    pnh.param("button_arm_angular", button_angular_, 9);
 
     // Twist limits
-    pnh.param("max_vel_x", max_vel_x_, 1.0);
-    pnh.param("max_vel_y", max_vel_y_, 1.0);
-    pnh.param("max_vel_z", max_vel_z_, 1.0);
-    pnh.param("max_acc_x", max_acc_x_, 10.0);
-    pnh.param("max_acc_y", max_acc_y_, 10.0);
-    pnh.param("max_acc_z", max_acc_z_, 10.0);
+    pnh.param("max_vel_x", max_vel_x_, 0.05);
+    pnh.param("max_vel_y", max_vel_y_, 0.05);
+    pnh.param("max_vel_z", max_vel_z_, 0.05);
+    pnh.param("max_acc_x", max_acc_x_, 1.0);
+    pnh.param("max_acc_y", max_acc_y_, 1.0);
+    pnh.param("max_acc_z", max_acc_z_, 1.0);
 
-    pnh.param("max_vel_roll", max_vel_roll_, 2.0);
-    pnh.param("max_vel_pitch", max_vel_pitch_, 2.0);
-    pnh.param("max_vel_yaw", max_vel_yaw_, 2.0);
-    pnh.param("max_acc_roll", max_acc_roll_, 10.0);
-    pnh.param("max_acc_pitch", max_acc_pitch_, 10.0);
-    pnh.param("max_acc_yaw", max_acc_yaw_, 10.0);
+    pnh.param("max_vel_roll", max_vel_roll_, 0.5);
+    pnh.param("max_vel_pitch", max_vel_pitch_, 0.5);
+    pnh.param("max_vel_yaw", max_vel_yaw_, 0.5);
+    pnh.param("max_acc_roll", max_acc_roll_, 2.0);
+    pnh.param("max_acc_pitch", max_acc_pitch_, 2.0);
+    pnh.param("max_acc_yaw", max_acc_yaw_, 2.0);
 
     cmd_pub_ = nh.advertise<geometry_msgs::TwistStamped>("/arm_controller/cartesian_twist/command", 10);
   }
@@ -604,6 +606,7 @@ public:
   virtual bool update(const sensor_msgs::Joy::ConstPtr& joy,
                       const sensor_msgs::JointState::ConstPtr& state)
   {
+
     bool button_linear_pressed = joy->buttons[button_linear_];
     bool button_angular_pressed = joy->buttons[button_angular_];
 
@@ -657,7 +660,6 @@ public:
       last_.twist.linear.x = integrate(desired_.twist.linear.x, last_.twist.linear.x, max_acc_x_, dt.toSec());
       last_.twist.linear.y = integrate(desired_.twist.linear.y, last_.twist.linear.y, max_acc_y_, dt.toSec());
       last_.twist.linear.z = integrate(desired_.twist.linear.z, last_.twist.linear.z, max_acc_z_, dt.toSec());
-
       last_.twist.angular.x = integrate(desired_.twist.angular.x, last_.twist.angular.x, max_acc_roll_, dt.toSec());
       last_.twist.angular.y = integrate(desired_.twist.angular.y, last_.twist.angular.y, max_acc_pitch_, dt.toSec());
       last_.twist.angular.z = integrate(desired_.twist.angular.z, last_.twist.angular.z, max_acc_yaw_, dt.toSec());

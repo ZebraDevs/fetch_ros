@@ -4,6 +4,7 @@ project(fetch_teleop)
 if (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
 endif()
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 find_package(Boost REQUIRED)
 find_package(catkin REQUIRED
@@ -35,6 +36,6 @@ install(
 )
 
 install(
-  PROGRAMS scripts/tuck_arm.py
+  PROGRAMS scripts/tuck_arm.py scripts/head_track.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
