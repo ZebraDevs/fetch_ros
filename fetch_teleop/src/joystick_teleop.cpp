@@ -102,14 +102,14 @@ public:
     pnh.param("axis_w", axis_w_, 0);
 
     // Base limits
-    pnh.param("max_vel_x", max_vel_x_, 1.0);
-    pnh.param("min_vel_x", min_vel_x_, -0.5);
-    pnh.param("max_vel_w", max_vel_w_, 3.0);
-    pnh.param("max_acc_x", max_acc_x_, 1.0);
-    pnh.param("max_acc_w", max_acc_w_, 3.0);
+    pnh.param("max_vel_x", max_vel_x_, 0.25);
+    pnh.param("min_vel_x", min_vel_x_, -0.125);
+    pnh.param("max_vel_w", max_vel_w_, 0.75);
+    pnh.param("max_acc_x", max_acc_x_, 0.5);
+    pnh.param("max_acc_w", max_acc_w_, 1.5);
 
     // Maximum windup of acceleration ramping
-    pnh.param("max_windup_time", max_windup_time, 0.25);
+    pnh.param("max_windup_time", max_windup_time, 0.1);
 
     // Mux for overriding navigation, etc.
     pnh.param("use_mux", use_mux_, true);
@@ -132,7 +132,7 @@ public:
       stop();
       return false;
     }
-    
+
     start();
 
     if (joy->axes[axis_x_] > 0.0)
@@ -173,7 +173,6 @@ public:
 
   virtual bool start()
   {
-  
     if (!active_ && use_mux_)
     {
       // Connect mux
@@ -579,27 +578,27 @@ public:
     pnh.param("axis_x", axis_x_, 1);
     pnh.param("axis_y", axis_y_, 0);
     pnh.param("axis_z", axis_z_, 3);
-    pnh.param("axis_roll", axis_roll_, 2);
-    pnh.param("axis_pitch", axis_pitch_, 3);
-    pnh.param("axis_yaw", axis_yaw_, 0);
+    pnh.param("axis_roll", axis_roll_, 1);
+    pnh.param("axis_pitch", axis_pitch_, 0);
+    pnh.param("axis_yaw", axis_yaw_, 3);
 
     pnh.param("button_arm_linear", button_linear_, 11);
     pnh.param("button_arm_angular", button_angular_, 9);
 
     // Twist limits
-    pnh.param("max_vel_x", max_vel_x_, 1.0);
-    pnh.param("max_vel_y", max_vel_y_, 1.0);
-    pnh.param("max_vel_z", max_vel_z_, 1.0);
-    pnh.param("max_acc_x", max_acc_x_, 10.0);
-    pnh.param("max_acc_y", max_acc_y_, 10.0);
-    pnh.param("max_acc_z", max_acc_z_, 10.0);
+    pnh.param("max_vel_x", max_vel_x_, 0.05);
+    pnh.param("max_vel_y", max_vel_y_, 0.05);
+    pnh.param("max_vel_z", max_vel_z_, 0.05);
+    pnh.param("max_acc_x", max_acc_x_, 1.0);
+    pnh.param("max_acc_y", max_acc_y_, 1.0);
+    pnh.param("max_acc_z", max_acc_z_, 1.0);
 
-    pnh.param("max_vel_roll", max_vel_roll_, 2.0);
-    pnh.param("max_vel_pitch", max_vel_pitch_, 2.0);
-    pnh.param("max_vel_yaw", max_vel_yaw_, 2.0);
-    pnh.param("max_acc_roll", max_acc_roll_, 10.0);
-    pnh.param("max_acc_pitch", max_acc_pitch_, 10.0);
-    pnh.param("max_acc_yaw", max_acc_yaw_, 10.0);
+    pnh.param("max_vel_roll", max_vel_roll_, 0.5);
+    pnh.param("max_vel_pitch", max_vel_pitch_, 0.5);
+    pnh.param("max_vel_yaw", max_vel_yaw_, 0.5);
+    pnh.param("max_acc_roll", max_acc_roll_, 2.0);
+    pnh.param("max_acc_pitch", max_acc_pitch_, 2.0);
+    pnh.param("max_acc_yaw", max_acc_yaw_, 2.0);
 
     cmd_pub_ = nh.advertise<geometry_msgs::TwistStamped>("/arm_controller/cartesian_twist/command", 10);
   }
