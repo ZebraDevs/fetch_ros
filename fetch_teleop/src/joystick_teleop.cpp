@@ -576,9 +576,9 @@ public:
   {
     ros::NodeHandle pnh(nh, name);
 
-    pnh.param("axis_x", axis_x_, 3);
-    pnh.param("axis_y", axis_y_, 2);
-    pnh.param("axis_z", axis_z_, 1);
+    pnh.param("axis_x", axis_x_, 1);
+    pnh.param("axis_y", axis_y_, 0);
+    pnh.param("axis_z", axis_z_, 3);
     pnh.param("axis_roll", axis_roll_, 2);
     pnh.param("axis_pitch", axis_pitch_, 3);
     pnh.param("axis_yaw", axis_yaw_, 0);
