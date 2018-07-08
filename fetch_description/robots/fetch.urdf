@@ -1,4 +1,18 @@
 <robot name="fetch">
+  <!-- Added here so gazebo doesnt complain. Removing this gives warning:
+  The root link base_link has an inertia specified in the URDF, but KDL does not support a root link with an inertia.
+  As a workaround, you can add an extra dummy link to your URDF.
+
+  Since the root cannot have inertia in KDL, we make a dummy_link to act as the root.-->
+  <joint name="dummy_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0" />
+    <parent link="dummy_link" />
+    <child link="base_link" />
+  </joint>
+  <link name="dummy_link">
+    <origin rpy="0 0 0" xyz="0 0 0" />
+  </link>
+  
   <link name="base_link">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.0036 0.0 0.0014" />
