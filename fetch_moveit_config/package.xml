@@ -6,7 +6,9 @@
      An automatically generated package with all the configuration and launch files for using the fetch_urdf with the MoveIt Motion Planning Framework
   </description>
   <author email="assistant@moveit.ros.org">MoveIt Setup Assistant</author>
-  <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>
+
+  <maintainer email="rtoris@fetchrobotics.com">Russell Toris</maintainer>
+  <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
 
   <license>BSD</license>
 

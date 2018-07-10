@@ -4,7 +4,9 @@
   <version>0.7.13</version>
   <description>The fetch_depth_layer package</description>
 
-  <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>
+  <author>Michael Ferguson</author>
+  <maintainer email="rtoris@fetchrobotics.com">Russell Toris</maintainer>
+  <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
 
   <license>BSD</license>
 

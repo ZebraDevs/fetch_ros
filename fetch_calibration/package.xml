@@ -4,8 +4,11 @@
   <description>
     Launch and configuration files for calibrating Fetch using the 'robot_calibration' package.
   </description>
+
   <author>Michael Ferguson</author>
-  <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>
+  <maintainer email="rtoris@fetchrobotics.com">Russell Toris</maintainer>
+  <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
+
   <license>Apache2</license>
   <url>http://ros.org/wiki/fetch_calibration</url>
   

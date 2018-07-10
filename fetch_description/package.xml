@@ -4,9 +4,12 @@
   <description>
     URDF for Fetch Robot.
   </description>
+
   <author>Michael Ferguson</author>
   <author>Melonee Wise</author>
-  <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>
+  <maintainer email="rtoris@fetchrobotics.com">Russell Toris</maintainer>
+  <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
+
   <license>CreativeCommons-Attribution-NonCommercial-NoDerivatives-4.0</license>
   <buildtool_depend>catkin</buildtool_depend>
   <run_depend>urdf</run_depend>

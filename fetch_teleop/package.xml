@@ -4,8 +4,11 @@
   <description>
     Teleoperation for fetch and freight.
   </description>
+
   <author>Michael Ferguson</author>
-  <maintainer email="mferguson@fetchrobotics.com">Michael Ferguson</maintainer>
+  <maintainer email="rtoris@fetchrobotics.com">Russell Toris</maintainer>
+  <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
+
   <license>BSD</license>
   <url>http://ros.org/wiki/fetch_teleop</url>
   
