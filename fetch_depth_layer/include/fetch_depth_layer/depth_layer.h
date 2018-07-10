@@ -40,19 +40,11 @@
 #include <tf/message_filter.h>
 #include <message_filters/subscriber.h>
 
-#if CV_MAJOR_VERSION == 3
-  #include <opencv2/rgbd.hpp>
-  using cv::rgbd::DepthCleaner;
-  using cv::rgbd::RgbdNormals;
-  using cv::rgbd::RgbdPlane;
-  using cv::rgbd::depthTo3d;
-#else
-  #include <opencv2/rgbd/rgbd.hpp>
-  using cv::DepthCleaner;
-  using cv::RgbdNormals;
-  using cv::RgbdPlane;
-  using cv::depthTo3d;
-#endif
+#include <opencv2/rgbd.hpp>
+using cv::rgbd::DepthCleaner;
+using cv::rgbd::RgbdNormals;
+using cv::rgbd::RgbdPlane;
+using cv::rgbd::depthTo3d;
 
 namespace costmap_2d
 {
