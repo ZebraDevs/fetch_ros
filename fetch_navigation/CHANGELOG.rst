@@ -2,6 +2,14 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.7.14 (2018-07-10)
+-------------------
+* updates ownership
+* Merge pull request `#76 <https://github.com/fetchrobotics/fetch_ros/issues/76>`_ from 708yamaguchi/change-amcl-param
+  Localized position of fetch often jumps
+* change odom model type and params for amcl
+* Contributors: Derek, Naoya Yamaguchi, Russell Toris
+
 0.7.13 (2017-11-02)
 -------------------
 

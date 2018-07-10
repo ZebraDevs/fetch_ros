@@ -2,6 +2,11 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.7.14 (2018-07-10)
+-------------------
+* updates ownership
+* Contributors: Russell Toris
+
 0.7.13 (2017-11-02)
 -------------------
 

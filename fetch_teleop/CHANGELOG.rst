@@ -2,6 +2,16 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.7.14 (2018-07-10)
+-------------------
+* updates ownership
+* Merge pull request `#68 <https://github.com/fetchrobotics/fetch_ros/issues/68>`_ from BillWSY/indigo-devel
+  Fixes an issue that tuck_arm.py spawns new roscore.
+* Fixes an issue that tuck_arm.py spawns new roscore.
+  tuck_arm.py calls roslaunch without --wait flag, which may spawn new ROS
+  master in a racing condition.
+* Contributors: Michael Ferguson, Russell Toris, Shengye Wang
+
 0.7.13 (2017-11-02)
 -------------------
 
