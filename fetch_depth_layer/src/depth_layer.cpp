@@ -243,7 +243,6 @@ void FetchDepthLayer::depthImageCallback(
     // Find plane(s)
     if (plane_estimator_.empty())
     {
-#if CV_MAJOR_VERSION == 3
       plane_estimator_.reset(new RgbdPlane());
       // Model parameters are based on notes in opencv_candidate
       plane_estimator_->setSensorErrorA(0.0075);
@@ -255,19 +254,6 @@ void FetchDepthLayer::depthImageCallback(
       plane_estimator_->setThreshold(observations_threshold_);
       // Minimum cluster size to be a plane
       plane_estimator_->setMinSize(1000);
-#else
-      plane_estimator_ = cv::Algorithm::create<RgbdPlane>("RGBD.RgbdPlane");
-      // Model parameters are based on notes in opencv_candidate
-      plane_estimator_->set("sensor_error_a", 0.0075);
-      plane_estimator_->set("sensor_error_b", 0.0);
-      plane_estimator_->set("sensor_error_c", 0.0);
-      // Image/cloud height/width must be multiple of block size
-      plane_estimator_->set("block_size", 40);
-      // Distance a point can be from plane and still be part of it
-      plane_estimator_->set("threshold", observations_threshold_);
-      // Minimum cluster size to be a plane
-      plane_estimator_->set("min_size", 1000);
-#endif
     }
     cv::Mat planes_mask;
     std::vector<cv::Vec4f> plane_coefficients;

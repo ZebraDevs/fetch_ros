@@ -8,7 +8,6 @@ find_package(catkin REQUIRED
     image_transport
     cv_bridge
     sensor_msgs
-    opencv_candidate
     costmap_2d
     nav_msgs
 )
