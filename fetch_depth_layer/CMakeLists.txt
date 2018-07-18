@@ -8,6 +8,8 @@ find_package(catkin REQUIRED
     image_transport
     cv_bridge
     sensor_msgs
+    geometry_msgs
+    tf2_ros
     costmap_2d
     nav_msgs
 )
@@ -24,6 +26,8 @@ catkin_package(
     cv_bridge
     roscpp
     sensor_msgs
+    tf2_ros
+    geometry_msgs
     costmap_2d
     nav_msgs
   DEPENDS

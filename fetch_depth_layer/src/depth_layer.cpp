@@ -31,6 +31,7 @@
 #include <pluginlib/class_list_macros.h>
 #include <fetch_depth_layer/depth_layer.h>
 #include <limits>
+#include <geometry_msgs/Vector3Stamped.h>
 
 PLUGINLIB_EXPORT_CLASS(costmap_2d::FetchDepthLayer, costmap_2d::Layer)
 
@@ -143,8 +144,8 @@ void FetchDepthLayer::onInitialize()
     camera_info_topic, 10, &FetchDepthLayer::cameraInfoCallback, this);
 
   depth_image_sub_.reset(new message_filters::Subscriber<sensor_msgs::Image>(private_nh, camera_depth_topic, 10));
-  depth_image_filter_ = boost::shared_ptr< tf::MessageFilter<sensor_msgs::Image> >(
-    new tf::MessageFilter<sensor_msgs::Image>(*depth_image_sub_, *tf_, global_frame_, 10));
+  depth_image_filter_ = boost::shared_ptr< tf2_ros::MessageFilter<sensor_msgs::Image> >(
+    new tf2_ros::MessageFilter<sensor_msgs::Image>(*depth_image_sub_, *tf_, global_frame_, 10, private_nh));
   depth_image_filter_->registerCallback(boost::bind(&FetchDepthLayer::depthImageCallback, this, _1));
   observation_subscribers_.push_back(depth_image_sub_);
   observation_notifiers_.push_back(depth_image_filter_);
@@ -275,16 +276,26 @@ void FetchDepthLayer::depthImageCallback(
   {
     // find ground plane in camera coordinates using tf
     // transform normal axis
-    tf::Stamped<tf::Vector3> vector(tf::Vector3(0, 0, 1), ros::Time(0), "base_link");
-    tf_->transformVector(msg->header.frame_id, vector, vector);
-    ground_plane[0] = vector.getX();
-    ground_plane[1] = vector.getY();
-    ground_plane[2] = vector.getZ();
+    geometry_msgs::Vector3Stamped vector;
+    vector.vector.x = 0;
+    vector.vector.y = 0;
+    vector.vector.z = 1;
+    vector.header.frame_id = "base_link";
+    vector.header.stamp = ros::Time();
+    tf_->transform(vector, vector, msg->header.frame_id);
+    ground_plane[0] = vector.vector.x;
+    ground_plane[1] = vector.vector.y;
+    ground_plane[2] = vector.vector.z;
 
     // find offset
-    tf::StampedTransform transform;
-    tf_->lookupTransform("base_link", msg->header.frame_id, ros::Time(0), transform);
-    ground_plane[3] = transform.getOrigin().getZ();
+    geometry_msgs::TransformStamped transform;
+    try {
+      transform = tf_->lookupTransform("base_link", msg->header.frame_id, msg->header.stamp);
+      ground_plane[3] = transform.transform.translation.z;
+    } catch (tf2::TransformException){
+      ROS_WARN("Failed to lookup transform!");
+      return;
+    }
   }
 
   // check that ground plane actually exists, so it doesn't count as marking observations
