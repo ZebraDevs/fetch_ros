@@ -232,10 +232,11 @@ void FetchDepthLayer::depthImageCallback(
     // Get normals
     if (normals_estimator_.empty())
     {
-      normals_estimator_ = new RgbdNormals(cv_ptr->image.rows,
-                                           cv_ptr->image.cols,
-                                           cv_ptr->image.depth(),
-                                           K_);
+      normals_estimator_.reset(new RgbdNormals());
+      normals_estimator_->setRows(cv_ptr->image.rows);
+      normals_estimator_->setCols(cv_ptr->image.cols);
+      normals_estimator_->setDepth(cv_ptr->image.depth());
+      normals_estimator_->setK(K_);
     }
     cv::Mat normals;
     (*normals_estimator_)(points3d, normals);
