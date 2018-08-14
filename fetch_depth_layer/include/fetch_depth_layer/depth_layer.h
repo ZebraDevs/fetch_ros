@@ -109,7 +109,7 @@ private:
   // retrieves depth image from head_camera
   // used to fit ground plane to
   boost::shared_ptr< message_filters::Subscriber<sensor_msgs::Image> > depth_image_sub_;
-  boost::shared_ptr< tf::MessageFilter<sensor_msgs::Image> > depth_image_filter_;
+  boost::shared_ptr< tf2_ros::MessageFilter<sensor_msgs::Image> > depth_image_filter_;
 
   // retrieves camera matrix for head_camera
   // used in calculating ground plane
