@@ -143,8 +143,8 @@ void FetchDepthLayer::onInitialize()
     camera_info_topic, 10, &FetchDepthLayer::cameraInfoCallback, this);
 
   depth_image_sub_.reset(new message_filters::Subscriber<sensor_msgs::Image>(private_nh, camera_depth_topic, 10));
-  depth_image_filter_ = boost::shared_ptr< tf::MessageFilter<sensor_msgs::Image> >(
-    new tf::MessageFilter<sensor_msgs::Image>(*depth_image_sub_, *tf_, global_frame_, 10));
+  depth_image_filter_ = boost::shared_ptr< tf2_ros::MessageFilter<sensor_msgs::Image> >(
+    new tf2_ros::MessageFilter<sensor_msgs::Image>(*depth_image_sub_, *tf_, global_frame_, 10, private_nh));
   depth_image_filter_->registerCallback(boost::bind(&FetchDepthLayer::depthImageCallback, this, _1));
   observation_subscribers_.push_back(depth_image_sub_);
   observation_notifiers_.push_back(depth_image_filter_);
@@ -276,15 +276,14 @@ void FetchDepthLayer::depthImageCallback(
     // find ground plane in camera coordinates using tf
     // transform normal axis
     tf::Stamped<tf::Vector3> vector(tf::Vector3(0, 0, 1), ros::Time(0), "base_link");
-    tf_->transformVector(msg->header.frame_id, vector, vector);
+    tf_->transform(vector, vector, msg->header.frame_id);
     ground_plane[0] = vector.getX();
     ground_plane[1] = vector.getY();
     ground_plane[2] = vector.getZ();
 
     // find offset
-    tf::StampedTransform transform;
-    tf_->lookupTransform("base_link", msg->header.frame_id, ros::Time(0), transform);
-    ground_plane[3] = transform.getOrigin().getZ();
+    geometry_msgs::TransformStamped transform = tf_->lookupTransform("base_link", msg->header.frame_id, ros::Time(0));
+    ground_plane[3] = transform.transform.translation.z;
   }
 
   // check that ground plane actually exists, so it doesn't count as marking observations
