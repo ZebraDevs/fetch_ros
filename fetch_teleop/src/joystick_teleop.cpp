@@ -580,6 +580,7 @@ public:
     pnh.param("axis_pitch", axis_pitch_, 3);
     pnh.param("axis_yaw", axis_yaw_, 0);
 
+    pnh.param("button_deadman", deadman_, 10);
     pnh.param("button_arm_linear", button_linear_, 9);
     pnh.param("button_arm_angular", button_angular_, 11);
 
@@ -604,10 +605,11 @@ public:
   virtual bool update(const sensor_msgs::Joy::ConstPtr& joy,
                       const sensor_msgs::JointState::ConstPtr& state)
   {
+    bool deadman_pressed = joy->buttons[deadman_];
     bool button_linear_pressed = joy->buttons[button_linear_];
     bool button_angular_pressed = joy->buttons[button_angular_];
 
-    if (!(button_linear_pressed || button_angular_pressed) &&
+    if ((!(button_linear_pressed || button_angular_pressed) || !deadman_pressed) &&
         (ros::Time::now() - last_update_ > ros::Duration(0.5)))
     {
       stop();
