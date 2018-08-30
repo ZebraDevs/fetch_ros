@@ -693,6 +693,7 @@ public:
 private:
 
   // Buttons from params
+  int deadman_;
   int axis_x_, axis_y_, axis_z_, axis_roll_, axis_pitch_, axis_yaw_;
   int button_linear_, button_angular_;
 
