@@ -5,13 +5,16 @@
   <description>The fetch_maps package</description>
 
   <author>Michael Ferguson</author>
+  <author>Michael Gregg</author>
+  <author>Aaron Blasdel</author>
   <maintainer email="rtoris@fetchrobotics.com">Russell Toris</maintainer>
   <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
 
-  <author>Michael Gregg</author>
-  <author>Michael Ferguson</author>
-  <author>Aaron Blasdel</author>
   <license>BSD</license>
+  <url>http://ros.org/wiki/fetch_maps</url>
+  <url type="website">http://docs.fetchrobotics.com/navigation.html</url>
+  <url type="bugtracker">https://github.com/fetchrobotics/fetch_ros/issues</url>
+  <url type="repository">https://github.com/fetchrobotics/fetch_ros</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 </package>

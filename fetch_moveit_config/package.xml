@@ -11,6 +11,7 @@
   <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
 
   <license>BSD</license>
+  <url>http://ros.org/wiki/fetch_moveit_config</url>
 
   <url type="website">http://moveit.ros.org/</url>
   <url type="bugtracker">https://github.com/ros-planning/moveit_setup_assistant/issues</url>

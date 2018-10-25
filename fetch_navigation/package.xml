@@ -8,7 +8,10 @@
   <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
 
   <license>BSD</license>
-  <author>Michael Ferguson</author>
+  <url>http://ros.org/wiki/fetch_navigation</url>
+  <url type="website">http://docs.fetchrobotics.com/navigation.html</url>
+  <url type="bugtracker">https://github.com/fetchrobotics/fetch_ros/issues</url>
+  <url type="repository">https://github.com/fetchrobotics/fetch_ros</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 
