@@ -1,6 +1,6 @@
 <launch>
 
-  <rosparam command="delete" param="robot_calibration" >
+  <rosparam command="delete" param="robot_calibration" />
   <node pkg="robot_calibration" type="calibrate" name="robot_calibration"
         args="--manual"
         output="screen" required="true">
