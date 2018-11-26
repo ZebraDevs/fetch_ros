@@ -20,6 +20,7 @@
 import argparse
 import os
 import rospkg
+import rospkg.distro
 import subprocess
 import time
 import yaml
@@ -174,7 +175,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     restart = False
-    rosdistro = "indigo"
+    rosdistro = rospkg.distro.current_distro_codename()
     etc_launch = "/etc/ros/%s/robot.launch" % rosdistro
 
     if args.date:
