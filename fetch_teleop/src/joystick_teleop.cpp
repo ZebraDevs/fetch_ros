@@ -720,32 +720,57 @@ public:
   void init(ros::NodeHandle& nh)
   {
     bool is_fetch;
+    bool use_torso;
+    bool use_gripper;
+    bool use_head;
+    bool use_arm;
+    bool use_base;
     nh.param("is_fetch", is_fetch, true);
+    nh.param("use_torso", use_torso, true);
+    nh.param("use_gripper", use_gripper, true);
+    nh.param("use_head", use_head, true);
+    nh.param("use_arm", use_arm, true);
+    nh.param("use_base", use_base, true);
 
     // TODO: load these from YAML
 
     TeleopComponentPtr c;
     if (is_fetch)
     {
-      // Torso does not override
-      c.reset(new FollowTeleop("torso", nh));
-      components_.push_back(c);
+      if (use_torso)
+      {
+        // Torso does not override
+        c.reset(new FollowTeleop("torso", nh));
+        components_.push_back(c);
+      }
 
-      // Gripper does not override
-      c.reset(new GripperTeleop("gripper", nh));
-      components_.push_back(c);
+      if (use_gripper)
+      {
+        // Gripper does not override
+        c.reset(new GripperTeleop("gripper", nh));
+        components_.push_back(c);
+      }
 
-      // Head overrides base
-      c.reset(new HeadTeleop("head", nh));
-      components_.push_back(c);
+      if (use_head)
+      {
+        // Head overrides base
+        c.reset(new HeadTeleop("head", nh));
+        components_.push_back(c);
+      }
 
-      c.reset(new ArmTeleop("arm", nh));
-      components_.push_back(c);
+      if (use_arm)
+      {
+        c.reset(new ArmTeleop("arm", nh));
+        components_.push_back(c);
+      }
     }
 
-    // BaseTeleop goes last
-    c.reset(new BaseTeleop("base", nh));
-    components_.push_back(c);
+    if (use_base)
+    {
+      // BaseTeleop goes last
+      c.reset(new BaseTeleop("base", nh));
+      components_.push_back(c);
+    }
 
     state_msg_.reset(new sensor_msgs::JointState());
     joy_sub_ = nh.subscribe("/joy", 1, &Teleop::joyCallback, this);
