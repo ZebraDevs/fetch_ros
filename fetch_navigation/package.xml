@@ -1,4 +1,5 @@
-<package>
+<?xml version="1.0"?>
+<package format="2">
   <name>fetch_navigation</name>
   <version>0.7.14</version>
   <description>Configuration and launch files for running ROS navigation on Fetch.</description>
@@ -8,26 +9,26 @@
   <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
 
   <license>BSD</license>
-  <url>http://ros.org/wiki/fetch_navigation</url>
+  <url type="wiki">http://ros.org/wiki/fetch_navigation</url>
   <url type="website">http://docs.fetchrobotics.com/navigation.html</url>
   <url type="bugtracker">https://github.com/fetchrobotics/fetch_ros/issues</url>
   <url type="repository">https://github.com/fetchrobotics/fetch_ros</url>
 
   <buildtool_depend>catkin</buildtool_depend>
 
-  <run_depend>amcl</run_depend>
-  <run_depend>base_local_planner</run_depend>
-  <run_depend>clear_costmap_recovery</run_depend>
-  <run_depend>costmap_2d</run_depend>
-  <run_depend>fetch_depth_layer</run_depend>
-  <run_depend>fetch_maps</run_depend>
-  <run_depend>map_server</run_depend>
-  <run_depend>move_base</run_depend>
-  <run_depend>move_base_msgs</run_depend>
-  <run_depend>navfn</run_depend>
-  <run_depend>rotate_recovery</run_depend>
-  <run_depend>slam_karto</run_depend>
-  <run_depend>voxel_grid</run_depend>
+  <exec_depend>amcl</exec_depend>
+  <exec_depend>base_local_planner</exec_depend>
+  <exec_depend>clear_costmap_recovery</exec_depend>
+  <exec_depend>costmap_2d</exec_depend>
+  <exec_depend>fetch_depth_layer</exec_depend>
+  <exec_depend>fetch_maps</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>move_base</exec_depend>
+  <exec_depend>move_base_msgs</exec_depend>
+  <exec_depend>navfn</exec_depend>
+  <exec_depend>rotate_recovery</exec_depend>
+  <exec_depend>slam_karto</exec_depend>
+  <exec_depend>voxel_grid</exec_depend>
 
   <test_depend>roslaunch</test_depend>
 

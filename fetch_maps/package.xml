@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<package>
+<package format="2">
   <name>fetch_maps</name>
   <version>0.7.14</version>
   <description>The fetch_maps package</description>
@@ -11,7 +11,7 @@
   <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
 
   <license>BSD</license>
-  <url>http://ros.org/wiki/fetch_maps</url>
+  <url type="wiki">http://ros.org/wiki/fetch_maps</url>
   <url type="website">http://docs.fetchrobotics.com/navigation.html</url>
   <url type="bugtracker">https://github.com/fetchrobotics/fetch_ros/issues</url>
   <url type="repository">https://github.com/fetchrobotics/fetch_ros</url>
