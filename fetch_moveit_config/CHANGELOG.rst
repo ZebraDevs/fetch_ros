@@ -2,6 +2,16 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.8.0 (2019-02-13)
+------------------
+* [package.xml] REP-140 package format 2 (`#104 <https://github.com/fetchrobotics/fetch_ros/issues/104>`_)
+  closes `#83 <https://github.com/fetchrobotics/fetch_ros/issues/83>`_
+* [MoveIt][Melodic]: MoveGroupExecuteService -> MoveGroupExecuteTrajectoryAction (`#94 <https://github.com/fetchrobotics/fetch_ros/issues/94>`_)
+* [Docs] Add URL tags to package for wiki.ros.org (`#90 <https://github.com/fetchrobotics/fetch_ros/issues/90>`_)
+  The <url> tag is required to automatically fill in at least some info
+  on the wiki pages. The extra tags will create links to our docs.
+* Contributors: Alex Moriarty, ivandariojr
+
 0.7.14 (2018-07-10)
 -------------------
 * updates ownership

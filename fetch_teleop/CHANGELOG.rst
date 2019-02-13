@@ -2,6 +2,19 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.8.0 (2019-02-13)
+------------------
+* [package.xml] REP-140 package format 2 (`#104 <https://github.com/fetchrobotics/fetch_ros/issues/104>`_)
+  closes `#83 <https://github.com/fetchrobotics/fetch_ros/issues/83>`_
+* [Docs] Add URL tags to package for wiki.ros.org (`#90 <https://github.com/fetchrobotics/fetch_ros/issues/90>`_)
+  The <url> tag is required to automatically fill in at least some info
+  on the wiki pages. The extra tags will create links to our docs.
+* [teleop] Require primary dead-man for arm motion (`#92 <https://github.com/fetchrobotics/fetch_ros/issues/92>`_)
+  * Require primary dead-man for arm teleop, along with with the angular or linear selector button.
+* Fixup to add missing variable definition.
+* Also require primary deadman for arm teleop
+* Contributors: Alex Moriarty, Eric Relson
+
 0.7.14 (2018-07-10)
 -------------------
 * updates ownership

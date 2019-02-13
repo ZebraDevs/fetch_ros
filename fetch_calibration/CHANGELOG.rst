@@ -2,6 +2,27 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.8.0 (2019-02-13)
+------------------
+* [package.xml] REP-140 package format 2 (`#104 <https://github.com/fetchrobotics/fetch_ros/issues/104>`_)
+  closes `#83 <https://github.com/fetchrobotics/fetch_ros/issues/83>`_
+* Merge pull request `#100 <https://github.com/fetchrobotics/fetch_ros/issues/100>`_ from aparker-fetch/distro-agnostic-calibration
+  removed hardcoded ROS distro from calibrate_robot
+* removed hardcoded ROS distro from calibrate_robot
+* [Fetch Calibration] fix syntax error (`#96 <https://github.com/fetchrobotics/fetch_ros/issues/96>`_)
+  Noticed here https://index.ros.org/stats/errors/
+  Failed to parse launchfile launch/capture_manual.launch:
+  Missing end tag for 'rosparam' (got "launch")
+  Line: 16 Position: 668 Last 80 unconsumed characters:
+* [Docs] Add URL tags to package for wiki.ros.org (`#90 <https://github.com/fetchrobotics/fetch_ros/issues/90>`_)
+  The <url> tag is required to automatically fill in at least some info
+  on the wiki pages. The extra tags will create links to our docs.
+* Merge pull request `#81 <https://github.com/fetchrobotics/fetch_ros/issues/81>`_ from moriarty/tf2-nav-melodic-devel
+  [fetch_depth_layer][tf2] fixes for upstream navigation
+  Changes for compatibility with `ros-planning/navigation#755 <https://github.com/ros-planning/navigation/issues/755>`_
+* (fetch_calibration) updates for new finders
+* Contributors: Alex Moriarty, Andrew Parker, Eric Relson, Michael Ferguson
+
 0.7.14 (2018-07-10)
 -------------------
 * updates ownership
