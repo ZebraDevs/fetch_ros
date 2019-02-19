@@ -565,7 +565,7 @@
     <child link="laser_link" />
     <axis xyz="0 0 0" />
   </joint>
-  <link name="torsoed_link">
+  <link name="torso_fixed_link">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.0722 0.0057 0.2656" />
       <mass value="13.2775" />
@@ -590,7 +590,7 @@
   <joint name="torsoed_joint" type="fixed">
     <origin rpy="-6.12303176911189E-17 0 0" xyz="-0.086875 0 0.377425" />
     <parent link="base_link" />
-    <child link="torsoed_link" />
+    <child link="torso_fixed_link" />
     <axis xyz="0 1 0" />
   </joint>
   <link name="head_camera_link" />
