@@ -8,7 +8,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/base_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/base_link.dae" />
       </geometry>
       <material name="">
         <color rgba="0.356 0.361 0.376 1" />
@@ -86,7 +86,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/torso_lift_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/torso_lift_link.dae" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -115,7 +115,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/head_pan_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/head_pan_link.dae" />
       </geometry>
       <material name="">
         <color rgba="0.356 0.361 0.376 1" />
@@ -143,7 +143,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/head_tilt_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/head_tilt_link.dae" />
       </geometry>
       <material name="">
         <color rgba="0.086 0.506 0.767 1" />
@@ -172,7 +172,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/shoulder_pan_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/shoulder_pan_link.dae" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -202,7 +202,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/shoulder_lift_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/shoulder_lift_link.dae" />
       </geometry>
       <material name="">
         <color rgba="0.086 0.506 0.767 1" />
@@ -232,7 +232,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/upperarm_roll_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/upperarm_roll_link.dae" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -262,7 +262,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/elbow_flex_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/elbow_flex_link.dae" />
       </geometry>
       <material name="">
         <color rgba="0.086 0.506 0.767 1" />
@@ -292,7 +292,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/forearm_roll_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/forearm_roll_link.dae" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -322,7 +322,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/wrist_flex_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/wrist_flex_link.dae" />
       </geometry>
       <material name="">
         <color rgba="0.086 0.506 0.767 1" />
@@ -352,7 +352,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/wrist_roll_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/wrist_roll_link.dae" />
       </geometry>
       <material name="">
         <color rgba="1 1 1 1" />
@@ -382,7 +382,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/gripper_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/gripper_link.dae" />
       </geometry>
     </visual>
     <collision>
@@ -565,7 +565,7 @@
     <child link="laser_link" />
     <axis xyz="0 0 0" />
   </joint>
-  <link name="torso_fixed_link">
+  <link name="torsoed_link">
     <inertial>
       <origin rpy="0 0 0" xyz="-0.0722 0.0057 0.2656" />
       <mass value="13.2775" />
@@ -574,7 +574,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/torso_fixed_link_fix.dae" />
+        <mesh filename="package://fetch_description/meshes/torso_fixed_link.dae" />
       </geometry>
       <material name="">
         <color rgba="0.086 0.506 0.767 1" />
@@ -587,10 +587,10 @@
       </geometry>
     </collision>
   </link>
-  <joint name="torso_fixed_joint" type="fixed">
+  <joint name="torsoed_joint" type="fixed">
     <origin rpy="-6.12303176911189E-17 0 0" xyz="-0.086875 0 0.377425" />
     <parent link="base_link" />
-    <child link="torso_fixed_link" />
+    <child link="torsoed_link" />
     <axis xyz="0 1 0" />
   </joint>
   <link name="head_camera_link" />
