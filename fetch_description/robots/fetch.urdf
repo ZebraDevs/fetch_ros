@@ -587,7 +587,7 @@
       </geometry>
     </collision>
   </link>
-  <joint name="torsoed_joint" type="fixed">
+  <joint name="torso_fixed_joint" type="fixed">
     <origin rpy="-6.12303176911189E-17 0 0" xyz="-0.086875 0 0.377425" />
     <parent link="base_link" />
     <child link="torso_fixed_link" />
