@@ -518,7 +518,7 @@
     <visual>
       <origin rpy="0 0 0" xyz="0 0 0" />
       <geometry>
-        <mesh filename="package://fetch_description/meshes/estop_link.STL" />
+        <mesh filename="package://fetch_description/meshes/estop_link.dae" />
       </geometry>
       <material name="">
         <color rgba="0.8 0 0 1" />
