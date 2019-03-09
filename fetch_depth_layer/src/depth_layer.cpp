@@ -28,7 +28,7 @@
 
 // Author: Anuj Pasricha, Michael Ferguson
 
-#include <pluginlib/class_list_macros.h>
+#include <pluginlib/class_list_macros.hpp>
 #include <fetch_depth_layer/depth_layer.h>
 #include <limits>
 #include <geometry_msgs/Vector3Stamped.h>
