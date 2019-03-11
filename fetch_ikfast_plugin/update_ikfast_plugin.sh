@@ -1,1 +1,1 @@
-rosrun moveit_ikfast create_ikfast_moveit_plugin.py fetch arm fetch_ikfast_plugin /home/hanhong/indigo/src/fetch_ikfast_plugin/src/fetch_arm_ikfast_solver.cpp
+rosrun moveit_kinematics create_ikfast_moveit_plugin.py --search_mode=OPTIMIZE_MAX_JOINT --srdf_filename=fetch.srdf --robot_name_in_srdf=fetch --moveit_config_pkg=fetch_moveit_config fetch arm fetch_ikfast_plugin torso_lift_link gripper_link /home/alex/ros/melodic/src/fetch_ros/fetch_ikfast_plugin/src/fetch_arm_ikfast_solver.cpp
