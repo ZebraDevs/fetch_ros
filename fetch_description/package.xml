@@ -11,7 +11,7 @@
   <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
 
   <license>CreativeCommons-Attribution-NonCommercial-NoDerivatives-4.0</license>
-  <url>http://ros.org/wiki/fetch_description</url>
+  <url type="wiki">http://ros.org/wiki/fetch_description</url>
   <url type="website">http://docs.fetchrobotics.com/robot_hardware.html</url>
   <url type="bugtracker">https://github.com/fetchrobotics/fetch_ros/issues</url>
   <url type="repository">https://github.com/fetchrobotics/fetch_ros</url>
