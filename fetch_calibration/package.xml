@@ -10,7 +10,10 @@
   <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
 
   <license>Apache2</license>
-  <url>http://ros.org/wiki/fetch_calibration</url>
+  <url type="wiki">http://ros.org/wiki/fetch_calibration</url>
+  <url type="website">http://docs.fetchrobotics.com/calibration.html</url>
+  <url type="bugtracker">https://github.com/fetchrobotics/fetch_ros/issues</url>
+  <url type="repository">https://github.com/fetchrobotics/fetch_ros</url>
   
   <buildtool_depend>catkin</buildtool_depend>
 

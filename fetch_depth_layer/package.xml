@@ -9,6 +9,10 @@
   <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
 
   <license>BSD</license>
+  <url type="wiki">http://ros.org/wiki/fetch_depth_layer</url>
+  <url type="website">http://docs.fetchrobotics.com/perception.html</url>
+  <url type="bugtracker">https://github.com/fetchrobotics/fetch_ros/issues</url>
+  <url type="repository">https://github.com/fetchrobotics/fetch_ros</url>
 
   <buildtool_depend>catkin</buildtool_depend>
   
