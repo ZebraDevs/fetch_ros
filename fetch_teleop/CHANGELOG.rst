@@ -2,8 +2,8 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.15 (2019-03-26)
+-------------------
 * [Docs] Add URL tags to package for wiki.ros.org (backport) (`#91 <https://github.com/fetchrobotics/fetch_ros/issues/91>`_)
 * [teleop] Safer arm teleop (`#95 <https://github.com/fetchrobotics/fetch_ros/issues/95>`_) (backport `#92 <https://github.com/fetchrobotics/fetch_ros/issues/92>`_)
   * Require primary dead-man for arm teleop, along with with the angular or linear selector button.

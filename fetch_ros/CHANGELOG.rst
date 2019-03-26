@@ -2,8 +2,8 @@
 Changelog for package fetch_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.15 (2019-03-26)
+-------------------
 * [fetch_ros] new meta-package (backport `#110 <https://github.com/fetchrobotics/fetch_ros/issues/110>`_) (`#111 <https://github.com/fetchrobotics/fetch_ros/issues/111>`_)
 * Contributors: Alexander Moriarty
 

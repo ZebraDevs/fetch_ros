@@ -2,8 +2,8 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.15 (2019-03-26)
+-------------------
 * [Docs] Add URL tags to package for wiki.ros.org (backport) (`#91 <https://github.com/fetchrobotics/fetch_ros/issues/91>`_)
 * [Fetch Calibration] fix syntax error (back-port `#96 <https://github.com/fetchrobotics/fetch_ros/issues/96>`_)(`#97 <https://github.com/fetchrobotics/fetch_ros/issues/97>`_)
 * Contributors: Alexander Moriarty

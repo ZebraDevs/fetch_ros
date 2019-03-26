@@ -2,8 +2,8 @@
 Changelog for package fetch_maps
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.7.15 (2019-03-26)
+-------------------
 * [Docs] Add URL tags to package for wiki.ros.org (backport) (`#91 <https://github.com/fetchrobotics/fetch_ros/issues/91>`_)
 * Contributors: Alexander Moriarty
 
