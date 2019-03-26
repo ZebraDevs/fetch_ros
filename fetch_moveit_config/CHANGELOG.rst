@@ -2,6 +2,11 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* [Docs] Add URL tags to package for wiki.ros.org (backport) (`#91 <https://github.com/fetchrobotics/fetch_ros/issues/91>`_)
+* Contributors: Alexander Moriarty
+
 0.7.14 (2018-07-10)
 -------------------
 * updates ownership
