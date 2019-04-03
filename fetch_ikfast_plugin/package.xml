@@ -24,4 +24,5 @@
   <export>
     <moveit_core plugin="${prefix}/fetch_arm_moveit_ikfast_plugin_description.xml"/>
   </export>
+  <exec_depend>tf2_kdl</exec_depend>
 </package>
