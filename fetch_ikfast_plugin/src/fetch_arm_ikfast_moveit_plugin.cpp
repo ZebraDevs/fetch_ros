@@ -163,7 +163,7 @@ class IKFastKinematicsPlugin : public kinematics::KinematicsBase
 
   // The ikfast and base frame are the start and end of the kinematic chain for which the
   // IKFast analytic solution was generated.
-  const std::string IKFAST_TIP_FRAME_ = "gripper_link";
+  const std::string IKFAST_TIP_FRAME_ = "wrist_roll_link";
   const std::string IKFAST_BASE_FRAME_ = "torso_lift_link";
 
   // The transform tip and base bool are set to true if this solver is used with a kinematic
