@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>fetch_navigation</name>
-  <version>0.8.0</version>
+  <version>0.8.1</version>
   <description>Configuration and launch files for running ROS navigation on Fetch.</description>
 
   <author>Michael Ferguson</author>

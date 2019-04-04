@@ -2,8 +2,8 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.1 (2019-04-04)
+------------------
 * sync cmake_minimum_required: 2.8.12
 * Added fixed dae models compatible with OpenWebGL (`#105 <https://github.com/fetchrobotics/fetch_ros/issues/105>`_)
 * Contributors: Alexander Moriarty, Miguel Angel Rodríguez

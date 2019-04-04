@@ -2,8 +2,8 @@
 Changelog for package fetch_ikfast_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.1 (2019-04-04)
+------------------
 * fix Error in latest IK_Fast Plugin `#113 <https://github.com/fetchrobotics/fetch_ros/issues/113>`_ (`#114 <https://github.com/fetchrobotics/fetch_ros/issues/114>`_)
     * fix Error in latest IK_Fast Plugin `#113 <https://github.com/fetchrobotics/fetch_ros/issues/113>`_ with moveit 1.0 interface
     * Related to the fix for issue `#103 <https://github.com/fetchrobotics/fetch_ros/issues/103>`_ PR `#107 <https://github.com/fetchrobotics/fetch_ros/issues/107>`_ used the wrong link

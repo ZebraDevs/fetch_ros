@@ -2,7 +2,7 @@
 <package format="2">
 
   <name>fetch_moveit_config</name>
-  <version>0.8.0</version>
+  <version>0.8.1</version>
   <description>
      An automatically generated package with all the configuration and launch files for using the fetch_urdf with the MoveIt Motion Planning Framework
   </description>

@@ -2,8 +2,8 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.1 (2019-04-04)
+------------------
 * sync cmake_minimum_required: 2.8.12
 * [fetch_depth_layer][OpenCV-4] operator= compile error (`#108 <https://github.com/fetchrobotics/fetch_ros/issues/108>`_)
     This fixes no match for ‘operator=’ error with OpenCV4 and how the cv::Ptr was being set.
