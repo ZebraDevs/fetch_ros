@@ -2,6 +2,14 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* sync cmake_minimum_required: 2.8.12
+* Merge pull request `#107 <https://github.com/fetchrobotics/fetch_ros/issues/107>`_ from moriarty/update-ikfast-plugin
+  [IKFast Plugin] Regenerate fetch_ikfast_plugin
+  Fixes `#103 <https://github.com/fetchrobotics/fetch_ros/issues/103>`_
+* Contributors: Alexander Moriarty, Carl Saldanha
+
 0.8.0 (2019-02-13)
 ------------------
 * [package.xml] REP-140 package format 2 (`#104 <https://github.com/fetchrobotics/fetch_ros/issues/104>`_)

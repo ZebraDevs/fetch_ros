@@ -2,6 +2,11 @@
 Changelog for package fetch_maps
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* sync cmake_minimum_required: 2.8.12
+* Contributors: Alexander Moriarty
+
 0.8.0 (2019-02-13)
 ------------------
 * [package.xml] REP-140 package format 2 (`#104 <https://github.com/fetchrobotics/fetch_ros/issues/104>`_)

@@ -2,6 +2,18 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* sync cmake_minimum_required: 2.8.12
+* [fetch_depth_layer][OpenCV-4] operator= compile error (`#108 <https://github.com/fetchrobotics/fetch_ros/issues/108>`_)
+    This fixes no match for ‘operator=’ error with OpenCV4 and how the cv::Ptr was being set.
+    Fixed by setting the normals_estimator\_ pointer similarly to how the plane_estimator\_ pointer is being set.
+    This closes `#82 <https://github.com/fetchrobotics/fetch_ros/issues/82>`_
+* [upstream change] pluginlib includes: h -> hpp (`#106 <https://github.com/fetchrobotics/fetch_ros/issues/106>`_)
+    pluginlib provided a script for this change, and it's been backported
+    to Indigo, Kinetic- but not Jade.
+* Contributors: Alexander Moriarty
+
 0.8.0 (2019-02-13)
 ------------------
 * [package.xml] REP-140 package format 2 (`#104 <https://github.com/fetchrobotics/fetch_ros/issues/104>`_)
