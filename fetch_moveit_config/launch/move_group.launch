@@ -38,6 +38,7 @@
   <rosparam command="delete" param="move_group/sensors" />
   <include ns="move_group" file="$(find fetch_moveit_config)/launch/sensor_manager.launch.xml" if="$(arg allow_active_sensing)">
     <arg name="moveit_sensor_manager" value="fetch" />
+    <arg name="moveit_octomap_sensor_params_file" value="$(arg moveit_octomap_sensor_params_file)"/>
   </include>
 
   <!-- Start the actual move_group node/action server -->
