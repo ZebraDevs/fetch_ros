@@ -35,7 +35,7 @@ arm:
     - PRMkConfigDefault
     - PRMstarkConfigDefault
   projection_evaluator: joints(shoulder_pan_joint,shoulder_lift_joint)
-  longest_valid_segment_fraction: 0.05
+  longest_valid_segment_fraction: 0.005
 arm_with_torso:
   planner_configs:
     - SBLkConfigDefault
