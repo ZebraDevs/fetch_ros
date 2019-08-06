@@ -2,6 +2,17 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Fixed chomp configuration for porting to moveit melodic-devel (`#124 <https://github.com/fetchrobotics/fetch_ros/issues/124>`_)
+* Merge pull request `#122 <https://github.com/fetchrobotics/fetch_ros/issues/122>`_ from dekent/melodic-devel
+  Much more collision checking = much safer robot with minimal planning time increases
+* Merge pull request `#116 <https://github.com/fetchrobotics/fetch_ros/issues/116>`_ from umhan35/moveit-costomap
+  [moveit_config] allow moveit octomap params to be overridden
+* add default moveit_octomap_sensor_params_file to move_group.launch
+* allow moveit octomap params to be overridden
+* Contributors: Carl Saldanha, David Kent, Yuma Hijioka, Zhao Han
+
 0.8.1 (2019-04-04)
 ------------------
 * sync cmake_minimum_required: 2.8.12

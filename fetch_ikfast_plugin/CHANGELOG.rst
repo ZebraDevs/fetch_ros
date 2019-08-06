@@ -2,6 +2,9 @@
 Changelog for package fetch_ikfast_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.8.1 (2019-04-04)
 ------------------
 * fix Error in latest IK_Fast Plugin `#113 <https://github.com/fetchrobotics/fetch_ros/issues/113>`_ (`#114 <https://github.com/fetchrobotics/fetch_ros/issues/114>`_)

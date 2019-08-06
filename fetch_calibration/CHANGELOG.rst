@@ -2,6 +2,9 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.8.1 (2019-04-04)
 ------------------
 * sync cmake_minimum_required: 2.8.12

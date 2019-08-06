@@ -2,6 +2,9 @@
 Changelog for package fetch_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.8.1 (2019-04-04)
 ------------------
 * catkin_make only supports cmake 2.8.3 for meta-pkg (`#115 <https://github.com/fetchrobotics/fetch_ros/issues/115>`_)

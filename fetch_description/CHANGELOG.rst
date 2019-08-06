@@ -2,6 +2,14 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* License: CC BY-NC-SA 4.0 (Remove ND) (`#123 <https://github.com/fetchrobotics/fetch_ros/issues/123>`_)
+  This addresses https://github.com/fetchrobotics/fetch_ros/issues/93
+  It still does not address all points raised, but we believe this is
+  better than CC-BY-NC-ND as it allows derivatives to be shared.
+* Contributors: Alex Moriarty
+
 0.8.1 (2019-04-04)
 ------------------
 * sync cmake_minimum_required: 2.8.12
