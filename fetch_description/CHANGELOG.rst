@@ -2,8 +2,8 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.2 (2019-08-06)
+------------------
 * License: CC BY-NC-SA 4.0 (Remove ND) (`#123 <https://github.com/fetchrobotics/fetch_ros/issues/123>`_)
   This addresses https://github.com/fetchrobotics/fetch_ros/issues/93
   It still does not address all points raised, but we believe this is

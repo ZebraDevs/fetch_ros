@@ -2,8 +2,8 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.2 (2019-08-06)
+------------------
 * Fixed chomp configuration for porting to moveit melodic-devel (`#124 <https://github.com/fetchrobotics/fetch_ros/issues/124>`_)
 * Merge pull request `#122 <https://github.com/fetchrobotics/fetch_ros/issues/122>`_ from dekent/melodic-devel
   Much more collision checking = much safer robot with minimal planning time increases

@@ -2,8 +2,8 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.2 (2019-08-06)
+------------------
 * Merge pull request `#118 <https://github.com/fetchrobotics/fetch_ros/issues/118>`_ from 708yamaguchi/add-teleop-rosparam-melodic
   Select teleop part by rosparam for melodic
 * select teleop part by rosparam
