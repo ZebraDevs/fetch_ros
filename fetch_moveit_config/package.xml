@@ -8,8 +8,11 @@
   </description>
   <author email="assistant@moveit.ros.org">MoveIt Setup Assistant</author>
 
+  <maintainer email="selliott@fetchrobotics.com">Sarah Elliott</maintainer>
+  <maintainer email="csaldanha@fetchrobotics.com">Carl Saldanha</maintainer>
+  <maintainer email="erelson@fetchrobotics.com">Eric Relson</maintainer>
   <maintainer email="rtoris@fetchrobotics.com">Russell Toris</maintainer>
-  <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
+  <maintainer email="opensource@fetchrobotics.com">Fetch Robotics Open Source Team</maintainer>
 
   <license>BSD</license>
   <url type="wiki">http://ros.org/wiki/fetch_moveit_config</url>

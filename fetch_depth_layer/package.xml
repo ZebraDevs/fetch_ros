@@ -5,8 +5,12 @@
   <description>The fetch_depth_layer package</description>
 
   <author>Michael Ferguson</author>
+  <maintainer email="csaldanha@fetchrobotics.com">Carl Saldanha</maintainer>
+  <maintainer email="erelson@fetchrobotics.com">Eric Relson</maintainer>
+  <maintainer email="narora@fetchrobotics.com">Niharika Arora</maintainer>
+  <maintainer email="selliott@fetchrobotics.com">Sarah Elliott</maintainer>
   <maintainer email="rtoris@fetchrobotics.com">Russell Toris</maintainer>
-  <maintainer email="amoriarty@fetchrobotics.com">Alex Moriarty</maintainer>
+  <maintainer email="opensource@fetchrobotics.com">Fetch Robotics Open Source Team</maintainer>
 
   <license>BSD</license>
   <url type="wiki">http://ros.org/wiki/fetch_depth_layer</url>
