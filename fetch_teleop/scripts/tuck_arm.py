@@ -80,7 +80,7 @@ class TuckThread(Thread):
         # Padding does not work (especially for self collisions)
         # So we are adding a box above the base of the robot
         scene = PlanningSceneInterface("base_link")
-        scene.addBox("keepout", 0.2, 0.5, 0.05, 0.15, 0.0, 0.375)
+        scene.addBox("keepout", 0.3, 0.5, 0.05, 0.12, 0.0, 0.375)
         scene.addBox("ground", 1.5, 1.5, 0.05, 0.5, 0.0, 0.0)
 
         joints = ["torso_lift_joint", "shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
