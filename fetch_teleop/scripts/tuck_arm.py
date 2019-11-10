@@ -81,6 +81,7 @@ class TuckThread(Thread):
         # So we are adding a box above the base of the robot
         scene = PlanningSceneInterface("base_link")
         scene.addBox("keepout", 0.2, 0.5, 0.05, 0.15, 0.0, 0.375)
+        scene.addBox("ground", 1.5, 1.5, 0.05, 0.5, 0.0, 0.0)
 
         joints = ["torso_lift_joint", "shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
                   "elbow_flex_joint", "forearm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
@@ -92,6 +93,7 @@ class TuckThread(Thread):
                                                      max_velocity_scaling_factor=0.5)
             if result and result.error_code.val == MoveItErrorCodes.SUCCESS:
                 scene.removeCollisionObject("keepout")
+                scene.removeCollisionObject("ground")
                 if move_thread:
                     move_thread.stop()
 
