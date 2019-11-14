@@ -29,14 +29,17 @@
 # Author: Michael Ferguson
 
 import argparse
+import os
 import subprocess
 import sys
 from threading import Thread
 
+import rospkg
 import rospy
 from sensor_msgs.msg import Joy
-from moveit_msgs.msg import MoveItErrorCodes, PlanningScene
+from geometry_msgs.msg import Pose
 from moveit_python import MoveGroupInterface, PlanningSceneInterface
+from moveit_msgs.msg import MoveItErrorCodes, PlanningScene
 
 class MoveItThread(Thread):
 
@@ -80,8 +83,18 @@ class TuckThread(Thread):
         # Padding does not work (especially for self collisions)
         # So we are adding a box above the base of the robot
         scene = PlanningSceneInterface("base_link")
-        scene.addBox("keepout", 0.3, 0.5, 0.03, 0.12, 0.0, 0.375)
-        scene.addBox("ground", 1.5, 1.5, 0.05, 0.5, 0.0, -0.03)
+        keepout_pose = Pose()
+        keepout_pose.position.z = 0.375
+        keepout_pose.orientation.w = 1.0
+        ground_pose = Pose()
+        ground_pose.position.z = -0.03
+        ground_pose.orientation.w = 1.0
+        rospack = rospkg.RosPack()
+        mesh_dir = os.path.join(rospack.get_path('fetch_teleop'), 'mesh')
+        scene.addMesh(
+            'keepout', keepout_pose, os.path.join(mesh_dir, 'keepout.stl'))
+        scene.addMesh(
+            'ground', ground_pose, os.path.join(mesh_dir, 'ground.stl'))
 
         joints = ["torso_lift_joint", "shoulder_pan_joint", "shoulder_lift_joint", "upperarm_roll_joint",
                   "elbow_flex_joint", "forearm_roll_joint", "wrist_flex_joint", "wrist_roll_joint"]
