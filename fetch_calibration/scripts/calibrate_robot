@@ -171,6 +171,8 @@ if __name__ == "__main__":
     parser.add_argument("--restore", help="Restore the previous calibration", action="store_true")
     parser.add_argument("--date", help="Get the timestamp of the current calibration", action="store_true")
     parser.add_argument("--directory", help="Directory to load calibration from or backup to", default="/tmp")
+    parser.add_argument("--velocity-factor", help="Velocity scaling factor for fetch calibration",
+                        type=float, default="1.0")
     args = parser.parse_args()
 
     restart = False
@@ -208,7 +210,8 @@ if __name__ == "__main__":
         except:
             print("\nCould not find robot_calibration package, is your ROS path correct?")
             exit(-1)
-        if subprocess.call(["roslaunch", "fetch_calibration", "capture.launch"]) != 0:
+        if subprocess.call(["roslaunch", "fetch_calibration",
+                            "capture.launch", "velocity_factor:={}".format(args.velocity_factor)]) != 0:
             print("Failed to run calibrate")
             exit(-1)
 
