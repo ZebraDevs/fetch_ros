@@ -38,8 +38,7 @@
   <include file="$(arg move_base_include)" >
     <arg name="name" value="fetch" />
     <arg if="$(arg use_keepout)" name="map_topic" value="map_keepout" />
-
-    <arg name="map_topic" value="$(arg map_topic)" />
+    <arg unless="$(arg use_keepout)" name="map_topic" value="$(arg map_topic)" />
     <arg name="cmd_vel_topic" value="$(arg cmd_vel_topic)" />
     <arg name="odom_topic" value="$(arg odom_topic)" />
   </include>
