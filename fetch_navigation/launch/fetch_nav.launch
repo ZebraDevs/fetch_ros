@@ -11,6 +11,12 @@
   <arg name="move_base_include" default="$(find fetch_navigation)/launch/include/move_base.launch.xml" />
   <arg name="amcl_include" default="$(find fetch_navigation)/launch/include/amcl.launch.xml" />
 
+  <!-- set topics -->
+  <arg name="scan_topic"     default="base_scan" />
+  <arg name="map_topic" default="map" />
+  <arg name="cmd_vel_topic" default="cmd_vel" />
+  <arg name="odom_topic" default="odom" />
+
   <!-- serve up a map -->
   <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
@@ -23,12 +29,19 @@
   </group>
 
   <!-- localize the robot -->
-  <include file="$(arg amcl_include)" />
+  <include file="$(arg amcl_include)" >
+    <arg name="scan_topic" value="$(arg scan_topic)" />
+    <arg name="map_topic" value="$(arg map_topic)" />
+  </include>
 
   <!-- move the robot -->
   <include file="$(arg move_base_include)" >
     <arg name="name" value="fetch" />
     <arg if="$(arg use_keepout)" name="map_topic" value="map_keepout" />
+
+    <arg name="map_topic" value="$(arg map_topic)" />
+    <arg name="cmd_vel_topic" value="$(arg cmd_vel_topic)" />
+    <arg name="odom_topic" value="$(arg odom_topic)" />
   </include>
 
   <!-- tilt the head -->
