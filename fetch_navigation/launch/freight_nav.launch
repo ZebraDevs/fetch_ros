@@ -11,7 +11,8 @@
   <arg name="move_base_include" default="$(find fetch_navigation)/launch/include/move_base.launch.xml" />
   <arg name="amcl_include" default="$(find fetch_navigation)/launch/include/amcl.launch.xml" />
 
-  <!-- set topics for move_base -->
+  <!-- set topics -->
+  <arg name="scan_topic"     default="base_scan" />
   <arg name="map_topic" default="map" />
   <arg name="cmd_vel_topic" default="cmd_vel" />
   <arg name="odom_topic" default="odom" />
