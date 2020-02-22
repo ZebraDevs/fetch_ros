@@ -12,7 +12,7 @@
   <arg name="amcl_include" default="$(find fetch_navigation)/launch/include/amcl.launch.xml" />
 
   <!-- set topics -->
-  <arg name="scan_topic"     default="base_scan" />
+  <arg name="scan_topic" default="base_scan" />
   <arg name="map_topic" default="map" />
   <arg name="cmd_vel_topic" default="cmd_vel" />
   <arg name="odom_topic" default="odom" />
