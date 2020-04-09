@@ -12,7 +12,7 @@ Fetch Package | Indigo Devel | Kinetic Devel | Melodic Devel | Dashing Devel
 ------------- | ------------ | ------------- | ------------- | -------------
 fetch_ros |  EOL | :negative_squared_cross_mark: not supported | [![Build Status](http://build.ros.org/buildStatus/icon?job=Mdev__fetch_ros__ubuntu_bionic_amd64)](http://build.ros.org/job/Mdev__fetch_ros__ubuntu_bionic_amd64/) | :construction: in planning :construction:
 
-Kinetic support, has been skipped. 18.04 supports both ROS1 and ROS2, so it was decided that effort will go towards ROS2 support in the future instead of supporting Kinetic.
+Kinetic support, has been skipped. Ubuntu 18.04 supports both ROS1 and ROS2, so it was decided that effort will go towards ROS2 support in the future instead of supporting Kinetic.
 
 ## ROS Buildfarm Release
 
