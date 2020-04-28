@@ -37,9 +37,9 @@ TrajectoryPlannerROS:
   vtheta_samples: 10
   # scoring (defaults)
   meter_scoring: true
-  pdist_scale: 8.0
-  gdist_scale: 12.0
-  occdist_scale: 0.1
+  path_distance_bias: 0.5
+  goal_distance_bias: 0.75
+  occdist_scale: 0.00625
   heading_lookahead: 0.325
   heading_scoring_timestep: 0.8
   heading_scoring: true
