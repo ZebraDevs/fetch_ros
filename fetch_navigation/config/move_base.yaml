@@ -34,7 +34,7 @@ TrajectoryPlannerROS:
   sim_granularity: 0.025
   angular_sim_granularity: 0.025
   vx_samples: 3
-  vtheta_samples: 20
+  vtheta_samples: 10
   # scoring (defaults)
   meter_scoring: true
   path_distance_bias: 8.0
