@@ -6,6 +6,7 @@
   <arg name="map_file" default="$(find fetch_maps)/maps/3_1_16_localization.yaml" />
   <arg name="map_keepout_file" default="$(find fetch_maps)/maps/3_1_16_keepout.yaml" />
   <arg name="use_keepout" default="false" />
+  <arg name="use_map_topic"  default="false" />
 
   <!-- Navigation parameter files -->
   <arg name="move_base_include" default="$(find fetch_navigation)/launch/include/move_base.launch.xml" />
@@ -32,6 +33,7 @@
   <include file="$(arg amcl_include)" >
     <arg name="scan_topic" value="$(arg scan_topic)" />
     <arg name="map_topic" value="$(arg map_topic)" />
+    <arg name="use_map_topic" value="$(arg use_map_topic)" />
   </include>
 
   <!-- move the robot -->
