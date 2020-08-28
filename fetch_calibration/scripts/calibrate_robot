@@ -93,7 +93,7 @@ def get_calibration_dict(directory, calibration = None):
         files.sort()
         # Open it
         calfile = open(os.path.join(directory, files[-1]))
-    except IndexError, IOError:
+    except (IndexError, IOError):
         print("Cannot open calibration.yaml")
         return calibration
     # Parse YAML
@@ -126,7 +126,7 @@ def get_base_calibration_dict(directory, calibration = None):
         files.sort()
         # Open it
         calfile = open(os.path.join(directory, files[-1]))
-    except IndexError, IOError:
+    except (IndexError, IOError):
         print("Cannot open base_calibration.yaml")
         return calibration
     # Parse YAML
