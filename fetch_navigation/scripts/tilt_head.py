@@ -44,6 +44,7 @@ from control_msgs.msg import PointHeadAction, PointHeadGoal
 from geometry_msgs.msg import PointStamped
 from nav_msgs.msg import Path
 
+
 class NavHeadController:
 
     def __init__(self):
@@ -131,6 +132,7 @@ class NavHeadController:
                 self.client.wait_for_result()
             else:
                 rospy.sleep(1.0)
+
 
 if __name__=="__main__":
     rospy.init_node("tilt_head_node")

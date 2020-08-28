@@ -25,7 +25,9 @@ import subprocess
 import time
 import yaml
 from lxml import etree
+from sys import exit
 from time import strftime
+
 
 def stop_drivers(rosdistro):
     return (subprocess.call(["sudo", "service", "robot", "stop"]) == 0)
@@ -77,7 +79,7 @@ def update_robot_launch(launch, calibration, install_dir):
             pass
 
     # Generate output to a local temp file
-    temp_launch = "/tmp/robot"+strftime("%Y_%m_%d_%H_%M_%S")+".launch"
+    temp_launch = "/tmp/robot" + strftime("%Y_%m_%d_%H_%M_%S") + ".launch"
     launch_xml.write(temp_launch)
 
     # Copy to system (using sudo if necessary)
@@ -93,7 +95,7 @@ def get_calibration_dict(directory, calibration = None):
         files.sort()
         # Open it
         calfile = open(os.path.join(directory, files[-1]))
-    except IndexError, IOError:
+    except (IndexError, IOError):
         print("Cannot open calibration.yaml")
         return calibration
     # Parse YAML
@@ -126,7 +128,7 @@ def get_base_calibration_dict(directory, calibration = None):
         files.sort()
         # Open it
         calfile = open(os.path.join(directory, files[-1]))
-    except IndexError, IOError:
+    except (IndexError, IOError):
         print("Cannot open base_calibration.yaml")
         return calibration
     # Parse YAML
@@ -165,15 +167,23 @@ def get_calibration_date(rosdistro):
 if __name__ == "__main__":
     # Parse the arguments
     parser = argparse.ArgumentParser(description="Calibrate the robot, update files in /etc/ros")
-    parser.add_argument("--arm", help="Capture arm/head calibration data", action="store_true")
-    parser.add_argument("--base", help="Captyure base calibration data", action="store_true")
-    parser.add_argument("--install", help="Install new calibration to /etc/ros (restarts drivers)", action="store_true")
-    parser.add_argument("--reset", help="Reset the calibration to factory defaults (restarts drivers)", action="store_true")
-    parser.add_argument("--restore", help="Restore the previous calibration", action="store_true")
-    parser.add_argument("--date", help="Get the timestamp of the current calibration", action="store_true")
-    parser.add_argument("--directory", help="Directory to load calibration from or backup to", default="/tmp")
-    parser.add_argument("--velocity-factor", help="Velocity scaling factor for fetch calibration. Max/default: 1.0",
-                        type=float, default="1.0")
+    parser.add_argument("--arm", action="store_true",
+                        help="Capture arm/head calibration data")
+    parser.add_argument("--base", action="store_true",
+                        help="Capture base calibration data")
+    parser.add_argument("--install", action="store_true",
+                        help="Install new calibration to /etc/ros (restarts drivers)")
+    parser.add_argument("--reset", action="store_true",
+                        help="Reset the calibration to factory defaults (restarts drivers)")
+    parser.add_argument("--restore", action="store_true",
+                        help="Restore the previous calibration")
+    parser.add_argument("--date", action="store_true",
+                        help="Get the timestamp of the current calibration")
+    parser.add_argument("--directory", default="/tmp",
+                        help="Directory to load calibration from or backup to")
+    parser.add_argument("--velocity-factor", type=float, default="1.0",
+                        help="Velocity scaling factor for fetch calibration. Max/default: 1.0")
+
     args = parser.parse_args()
 
     restart = False

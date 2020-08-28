@@ -19,6 +19,8 @@
 import sys
 import rospy
 import dynamic_reconfigure.client
+from sys import exit
+
 
 class CameraReconfigure(object):
 
@@ -37,6 +39,7 @@ class CameraReconfigure(object):
 
     def callback(self, config):
         rospy.loginfo("camera configured")
+
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

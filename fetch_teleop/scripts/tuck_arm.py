@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2015, Fetch Robotics Inc.
+# Copyright (c) 2015-2020, Fetch Robotics Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -26,7 +26,7 @@
 # (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
-# Author: Michael Ferguson
+# Author: Michael Ferguson, Eric Relson
 
 import argparse
 import subprocess
@@ -37,6 +37,7 @@ import rospy
 from sensor_msgs.msg import Joy
 from moveit_msgs.msg import MoveItErrorCodes, PlanningScene
 from moveit_python import MoveGroupInterface, PlanningSceneInterface
+
 
 class MoveItThread(Thread):
 
@@ -54,9 +55,11 @@ class MoveItThread(Thread):
 
 def is_moveit_running():
     output = subprocess.check_output(["rosnode", "info", "move_group"], stderr=subprocess.STDOUT)
-    if output.find("unknown node") >= 0:
+    if isinstance(output, bytes):
+        output = output.decode('utf-8')
+    if "unknown node" in output:
         return False
-    if output.find("Communication with node") >= 0:
+    if "Communication with node" in output:
         return False
     return True
 
