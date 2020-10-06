@@ -53,7 +53,7 @@ class MoveItThread(Thread):
         self.process.wait()
 
 def is_moveit_running():
-   try:
+    try:
         output = subprocess.check_output(["rosnode", "info", "move_group"], stderr=subprocess.STDOUT)
     except subprocess.CalledProcessError as e:
         output = e.output
