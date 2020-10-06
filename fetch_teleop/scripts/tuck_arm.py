@@ -53,7 +53,10 @@ class MoveItThread(Thread):
         self.process.wait()
 
 def is_moveit_running():
-    output = subprocess.check_output(["rosnode", "info", "move_group"], stderr=subprocess.STDOUT)
+    try:
+        output = subprocess.check_output(["rosnode", "info", "move_group"], stderr=subprocess.STDOUT)
+    except subprocess.CalledProcessError as e:
+        output = e.output
     if output.find("unknown node") >= 0:
         return False
     if output.find("Communication with node") >= 0:
@@ -72,6 +75,8 @@ class TuckThread(Thread):
         if not is_moveit_running():
             rospy.loginfo("starting moveit")
             move_thread = MoveItThread()
+        else:
+            rospy.loginfo("moveit already started")
 
         rospy.loginfo("Waiting for MoveIt...")
         self.client = MoveGroupInterface("arm_with_torso", "base_link")
