@@ -14,7 +14,7 @@ find_package(catkin REQUIRED
     nav_msgs
 )
 
-find_package(OpenCV 3.2 REQUIRED)
+find_package(OpenCV 4.2 REQUIRED)
 
 catkin_package(
   INCLUDE_DIRS
