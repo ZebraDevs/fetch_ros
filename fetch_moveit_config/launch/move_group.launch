@@ -1,6 +1,9 @@
 <launch>
 
-  <include file="$(find fetch_moveit_config)/launch/planning_context.launch" />
+  <arg name="srdf" default="$(find fetch_moveit_config)/config/fetch.srdf" />
+  <include file="$(find fetch_moveit_config)/launch/planning_context.launch" >
+    <arg name="srdf" value="$(arg srdf)" />
+  </include>
 
   <!-- GDB Debug Option -->
   <arg name="debug" default="false" />
