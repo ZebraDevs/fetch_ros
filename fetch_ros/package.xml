@@ -5,7 +5,6 @@
   <version>0.8.2</version>
   <description>Fetch ROS, packages for working with Fetch and Freight</description>
   <maintainer email="selliott@fetchrobotics.com">Sarah Elliott</maintainer>
-  <maintainer email="narora@fetchrobotics.com">Niharika Arora</maintainer>
   <maintainer email="csaldanha@fetchrobotics.com">Carl Saldanha</maintainer>
   <maintainer email="erelson@fetchrobotics.com">Eric Relson</maintainer>
   <maintainer email="opensource@fetchrobotics.com">Fetch Robotics Open Source Team</maintainer>
