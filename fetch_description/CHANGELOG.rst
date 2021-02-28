@@ -2,8 +2,8 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.9.0 (2021-02-28)
+------------------
 * Initial noetic release
 * Manually revert textures on URDF models
   See fetch_ros/issues/`#138 <https://github.com/fetchrobotics/fetch_ros/issues/138>`_

@@ -2,8 +2,8 @@
 Changelog for package fetch_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.9.0 (2021-02-28)
+------------------
 * Initial noetic release
 * Updates for python3 and ROS Noetic
 * Updates maintainers

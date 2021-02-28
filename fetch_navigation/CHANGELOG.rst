@@ -2,8 +2,8 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.9.0 (2021-02-28)
+------------------
 * Initial noetic release
 * Updates for python3 and ROS Noetic
 * Add use_map_topic arg in fetch_nav.launch (`#145 <https://github.com/fetchrobotics/fetch_ros/issues/145>`_)
