@@ -2,6 +2,12 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Initial noetic release
+* Updates maintainers
+* Contributors: Eric Relson
+
 0.8.2 (2019-08-06)
 ------------------
 * Fixed chomp configuration for porting to moveit melodic-devel (`#124 <https://github.com/fetchrobotics/fetch_ros/issues/124>`_)

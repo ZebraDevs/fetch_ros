@@ -2,6 +2,12 @@
 Changelog for package fetch_maps
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Initial noetic release
+* updates maintainers
+* Contributors: Alex Moriarty, Eric Relson, Russell Toris
+
 0.8.2 (2019-08-06)
 ------------------
 

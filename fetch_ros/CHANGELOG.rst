@@ -2,6 +2,13 @@
 Changelog for package fetch_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Initial noetic release
+* Updates for python3 and ROS Noetic
+* Updates maintainers
+* Contributors: Alex Moriarty, Eric Relson, Russell Toris
+
 0.8.2 (2019-08-06)
 ------------------
 

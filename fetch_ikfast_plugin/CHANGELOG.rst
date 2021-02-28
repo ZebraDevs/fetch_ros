@@ -2,6 +2,12 @@
 Changelog for package fetch_ikfast_plugin
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Initial noetic release
+* Updates maintainers
+* Contributors: Alex Moriarty, Eric Relson, Russell Toris
+
 0.8.2 (2019-08-06)
 ------------------
 
