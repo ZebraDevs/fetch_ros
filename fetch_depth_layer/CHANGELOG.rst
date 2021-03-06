@@ -2,8 +2,8 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.9.1 (2021-03-05)
+------------------
 * Fixup: Remove version specification for OpenCV
   Debian Buster only has 3.x available, while Ubuntu 20.04 has 4.x available.
   This package works with either.
