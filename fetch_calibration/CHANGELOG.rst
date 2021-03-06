@@ -2,6 +2,9 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.9.0 (2021-02-28)
 ------------------
 * Initial noetic release
