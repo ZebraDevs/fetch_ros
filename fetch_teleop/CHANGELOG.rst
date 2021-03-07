@@ -2,8 +2,8 @@
 Changelog for package fetch_teleop
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.3 (2021-03-06)
+------------------
 * Initial noetic release
 * Fix tuck arm moveit check [OPEN-48] (`#150 <https://github.com/fetchrobotics/fetch_ros/issues/150>`_)
 * Tuck arm script: Add ground collision for melodic (`#130 <https://github.com/fetchrobotics/fetch_ros/issues/130>`_)

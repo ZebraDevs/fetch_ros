@@ -2,8 +2,8 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.3 (2021-03-06)
+------------------
 * Initial noetic release
 * Add launch_map_server argument in fetch_nav.launch (`#147 <https://github.com/fetchrobotics/fetch_ros/issues/147>`_)
 * Add use_map_topic arg in fetch_nav.launch (`#145 <https://github.com/fetchrobotics/fetch_ros/issues/145>`_)

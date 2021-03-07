@@ -2,8 +2,8 @@
 Changelog for package fetch_depth_layer
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.8.3 (2021-03-06)
+------------------
 * Initial noetic release
 * Updates maintainers
 * Contributors: Alex Moriarty, Russell Toris
