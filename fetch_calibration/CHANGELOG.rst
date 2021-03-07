@@ -2,6 +2,14 @@
 Changelog for package fetch_calibration
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Initial noetic release
+* Add velocity-factor in calibrate_robot (`#133 <https://github.com/fetchrobotics/fetch_ros/issues/133>`_)
+  Limit velocity factor so that it can only be used to slow down calibration.
+* Updates maintainers
+* Contributors: Alex Moriarty, Eric Relson, Russell Toris, Shingo Kitagawa
+
 0.8.2 (2019-08-06)
 ------------------
 

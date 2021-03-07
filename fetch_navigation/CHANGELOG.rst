@@ -2,6 +2,16 @@
 Changelog for package fetch_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Initial noetic release
+* Add launch_map_server argument in fetch_nav.launch (`#147 <https://github.com/fetchrobotics/fetch_ros/issues/147>`_)
+* Add use_map_topic arg in fetch_nav.launch (`#145 <https://github.com/fetchrobotics/fetch_ros/issues/145>`_)
+* Update bias/scale params (`#141 <https://github.com/fetchrobotics/fetch_ros/issues/141>`_)
+* Add topicname args to navigation launch (`#136 <https://github.com/fetchrobotics/fetch_ros/issues/136>`_)
+* Updates maintainers
+* Contributors: Alex Moriarty, Koki Shinjo, Michael Ferguson, Russell Toris, Shingo Kitagawa
+
 0.8.2 (2019-08-06)
 ------------------
 

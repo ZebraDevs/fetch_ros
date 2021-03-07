@@ -2,6 +2,13 @@
 Changelog for package fetch_description
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Initial noetic release
+* Manually revert textures on URDF models (`#154 <https://github.com/fetchrobotics/fetch_ros/issues/154>`_)
+* Updates maintainers
+* Contributors: Alex Moriarty, Eric Relson, Russell Toris
+
 0.8.2 (2019-08-06)
 ------------------
 * License: CC BY-NC-SA 4.0 (Remove ND) (`#123 <https://github.com/fetchrobotics/fetch_ros/issues/123>`_)

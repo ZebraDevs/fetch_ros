@@ -2,6 +2,12 @@
 Changelog for package fetch_ros
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Initial noetic release
+* Updates maintainers
+* Contributors: Alex Moriarty, Russell Toris
+
 0.8.2 (2019-08-06)
 ------------------
 

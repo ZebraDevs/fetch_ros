@@ -2,6 +2,15 @@
 Changelog for package fetch_moveit_config
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Initial noetic release
+* Add srdf file path argument to move_group.launch
+* Use xacro to load fetch.srdf
+* Add srdf file path argument to move_group.launch
+* Updates maintainers
+* Contributors: Alex Moriarty, Carl Saldanha, Naoya Yamaguchi, Russell Toris
+
 0.8.2 (2019-08-06)
 ------------------
 * Fixed chomp configuration for porting to moveit melodic-devel (`#124 <https://github.com/fetchrobotics/fetch_ros/issues/124>`_)
