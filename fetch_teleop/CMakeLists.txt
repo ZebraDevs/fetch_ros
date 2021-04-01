@@ -29,6 +29,10 @@ target_link_libraries(joystick_teleop
   ${catkin_LIBRARIES}
 )
 
+if(UNIX AND NOT APPLE)
+  target_link_libraries(joystick_teleop rt)
+endif()
+
 install(
   TARGETS joystick_teleop
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
