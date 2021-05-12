@@ -36,6 +36,10 @@ arm:
     - PRMstarkConfigDefault
   projection_evaluator: joints(shoulder_pan_joint,shoulder_lift_joint)
   longest_valid_segment_fraction: 0.005
+  # this will enforce JointModelStateSpaceFactory for problem representing see 
+  # https://github.com/ros-planning/moveit/pull/541 for detail
+  # basically this would allow path constraints in moveit_commander to work properly
+  enforce_joint_model_state_space: true
 arm_with_torso:
   planner_configs:
     - SBLkConfigDefault
@@ -51,6 +55,10 @@ arm_with_torso:
     - PRMstarkConfigDefault
   projection_evaluator: joints(torso_lift_joint,shoulder_pan_joint)
   longest_valid_segment_fraction: 0.05
+  # this will enforce JointModelStateSpaceFactory for problem representing see 
+  # https://github.com/ros-planning/moveit/pull/541 for detail
+  # basically this would allow path constraints in moveit_commander to work properly
+  enforce_joint_model_state_space: true
 gripper:
   planner_configs:
     - SBLkConfigDefault
