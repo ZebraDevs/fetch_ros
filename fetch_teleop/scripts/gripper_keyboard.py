@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-# Copyright (c) 2015, Fetch Robotics Inc.
+# Copyright (c) 2015-2022, Fetch Robotics Inc.
 # All rights reserved.
 #
 # Redistribution and use in source and binary forms, with or without
@@ -51,13 +51,15 @@ def getch():
 
 class GripperKeyboard(object):
 
-    OPEN_POSITION = 0.1
+    OPEN_POSITION = 0.095 # meters; 0.1 is maximum; constrained to avoid hitting bumpers, to reduce wear
     CLOSED_POSITION = 0
+    MAX_EFFORT = 122.0  # Internal drivers code limit
+    MIN_EFFORT = 40.0  # Observed practical minimum is ~40
 
     def __init__(self):
         self._lock = Lock()
 
-        self.max_effort = 20.0
+        self.max_effort = 100.0
         self.position = None
         self._sub_pos = rospy.Subscriber('joint_states', JointState,
                                          self._set_state)
@@ -70,15 +72,16 @@ class GripperKeyboard(object):
         rospy.loginfo('...connected.')
 
     def _set_state(self, joint_state):
-        l_gripper_position = None
-        r_gripper_position = None
+        l_gripper_finger_pos = None
+        r_gripper_finger_pos = None
         for joint, pos in zip(joint_state.name, joint_state.position):
             if joint == 'l_gripper_finger_joint':
                 l_gripper_finger_pos = pos
             if joint == 'r_gripper_finger_joint':
                 r_gripper_finger_pos = pos
-        with self._lock:
-            self.position = l_gripper_finger_pos + r_gripper_finger_pos
+        if l_gripper_finger_pos is not None and r_gripper_finger_pos is not None:
+            with self._lock:
+                self.position = l_gripper_finger_pos + r_gripper_finger_pos
 
     def set_position(self, position):
         goal = GripperCommandGoal()
@@ -135,13 +138,19 @@ if __name__ == '__main__':
   max_effort: {}'''.format(gripper_keyboard.position,
                            gripper_keyboard.max_effort))
                 elif c == 'e':
-                    gripper_keyboard.max_effort -= 1
-                    rospy.loginfo('Decrease max_effort to: {}'
-                          .format(gripper_keyboard.max_effort))
+                    if gripper_keyboard.max_effort > gripper_keyboard.MIN_EFFORT:
+                        gripper_keyboard.max_effort -= 1
+                        rospy.loginfo('Decrease max_effort to: {}'
+                              .format(gripper_keyboard.max_effort))
+                    else:
+                        rospy.loginfo('max_effort already at minimum')
                 elif c == 'E':
-                    gripper_keyboard.max_effort += 1
-                    rospy.loginfo('Increase max_effort to: {}'
-                          .format(gripper_keyboard.max_effort))
+                    if gripper_keyboard.max_effort < gripper_keyboard.MAX_EFFORT:
+                        gripper_keyboard.max_effort += 1
+                        rospy.loginfo('Increase max_effort to: {}'
+                              .format(gripper_keyboard.max_effort))
+                    else:
+                        rospy.loginfo('max_effort already at maximum')
                 elif c == '?':
                     print(usage)
             else:
