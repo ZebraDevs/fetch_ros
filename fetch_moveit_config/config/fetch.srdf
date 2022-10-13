@@ -94,7 +94,7 @@
     <disable_collisions link1="estop_link" link2="head_tilt_link" reason="Never" />
     <disable_collisions link1="estop_link" link2="l_wheel_link" reason="Never" />
     <disable_collisions link1="estop_link" link2="laser_link" reason="Never" />
-    <disable_collisions link1="estop_link" link2="r_gripper_finger_link" reason="Never" />
+    <!-- <disable_collisions link1="estop_link" link2="r_gripper_finger_link" reason="Never" /> -->
     <disable_collisions link1="estop_link" link2="r_wheel_link" reason="Never" />
     <disable_collisions link1="estop_link" link2="shoulder_lift_link" reason="Never" />
     <disable_collisions link1="estop_link" link2="shoulder_pan_link" reason="Never" />
