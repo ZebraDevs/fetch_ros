@@ -104,7 +104,7 @@ class GripperKeyboard(object):
 if __name__ == '__main__':
     settings = termios.tcgetattr(sys.stdin)
 
-    rospy.init_node('grippper_keyboard')
+    rospy.init_node('gripper_keyboard')
 
     gripper_keyboard = GripperKeyboard()
 
