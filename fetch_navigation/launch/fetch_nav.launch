@@ -6,6 +6,7 @@
   <arg name="map_file" default="$(find fetch_maps)/maps/3_1_16_localization.yaml" />
   <arg name="map_keepout_file" default="$(find fetch_maps)/maps/3_1_16_keepout.yaml" />
   <arg name="use_keepout" default="false" />
+  <arg name="launch_map_server" default="true" />
   <arg name="use_map_topic"  default="false" />
 
   <!-- Navigation parameter files -->
@@ -18,15 +19,17 @@
   <arg name="cmd_vel_topic" default="cmd_vel" />
   <arg name="odom_topic" default="odom" />
 
-  <!-- serve up a map -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+  <group if="$(arg launch_map_server)">
+    <!-- serve up a map -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
 
-  <!-- serve up a map with keepout zones -->
-  <group if="$(arg use_keepout)" >
-  <node name="map_keepout_server" pkg="map_server" type="map_server" args="$(arg map_keepout_file)" >
-    <remap from="map" to="map_keepout" />
-    <remap from="static_map" to="static_map_keepout" />
-  </node>
+    <!-- serve up a map with keepout zones -->
+    <group if="$(arg use_keepout)" >
+    <node name="map_keepout_server" pkg="map_server" type="map_server" args="$(arg map_keepout_file)" >
+      <remap from="map" to="map_keepout" />
+      <remap from="static_map" to="static_map_keepout" />
+    </node>
+    </group>
   </group>
 
   <!-- localize the robot -->
