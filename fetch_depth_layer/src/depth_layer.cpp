@@ -146,7 +146,7 @@ void FetchDepthLayer::onInitialize()
   depth_image_sub_.reset(new message_filters::Subscriber<sensor_msgs::Image>(private_nh, camera_depth_topic, 10));
   depth_image_filter_ = boost::shared_ptr< tf2_ros::MessageFilter<sensor_msgs::Image> >(
     new tf2_ros::MessageFilter<sensor_msgs::Image>(*depth_image_sub_, *tf_, global_frame_, 10, private_nh));
-  depth_image_filter_->registerCallback(boost::bind(&FetchDepthLayer::depthImageCallback, this, _1));
+  depth_image_filter_->registerCallback([this](auto msg){ depthImageCallback(msg); });
   observation_subscribers_.push_back(depth_image_sub_);
   observation_notifiers_.push_back(depth_image_filter_);
   observation_notifiers_.back()->setTolerance(ros::Duration(0.05));
